@@ -95,7 +95,8 @@
                                     <TextField />
                                     <Label text="Gielda" />
                                     <TextField />
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Button">
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0"
+                                            alignment="BASELINE_CENTER" HBox.hgrow="ALWAYS" text="Button">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>

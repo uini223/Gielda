@@ -23,11 +23,11 @@ public class Main extends Application {
         mainStage = primaryStage;
         String name = "../views/";
         Parent root;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/PanelKontrolnyView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/SpolkiOknoInformacyjneView.fxml"));
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
         root = loader.load();
         primaryStage.setTitle("Giełda");
-        primaryStage.setScene(new Scene(root, 900, 500));
+        primaryStage.setScene(new Scene(root, 300, 200));
         primaryStage.show();
         Controllable kontroler = loader.getController();
         kontroler.setStage(mainStage);
