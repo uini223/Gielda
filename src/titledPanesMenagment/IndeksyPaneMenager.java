@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import main.Main;
 
 public class IndeksyPaneMenager extends Upper{
+    //hello
     private TextField nazwaTextField,gieldaTextField;
 
     private ChoiceBox<String> typChoiceBox;
