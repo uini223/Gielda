@@ -2,9 +2,11 @@ package posiadajacyPieniadze;
 
 import controllers.Listable;
 import gield.Inwestycja;
+import gieldaPapierowWartosciowych.Akcje;
 import main.Main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class PosiadajacyPieniadze implements Listable, Runnable{
@@ -14,26 +16,39 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable{
 
     private List<Inwestycja> listaInwestycji;
 
+    private HashMap<Inwestycja,Number> hashMapInwestycji;
+
     private String name;
+
+    public HashMap<Inwestycja, Number> getHashMapInwestycji() {
+        return hashMapInwestycji;
+    }
+
+    public void setHashMapInwestycji(HashMap<Inwestycja, Number> hashMapInwestycji) {
+        this.hashMapInwestycji = hashMapInwestycji;
+    }
 
     public PosiadajacyPieniadze(){
         listaInwestycji = new ArrayList<>();
+        hashMapInwestycji = new HashMap<>();
         imie = generujImie();
         nazwisko = generujNazwisko();
-        kapital = Math.random()*1000000;
+        kapital = Math.random()*1000000+1000000;
         name = imie+nazwisko+" "+Integer.toString((int)(Math.random()*10000));
     }
 
     public String getName() {
         return name;
     }
-    public void updateName(){
-        synchronized(Main.getContainer()){
+
+    private void updateName(){
+        synchronized(Main.getMonitor()){
             Main.getContainer().getHashMapInwestorow().remove(name);
-            name= imie + nazwisko+" "+Integer.toString((int)(Math.random()*10000));
+            name= imie+" "+nazwisko+" "+Integer.toString((int)(Math.random()*10000));
             Main.getContainer().getHashMapInwestorow().put(name,this);
         }
     }
+
     public void setName(String name) {
         this.name = name;
     }

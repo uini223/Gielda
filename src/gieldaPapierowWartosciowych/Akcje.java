@@ -35,4 +35,9 @@ public class Akcje extends Inwestycja{
     public String getNazwaSpolki() {
         return nazwaSpolki;
     }
+
+    @Override
+    public String toString() {
+        return nazwaSpolki;
+    }
 }

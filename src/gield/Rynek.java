@@ -14,9 +14,18 @@ public abstract class Rynek implements Listable{
     private Adres adres;
     private Indeks indeks;
     private double marzaOdTransakcji;
+    private double przelicznik;
+
+    public double getPrzelicznik() {
+        return przelicznik;
+    }
+
+    public void setPrzelicznik(double przelicznik) {
+        this.przelicznik = przelicznik;
+    }
 
     public Rynek() {
-        String[] nazwyGield = {"GPW","NYM","WSP","PPP","APS","STH","UNE","OMA","ead","sdada","dada"};
+        String[] nazwyGield = {"GPW","NYM","WSP","PPP","APS","STH","UNE","OMA","PPA","ASA","PLN"};
         for (int i=0;i<nazwyGield.length;i++) {
             nazwyGield[i] += Integer.toString((int)(Math.random()*1000));
         }
@@ -25,7 +34,6 @@ public abstract class Rynek implements Listable{
         int a = (int)((Math.random()*100)%waluty.length);
         nazwa = nazwyGield[(int)(Math.random()*100)%nazwyGield.length];
         this.kraj = "kraj";
-
         synchronized (Main.getContainer()) {
           this.waluta = Main.getContainer().getHashMapWalut().get(waluty[a]);
         }

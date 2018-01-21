@@ -13,16 +13,21 @@ public class Waluta extends Inwestycja {
     private String nazwa;
 
     /**
-     * @param a waluta na ktora ma zostac przeliczona obecna waluta
+     * @param cenaWPLN na ktora ma zostac przeliczona obecna waluta
      * @return zwraca wartosc w nowej walucie
      */
-    public double przeliczCene(Waluta a){
-        return 0;
+    public double przeliczCene(double cenaWPLN){
+        return cenaWPLN*przelicznik;
     }
 
     public Waluta(String nazwa) {
         this.nazwa = nazwa;
-
+        if(nazwa.equals("PLN")){
+            przelicznik = 1;
+        }
+        else{
+            przelicznik = Math.random()*5;
+        }
     }
 
     public String getNazwa() {

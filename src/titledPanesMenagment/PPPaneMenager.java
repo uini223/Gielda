@@ -76,9 +76,9 @@ public class PPPaneMenager extends Upper{
                 }
                 typTextField.setText(pp.getClass().toString());
                 inwestycjeListView.getItems().clear();
-                for (Inwestycja i : pp.getListaInwestycji()
+                for (Inwestycja i : pp.getHashMapInwestycji().keySet()
                         ) {
-                    inwestycjeListView.getItems().add(i.toString());
+                    inwestycjeListView.getItems().add(i.toString()+" "+pp.getHashMapInwestycji().get(i));
                 }
 
             }
@@ -89,7 +89,7 @@ public class PPPaneMenager extends Upper{
     @Override
     public void wczytajListe() {
         getLista().getItems().clear();
-        synchronized (Main.getContainer()) {
+        synchronized (Main.getMonitor()) {
             for (String r : Main.getContainer().getHashMapInwestorow().keySet()) {
                 getLista().getItems().add(Main.getContainer().getPP(r));
             }
@@ -105,7 +105,7 @@ public class PPPaneMenager extends Upper{
         if(!typChoiceBox.getSelectionModel().isEmpty()) {
             switch (typChoiceBox.getSelectionModel().getSelectedItem()) {
                 case "Inwestor": {
-                    synchronized (Main.getContainer()) {
+                    synchronized (Main.getMonitor()) {
                         Inwestor inwestor = new Inwestor();
                         Main.getContainer().addPosiadajacyPieniadze(inwestor);
                         Thread thread = new Thread(inwestor);
@@ -115,7 +115,7 @@ public class PPPaneMenager extends Upper{
                     break;
                 }
                 case "Fundusz Inwestycyjny": {
-                    synchronized (Main.getContainer()) {
+                    synchronized (Main.getMonitor()) {
                         Main.getContainer().addPosiadajacyPieniadze(new FunduszInwestycyjny());
                     }
                     break;
@@ -128,7 +128,7 @@ public class PPPaneMenager extends Upper{
     @Override
     public void zapiszPola() {
         if (!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getContainer()) {
+            synchronized (Main.getMonitor()) {
                 PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
                 pp.setNazwisko(nazwiskoTextField.getText());
                 pp.setKapital(Double.valueOf(kapitalTextField.getText()));

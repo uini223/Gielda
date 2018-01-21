@@ -55,13 +55,13 @@ public class Inwestor extends PosiadajacyPieniadze {
     @Override
     public void run() {
 
-        while(true){
+        for (int i=0;i<10;i++){
             kupInwestycje();
             sprzedajInwestycje();
             //System.out.println(this.getName());
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -13,13 +13,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanelKontrolnyViewController">
+<BorderPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanelKontrolnyViewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -113,104 +110,47 @@
                      </content></TitledPane>
                   <TitledPane animated="false" text="Indeksy">
                      <content>
-                        <GridPane hgap="2.0" prefHeight="183.0" prefWidth="408.0" vgap="2.0">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="142.0" minWidth="10.0" percentWidth="30.0" prefWidth="142.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" percentWidth="30.0" prefWidth="147.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" percentWidth="40.0" prefWidth="86.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="56.0" valignment="CENTER" vgrow="ALWAYS" />
-                          </rowConstraints>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Nazwa" />
                                     <TextField fx:id="indeksyNazwaTextField" prefHeight="21.0" prefWidth="104.0" />
-                                 </children>
-                              </VBox>
-                              <VBox layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                                 <children>
                                     <Label text="Giełda" />
                                     <TextField fx:id="indeksyGieldaTextField" prefHeight="23.0" prefWidth="103.0" />
                                  </children>
                               </VBox>
-                              <VBox layoutX="136.0" layoutY="20.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#dodajSpolkeAction" prefHeight="30.0" prefWidth="150.0" text="Dodaj Spółke do Indeksu" />
+                                    <ChoiceBox fx:id="indeksyTypChoiceBox" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefWidth="100.0" text="Dodaj Indeks" VBox.vgrow="ALWAYS" />
+                                    <Button minHeight="-Infinity" mnemonicParsing="false" onAction="#usunButtonAction" prefWidth="100.0" text="Usuń" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Spółki" />
-                                    <ListView fx:id="indeksySpolkiListView" prefHeight="200.0" prefWidth="200.0" />
+                                    <ListView fx:id="indeksySpolkiListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
-                              <VBox layoutX="257.0" layoutY="20.0" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                                 <children>
-                                    <ChoiceBox fx:id="indeksyTypChoiceBox" prefWidth="150.0" VBox.vgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" text="Dodaj Indeks" VBox.vgrow="ALWAYS" />
-                                 </children>
-                              </VBox>
-                              <Button mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="29.0" prefWidth="122.0" text="Usuń" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                              <Button mnemonicParsing="false" onAction="#dodajSpolkeAction" prefHeight="55.0" prefWidth="121.0" text="Dodaj Spółke do Indeksu" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
-                           <padding>
-                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                           </padding>
-                        </GridPane>
+                        </HBox>
                      </content></TitledPane>
                   <TitledPane animated="false" layoutX="13.0" layoutY="13.0" text="Posiadajacy Pieniadze">
                      <content>
-                        <GridPane hgap="2.0" vgap="2.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="74.0" minHeight="10.0" percentHeight="45.0" prefHeight="71.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="92.0" minHeight="10.0" percentHeight="19.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="56.0" minHeight="10.0" percentHeight="36.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0">
+                              <VBox fillWidth="false" prefHeight="50.0" prefWidth="180.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Imię" />
-                                    <TextField fx:id="ppImieTextField" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label text="Nazwisko" />
-                                    <TextField fx:id="ppNazwiskoTextField" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="2">
-                                 <children>
-                                    <Label text="Posiadane Inwestycje" />
-                                    <ListView fx:id="ppInwestycjeListView" prefHeight="200.0" prefWidth="200.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="20.0" layoutY="72.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.rowIndex="1">
-                                 <children>
+                                    <Label text="Kapitał" />
+                                    <TextField fx:id="ppKapitalTextField" />
                                     <Label text="Nazwa" />
                                     <TextField fx:id="ppNazwaTextField" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
+                                    <Label text="Imię" />
+                                    <TextField fx:id="ppImieTextField" />
+                                    <Label text="Nazwisko" />
+                                    <TextField fx:id="ppNazwiskoTextField" />
                                     <Label text="Pesel" />
                                     <TextField fx:id="ppPeselTextField" />
                                  </children>
@@ -218,129 +158,84 @@
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </padding>
                               </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <VBox fillWidth="false" prefHeight="50.0" prefWidth="180.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
                                  <children>
-                                    <Label text="Kapitał" />
-                                    <TextField fx:id="ppKapitalTextField" />
+                                    <Label text="Typ PP" />
+                                    <TextField fx:id="ppTypTextField" editable="false" />
+                                    <Button fx:id="rynkiLosujButton1" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="30.0" prefWidth="100.0" text="Usun">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin></Button>
+                                    <Button mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="30.0" prefWidth="100.0" text="Zapisz Pola">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <ChoiceBox fx:id="ppTypChoiceBox" prefWidth="150.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin></ChoiceBox>
+                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="30.0" prefWidth="100.0" text="Dodaj Nowy">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin></Button>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Posiadane Inwestycje" />
+                                    <ListView fx:id="ppInwestycjeListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                                  </children>
                                  <padding>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </padding>
                               </VBox>
-                              <Button mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="29.0" prefWidth="103.0" text="Zapisz Pola" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                              <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label text="Typ PP" />
-                                    <TextField fx:id="ppTypTextField" editable="false" />
-                                    <Button fx:id="rynkiLosujButton1" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="29.0" prefWidth="96.0" text="Usun" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <children>
-                                    <ChoiceBox fx:id="ppTypChoiceBox" prefWidth="150.0" />
-                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="29.0" prefWidth="94.0" text="Dodaj Nowy" />
-                                 </children>
-                              </VBox>
                            </children>
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </GridPane>
+                        </HBox>
                      </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Rynki">
                      <content>
-                        <GridPane hgap="2.0" vgap="2.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="40.0" valignment="CENTER" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0">
-                                 <children>
-                                    <Label text="Nazwa" />
-                                    <TextField fx:id="rynkiNazwaTextField" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label text="Kraj" />
-                                    <TextField fx:id="rynkiKrajTextField" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="2">
-                                 <children>
-                                    <Label text="Waluta" />
-                                    <TextField fx:id="rynkiWalutaTextField" editable="false" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="20.0" layoutY="72.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.rowIndex="1">
+                              <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Miasto" />
                                     <TextField fx:id="rynkiMiastoTextField" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox layoutX="25.0" layoutY="19.0" prefHeight="50.0" prefWidth="180.0" spacing="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
                                     <Label text="Ulica" />
                                     <TextField fx:id="rynkiUlicaTextField" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <Button fx:id="rynkiZapiszButton" alignment="CENTER" mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="29.0" prefWidth="103.0" text="Zapisz Pola" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                              <VBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                 <children>
+                                    <Label text="Nazwa" />
+                                    <TextField fx:id="rynkiNazwaTextField" />
+                                    <Label text="Kraj" />
+                                    <TextField fx:id="rynkiKrajTextField" />
                                     <Label text="Typ Rynku" />
                                     <TextField fx:id="rynkiTypRynkuTextField" alignment="TOP_LEFT" editable="false" VBox.vgrow="ALWAYS" />
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="29.0" prefWidth="96.0" text="Usuń" VBox.vgrow="ALWAYS" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" spacing="7.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                                 <children>
-                                    <ChoiceBox fx:id="rynkiTypChoiceBox" prefWidth="150.0" />
-                                    <Button fx:id="rynkiDodajNowyButton" mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="29.0" prefWidth="94.0" text="Dodaj Nowy" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <children>
+                                    <Label text="Waluta" />
+                                    <TextField fx:id="rynkiWalutaTextField" editable="false" />
                                     <Label text="Marża od Transakcji" />
                                     <TextField fx:id="rynkiMarzaTextField" />
                                  </children>
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox prefHeight="50.0" prefWidth="180.0" spacing="15.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <VBox alignment="CENTER" spacing="5.0" />
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="29.0" prefWidth="96.0" text="Usuń" VBox.vgrow="ALWAYS" />
+                                    <Button fx:id="rynkiZapiszButton" alignment="CENTER" mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="29.0" prefWidth="103.0" text="Zapisz Pola" />
+                                    <ChoiceBox fx:id="rynkiTypChoiceBox" prefWidth="150.0" />
+                                    <Button fx:id="rynkiDodajNowyButton" mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="30.0" prefWidth="94.0" text="Dodaj Nowy" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
                               </VBox>
                            </children>
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </GridPane>
+                        </HBox>
                      </content>
                   </TitledPane>
               </panes>

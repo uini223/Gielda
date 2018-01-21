@@ -23,7 +23,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new ConcurrentHashMap<>();
         Indeks ind;
-        for(int i=0;i<3;i++){
+        for(int i=0;i<1;i++){
             ind = new Indeks(this);
             hashMapIndeksow.put(ind.getName(),ind);
         }
@@ -72,17 +72,32 @@ public class GieldaPapierowWartosciowych extends Rynek{
                 hashMapSpolek.keySet()) {
             if (i == rnd){
                 spolka = hashMapSpolek.get(s);
-                pp.getListaInwestycji().add(spolka.getAkcjaSpolki());
+                int pom;
                 int ilosc = (int)(Math.random()*1000000)%spolka.getLiczbaAkcji();
                 double kwota = ilosc*spolka.getAktualnyKurs();
-                if( kwota <= pp.getKapital()) {
+                kwota = getWaluta().przeliczCene(kwota);
+                kwota = pobierzMarze(kwota);
+                if( kwota <= pp.getKapital() && ilosc>0) {
+                    if(pp.getHashMapInwestycji().containsKey(spolka.getAkcjaSpolki())) {
+                        pom = pp.getHashMapInwestycji().get(spolka.getAkcjaSpolki()).intValue();
+                        pp.getHashMapInwestycji().put(spolka.getAkcjaSpolki(),pom+ilosc);
+                    }
+                    else {
+                        pp.getHashMapInwestycji().put(spolka.getAkcjaSpolki(),ilosc);
+                    }
                     spolka.sprzedajAkcje(ilosc);
                     pp.setKapital(pp.getKapital()-kwota);
-                    System.out.println(pp.getName() +" " +pp.getKapital());
+                    System.out.printf("Name: %s Kapital: %.2f Ilosc %d kwota zakupu %.2f nazwa %s\n"
+                            ,pp.getName(), pp.getKapital(),ilosc,kwota,spolka.getName());
                 }
             }
             i++;
         }
+    }
+
+    private double pobierzMarze(double kwota) {
+        double marza = getMarzaOdTransakcji()/100;
+        return kwota-(kwota*marza);
     }
 
     @Override

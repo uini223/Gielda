@@ -73,7 +73,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         Inwestor inwestor;
         for(int i=0;i<4;i++){
             inwestor = new Inwestor();
-            if(i<3) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
+            if(i<1) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
 
             Main.getContainer().addPosiadajacyPieniadze(inwestor);
             Thread th;
