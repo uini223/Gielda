@@ -8,6 +8,14 @@ public class Spolka implements Runnable{
     private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy,  obroty, aktualnyKurs,
             maksymalnyKurs, minimalnyKurs,zysk;
 
+    public int getLiczbaAkcji() {
+        return liczbaAkcji;
+    }
+
+    public void setLiczbaAkcji(int liczbaAkcji) {
+        this.liczbaAkcji = liczbaAkcji;
+    }
+
     private int liczbaAkcji,wolumen;
 
     private Akcje akcjaSpolki;
@@ -75,8 +83,7 @@ public class Spolka implements Runnable{
 
     public void sprzedajAkcje(int ilosc){
         int rnd = (int)(Math.random()*100)%10+1;
-        double wartosc = (aktualnyKurs*(rnd/100));
-        System.out.println(wartosc);
+        double wartosc = (aktualnyKurs*((double)rnd/100));
         int plus = (int)(Math.random()*100);
         if(plus>=50){
             setAktualnyKurs(aktualnyKurs+wartosc);
@@ -85,7 +92,11 @@ public class Spolka implements Runnable{
             setAktualnyKurs(aktualnyKurs-wartosc);
         }
         getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
+        liczbaAkcji-=ilosc;
+    }
 
+    public double getAktualnyKurs() {
+        return aktualnyKurs;
     }
 
     public void run(){

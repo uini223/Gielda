@@ -76,7 +76,10 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             if(i<3) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
 
             Main.getContainer().addPosiadajacyPieniadze(inwestor);
-            new Thread(inwestor).start();
+            Thread th;
+            th = new Thread(inwestor);
+            th.setDaemon(true);
+            th.start();
 
         }
 

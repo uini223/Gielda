@@ -73,7 +73,13 @@ public class GieldaPapierowWartosciowych extends Rynek{
             if (i == rnd){
                 spolka = hashMapSpolek.get(s);
                 pp.getListaInwestycji().add(spolka.getAkcjaSpolki());
-                spolka.sprzedajAkcje();
+                int ilosc = (int)(Math.random()*1000000)%spolka.getLiczbaAkcji();
+                double kwota = ilosc*spolka.getAktualnyKurs();
+                if( kwota <= pp.getKapital()) {
+                    spolka.sprzedajAkcje(ilosc);
+                    pp.setKapital(pp.getKapital()-kwota);
+                    System.out.println(pp.getName() +" " +pp.getKapital());
+                }
             }
             i++;
         }
