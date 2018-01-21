@@ -16,10 +16,7 @@ import main.Main;
 import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
-import titledPanesMenagment.IndeksyPaneMenager;
-import titledPanesMenagment.PPPaneMenager;
-import titledPanesMenagment.RynkiPaneMenager;
-import titledPanesMenagment.Upper;
+import titledPanesMenagment.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +27,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private RynkiPaneMenager rynkiPaneMenager;
     private PPPaneMenager ppPaneMenager;
     private IndeksyPaneMenager indeksyPaneMenager;
+    private SpolkiPaneMenager spolkiPaneMenager;
     private Upper menager;
     @FXML
     private BorderPane layout;
@@ -70,9 +68,16 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         indeksyPaneMenager = new IndeksyPaneMenager(lista, accordion, indeksyNazwaTextField,indeksyGieldaTextField
                 ,indeksyTypChoiceBox,indeksySpolkiListView);
 
+        spolkiPaneMenager = new SpolkiPaneMenager(lista,accordion);
+
+        Inwestor inwestor;
         for(int i=0;i<10;i++){
+            inwestor = new Inwestor();
             if(i<3) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
-            Main.getContainer().addPosiadajacyPieniadze(new Inwestor());
+
+            Main.getContainer().addPosiadajacyPieniadze(inwestor);
+            new Thread(inwestor).start();
+
         }
 
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -99,7 +104,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                                 break;
                             }
                             case "Spolki":{
-
+                                menager = spolkiPaneMenager;
                                 break;
                             }
                             case "Waluty":{

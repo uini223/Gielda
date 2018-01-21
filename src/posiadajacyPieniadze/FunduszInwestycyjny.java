@@ -26,4 +26,9 @@ public class FunduszInwestycyjny extends PosiadajacyPieniadze {
     public void sprzedajInwestycje() {
 
     }
+
+    @Override
+    public void run() {
+
+    }
 }

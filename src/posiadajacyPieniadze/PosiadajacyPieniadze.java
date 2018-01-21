@@ -7,7 +7,7 @@ import main.Main;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PosiadajacyPieniadze implements Listable{
+public abstract class PosiadajacyPieniadze implements Listable, Runnable{
     private double kapital;
 
     private String imie, nazwisko;
