@@ -3,6 +3,7 @@ package gield;
 import controllers.Listable;
 import gieldaPapierowWartosciowych.Indeks;
 import main.Main;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.Waluta;
 
 import java.util.Set;
@@ -32,9 +33,9 @@ public abstract class Rynek implements Listable{
         this.marzaOdTransakcji = 0.5;
     }
 
-    public abstract void kupno();
+    public abstract void kupno(PosiadajacyPieniadze pp);
 
-    public abstract void sprzedaz();
+    public abstract void sprzedaz(PosiadajacyPieniadze pp);
 
     @Override
     public String toString() {

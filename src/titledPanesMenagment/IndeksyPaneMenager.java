@@ -57,9 +57,9 @@ public class IndeksyPaneMenager extends Upper{
         Indeks ind;
         synchronized(Main.getContainer()){
             ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
-            for (Spolka s: ind.getListaSpolek()
+            for (String s: ind.getHashMapSpolek().keySet()
                     ) {
-                spolkiListView.getItems().add(s.getName());
+                spolkiListView.getItems().add(s);
             }
             nazwaTextField.setText(ind.getName());
             gieldaTextField.setText(ind.getRodzic().getNazwa());

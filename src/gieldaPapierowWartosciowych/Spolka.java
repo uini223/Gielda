@@ -47,6 +47,7 @@ public class Spolka implements Runnable{
                 (int)(Math.random()*100));
     }
 
+
     public Akcje getAkcjaSpolki(){
         return akcjaSpolki;
     }
@@ -54,6 +55,7 @@ public class Spolka implements Runnable{
     public void generujPrzychod(){
         przychod+= Math.random()*10000;
     }
+
     public void generujZysk(){
         generujPrzychod();
         zysk = przychod - Math.random()*1000;
@@ -69,6 +71,21 @@ public class Spolka implements Runnable{
         if(aktualnyKurs>maksymalnyKurs) maksymalnyKurs = aktualnyKurs;
         this.aktualnyKurs = aktualnyKurs;
         akcjaSpolki.addWartoscAkcji(aktualnyKurs);
+    }
+
+    public void sprzedajAkcje(int ilosc){
+        int rnd = (int)(Math.random()*100)%10+1;
+        double wartosc = (aktualnyKurs*(rnd/100));
+        System.out.println(wartosc);
+        int plus = (int)(Math.random()*100);
+        if(plus>=50){
+            setAktualnyKurs(aktualnyKurs+wartosc);
+        }
+        else {
+            setAktualnyKurs(aktualnyKurs-wartosc);
+        }
+        getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
+
     }
 
     public void run(){

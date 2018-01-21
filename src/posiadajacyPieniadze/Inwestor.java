@@ -1,9 +1,16 @@
 package posiadajacyPieniadze;
 
+import gield.Inwestycja;
 import main.Main;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Inwestor extends PosiadajacyPieniadze {
-    int pesel;
+
+
+    private int pesel;
 
     public Inwestor() {
         super();
@@ -19,9 +26,17 @@ public class Inwestor extends PosiadajacyPieniadze {
     }
 
     @Override
-
     public void kupInwestycje() {
-
+        int size,i=0,rnd;
+        size = Main.getContainer().getHashMapRynkow().keySet().size();
+        rnd = (int)(Math.random()*100)%size;
+        for (String s:Main.getContainer().getHashMapRynkow().keySet()
+                ) {
+            if(i == rnd){
+                Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+            }
+            i++;
+        }
     }
 
     @Override
@@ -37,23 +52,14 @@ public class Inwestor extends PosiadajacyPieniadze {
 
     @Override
     public void run() {
-        int size,i=0,rnd;
+
         while(true){
-            i=0;
             kupInwestycje();
             sprzedajInwestycje();
-            System.out.println(this.getName());
-            size = Main.getContainer().getHashMapRynkow().keySet().size();
-            rnd = (int)(Math.random()*100)%size;
-            for (String s:Main.getContainer().getHashMapRynkow().keySet()
-                 ) {
-                if(i == rnd){
+            //System.out.println(this.getName());
 
-                }
-                i++;
-            }
             try {
-                Thread.sleep(100);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

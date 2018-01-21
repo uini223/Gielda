@@ -41,7 +41,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private ListView<Listable> lista;
     @FXML
-    private ListView<String> indeksySpolkiListView;
+    private ListView<String> indeksySpolkiListView,ppInwestycjeListView;
     @FXML
     private TextField rynkiNazwaTextField,rynkiKrajTextField,rynkiMiastoTextField,rynkiUlicaTextField,
             rynkiTypRynkuTextField,rynkiMarzaTextField,rynkiWalutaTextField;
@@ -63,7 +63,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                 rynkiWalutaTextField, rynkiTypChoiceBox);
 
         ppPaneMenager = new PPPaneMenager(lista,accordion,ppImieTextField,ppNazwiskoTextField,ppNazwaTextField,
-                ppPeselTextField,ppKapitalTextField,ppTypTextField,ppTypChoiceBox);
+                ppPeselTextField,ppKapitalTextField,ppTypTextField,ppTypChoiceBox,ppInwestycjeListView);
 
         indeksyPaneMenager = new IndeksyPaneMenager(lista, accordion, indeksyNazwaTextField,indeksyGieldaTextField
                 ,indeksyTypChoiceBox,indeksySpolkiListView);

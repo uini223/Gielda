@@ -3,22 +3,35 @@ package gieldaPapierowWartosciowych;
 import controllers.Listable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Indeks implements Listable {
 
     private GieldaPapierowWartosciowych rodzic;
 
-    private List<Spolka> listaSpolek;
+    private Map<String,Spolka> hashMapSpolek;
 
     private String name;
 
+    public Map<String, Spolka> getHashMapSpolek() {
+        return hashMapSpolek;
+    }
+
+    public void setHashMapSpolek(Map<String, Spolka> hashMapSpolek) {
+        this.hashMapSpolek = hashMapSpolek;
+    }
+
     public Indeks(GieldaPapierowWartosciowych rodzic) {
         this.rodzic = rodzic;
-        listaSpolek = new ArrayList<>();
+        hashMapSpolek = new ConcurrentHashMap<>();
         name = "indeks" + Integer.toString((int)((Math.random())*10000));
+        Spolka spolka;
         for (int i = 0; i < 3; i++) {
-            listaSpolek.add(new Spolka());
+            spolka = new Spolka();
+            hashMapSpolek.put(spolka.getName(),spolka);
         }
         rodzic.addIndeks(this);
     }
@@ -40,14 +53,6 @@ public class Indeks implements Listable {
         this.rodzic = rodzic;
     }
 
-    public List<Spolka> getListaSpolek() {
-        return listaSpolek;
-    }
-
-    public void setListaSpolek(List<Spolka> listaSpolek) {
-        this.listaSpolek = listaSpolek;
-    }
-
     public int getParametrDoboruSpolek() {
         return parametrDoboruSpolek;
     }
@@ -63,7 +68,8 @@ public class Indeks implements Listable {
     private int parametrDoboruSpolek;
 
     public void dodajSpolke(Spolka a){
-        listaSpolek.add(a);
+        hashMapSpolek.put(a.getName(),a);
+        rodzic.aktualizujSpolki();
     }
     public void usunSpolke(Spolka a){
 

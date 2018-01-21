@@ -3,6 +3,7 @@ package rynekwalut;
 import gield.Adres;
 import gieldaPapierowWartosciowych.Indeks;
 import gield.Rynek;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.util.List;
 
@@ -13,12 +14,12 @@ public class RynekWalut extends Rynek {
     }
 
     @Override
-    public void kupno() {
+    public void kupno(PosiadajacyPieniadze pp) {
 
     }
 
     @Override
-    public void sprzedaz() {
+    public void sprzedaz(PosiadajacyPieniadze pp) {
 
     }
 

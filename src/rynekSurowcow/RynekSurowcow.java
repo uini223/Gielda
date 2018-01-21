@@ -3,6 +3,7 @@ package rynekSurowcow;
 import gield.Adres;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Indeks;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.Waluta;
 
 import java.util.List;
@@ -14,12 +15,13 @@ public class RynekSurowcow extends Rynek{
     }
 
     @Override
-    public void kupno() {
+    public void kupno(PosiadajacyPieniadze pp) {
 
     }
 
     @Override
-    public void sprzedaz() {
+    public void sprzedaz(PosiadajacyPieniadze pp) {
 
     }
+
 }

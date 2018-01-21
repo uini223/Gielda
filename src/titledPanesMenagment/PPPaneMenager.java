@@ -13,10 +13,12 @@ public class PPPaneMenager extends Upper{
     private TextField imieTextField,nazwiskoTextField,nazwaTextField,
         peselTextField,kapitalTextField,typTextField;
     private ChoiceBox<String> typChoiceBox;
+    private ListView<String> inwestycjeListView;
 
     public PPPaneMenager(ListView<Listable> lista, Accordion accordion, TextField imieTextField, TextField
             nazwiskoTextField, TextField nazwaTextField, TextField peselTextField, TextField kapitalTextField,
-                         TextField typTextField, ChoiceBox<String> inwestycjeChoiceBox) {
+                         TextField typTextField, ChoiceBox<String> inwestycjeChoiceBox,
+                         ListView<String> inwestycjeListView) {
         super(lista, accordion);
         this.imieTextField = imieTextField;
         this.nazwiskoTextField = nazwiskoTextField;
@@ -25,6 +27,7 @@ public class PPPaneMenager extends Upper{
         this.kapitalTextField = kapitalTextField;
         this.typTextField = typTextField;
         this.typChoiceBox = inwestycjeChoiceBox;
+        this.inwestycjeListView = inwestycjeListView;
         setName("Posiadajacy Pieniadze");
     }
 
@@ -46,6 +49,7 @@ public class PPPaneMenager extends Upper{
         kapitalTextField.clear();
         typTextField.clear();
         typChoiceBox.getItems().clear();
+        inwestycjeListView.getItems().clear();
     }
 
     @Override
@@ -70,10 +74,12 @@ public class PPPaneMenager extends Upper{
                     nazwaTextField.setText(((FunduszInwestycyjny) pp).getNazwa());
                 }
                 typTextField.setText(pp.getClass().toString());
+                inwestycjeListView.getItems().clear();
                 for (Inwestycja i : pp.getListaInwestycji()
                         ) {
-                    typChoiceBox.getItems().add(i.toString());
+                    inwestycjeListView.getItems().add(i.toString());
                 }
+
             }
         }
 
