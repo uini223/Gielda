@@ -29,7 +29,7 @@ public class Main extends Application {
         mainStage = primaryStage;
         String name = "../views/";
         Parent root;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/PanelKontrolnyView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/MainView.fxml"));
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
         root = loader.load();
         primaryStage.setTitle("Giełda");

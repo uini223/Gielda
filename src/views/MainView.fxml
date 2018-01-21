@@ -26,7 +26,7 @@
          </padding></ListView>
    </left>
    <center>
-      <LineChart BorderPane.alignment="CENTER">
+      <LineChart fx:id="wykresWartosci" onMouseClicked="#pokazWykres" BorderPane.alignment="CENTER">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

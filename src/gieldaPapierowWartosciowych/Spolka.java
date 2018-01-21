@@ -33,7 +33,7 @@ public class Spolka implements Runnable{
         dataPierwszejWyceny = new Date();
         kapitalZakladowy = Math.random()*1000000;
         kapitalWlasny = kapitalZakladowy+Math.random()*1000000;
-        liczbaAkcji = (int)(Math.random()*10000);
+        liczbaAkcji = (int)(Math.random()*1000000);
         kursOtwarcia = kapitalWlasny/liczbaAkcji;
         aktualnyKurs = kursOtwarcia;
         minimalnyKurs = kursOtwarcia;

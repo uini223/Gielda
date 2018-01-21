@@ -18,6 +18,14 @@ public class GieldaPapierowWartosciowych extends Rynek{
 
     private Map<String, Spolka> hashMapSpolek;
 
+    public Map<String, Spolka> getHashMapSpolek() {
+        return hashMapSpolek;
+    }
+
+    public void setHashMapSpolek(Map<String, Spolka> hashMapSpolek) {
+        this.hashMapSpolek = hashMapSpolek;
+    }
+
     public GieldaPapierowWartosciowych() {
         super();
         hashMapIndeksow = new HashMap<>();
@@ -28,6 +36,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
             hashMapIndeksow.put(ind.getName(),ind);
         }
         aktualizujIndeksy();
+
         //aktualizujSpolki();
     }
 
@@ -86,9 +95,11 @@ public class GieldaPapierowWartosciowych extends Rynek{
                         pp.getHashMapInwestycji().put(spolka.getAkcjaSpolki(),ilosc);
                     }
                     spolka.sprzedajAkcje(ilosc);
+                    System.out.println(spolka.getAkcjaSpolki().getWartosciAkcji());
                     pp.setKapital(pp.getKapital()-kwota);
                     System.out.printf("Name: %s Kapital: %.2f Ilosc %d kwota zakupu %.2f nazwa %s\n"
                             ,pp.getName(), pp.getKapital(),ilosc,kwota,spolka.getName());
+                    System.out.println("------------------------------");
                 }
             }
             i++;
