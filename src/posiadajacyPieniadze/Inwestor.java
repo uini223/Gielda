@@ -27,15 +27,17 @@ public class Inwestor extends PosiadajacyPieniadze {
 
     @Override
     public void kupInwestycje() {
-        int size,i=0,rnd;
-        size = Main.getContainer().getHashMapRynkow().keySet().size();
-        rnd = (int)(Math.random()*100)%size;
-        for (String s:Main.getContainer().getHashMapRynkow().keySet()
-                ) {
-            if(i == rnd){
-                Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+        synchronized(Main.getMonitor()){
+            int size,i=0,rnd;
+            size = Main.getContainer().getHashMapRynkow().keySet().size();
+            rnd = (int)(Math.random()*100)%size;
+            for (String s:Main.getContainer().getHashMapRynkow().keySet()
+                    ) {
+                if(i == rnd){
+                    Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+                }
+                i++;
             }
-            i++;
         }
     }
 

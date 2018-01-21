@@ -13,6 +13,12 @@ import static java.lang.Thread.sleep;
 public class Main extends Application {
     private  Stage mainStage;
     private volatile static Container kontener=new Container();
+
+    private static Object monitor = new Object();
+
+    public static Object getMonitor() {
+        return monitor;
+    }
     private javafx.event.EventHandler<WindowEvent> windowHandler;
     @Override
     public void stop(){
@@ -34,6 +40,11 @@ public class Main extends Application {
 
         primaryStage.setOnCloseRequest(event -> {
         });
+
+    }
+
+    public void updateAll() {
+
     }
 
     public void setView(String name) throws Exception{

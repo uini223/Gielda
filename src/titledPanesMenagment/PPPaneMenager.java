@@ -33,9 +33,10 @@ public class PPPaneMenager extends Upper{
 
     public void usun(){
         if(!getLista().getSelectionModel().isEmpty()){
-            synchronized (Main.getContainer()){
+            synchronized (Main.getMonitor()){
                 PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
                 Main.getContainer().getHashMapInwestorow().remove(pp.getName());
+
             }
         }
         wczytajListe();
@@ -55,7 +56,7 @@ public class PPPaneMenager extends Upper{
     @Override
     public void onSelectedItem() {
         if (!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getContainer()) {
+            synchronized (Main.getMonitor()) {
                 PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
                 imieTextField.setText(pp.getImie());
                 kapitalTextField.setText(String.valueOf(pp.getKapital()));
@@ -105,7 +106,11 @@ public class PPPaneMenager extends Upper{
             switch (typChoiceBox.getSelectionModel().getSelectedItem()) {
                 case "Inwestor": {
                     synchronized (Main.getContainer()) {
-                        Main.getContainer().addPosiadajacyPieniadze(new Inwestor());
+                        Inwestor inwestor = new Inwestor();
+                        Main.getContainer().addPosiadajacyPieniadze(inwestor);
+                        Thread thread = new Thread(inwestor);
+                        thread.setDaemon(true);
+                        thread.start();
                     }
                     break;
                 }

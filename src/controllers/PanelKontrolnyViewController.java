@@ -71,7 +71,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         spolkiPaneMenager = new SpolkiPaneMenager(lista,accordion);
 
         Inwestor inwestor;
-        for(int i=0;i<10;i++){
+        for(int i=0;i<4;i++){
             inwestor = new Inwestor();
             if(i<3) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
 
@@ -80,7 +80,6 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             th = new Thread(inwestor);
             th.setDaemon(true);
             th.start();
-
         }
 
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -154,6 +153,5 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private void dodajSpolkeAction(){
         indeksyPaneMenager.dodajSpolkeDoIndeksu();
     }
-
 
 }
