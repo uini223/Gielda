@@ -30,15 +30,15 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class MainViewController implements Initializable, Controllable{
+public class MainViewController implements Initializable, Controllable {
     @FXML
     private ListView<Inwestycja> listaAkcji;
     @FXML
     private Text titleText;
     @FXML
-    private LineChart<String,Number> wykresWartosci;
+    private LineChart<String, Number> wykresWartosci;
     @FXML
-    private MenuItem delete,utworzGieldeMenuItem,closeMenuItem;
+    private MenuItem delete, utworzGieldeMenuItem, closeMenuItem;
     @FXML
     private Button guzik;
     @FXML
@@ -49,11 +49,11 @@ public class MainViewController implements Initializable, Controllable{
     @FXML
     private TextField najmniejszaWartosc;
 
-    private Map<String,Akcje> akcje;
+    private Map<String, Akcje> akcje;
 
     private Stage myStage;
 
-    public MainViewController(){
+    public MainViewController() {
     }
 
     @Override
@@ -61,26 +61,30 @@ public class MainViewController implements Initializable, Controllable{
         titleText.setText("sdad");
     }
 
-    @FXML private void deleteButtonAction() throws Exception{
+    @FXML
+    private void deleteButtonAction() throws Exception {
 
     }
 
-    @FXML private void anulujButtonAction(){
+    @FXML
+    private void anulujButtonAction() {
 
     }
 
-    @FXML private void closeMenuItemAction(){
+    @FXML
+    private void closeMenuItemAction() {
         myStage.close();
     }
 
-    @FXML private void utworzGieldeMenuItemAction() throws Exception{
+    @FXML
+    private void utworzGieldeMenuItemAction() throws Exception {
         boolean canCreate = true;
         String title = "Kreator Gieldy";
-        for (Stage s: FXRobotHelper.getStages()
+        for (Stage s : FXRobotHelper.getStages()
                 ) {
-            if(s.getTitle().equals(title)) canCreate = false;
+            if (s.getTitle().equals(title)) canCreate = false;
         }
-        if(canCreate) {
+        if (canCreate) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/KreatorRynkuView.fxml"));
             Parent root;
             root = loader.load();
@@ -97,14 +101,14 @@ public class MainViewController implements Initializable, Controllable{
     }
 
     @FXML
-    private void tester(){
+    private void tester() {
         //testowo
-        if(listaAkcji.getSelectionModel().isEmpty()) {
+       /* if(listaAkcji.getSelectionModel().isEmpty()) {
             ObservableList<PosiadajacyPieniadze> items = listaAkcji.getItems();
             PosiadajacyPieniadze zbyszek = new Inwestor();
             //najmniejszaWartosc.setText(zbyszek.getImie());
             items.add(zbyszek);
-        }
+        }*/
     }
 
     @Override
@@ -118,8 +122,8 @@ public class MainViewController implements Initializable, Controllable{
     }
 
     @FXML
-    private void pokazWykres(){
-       SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy ss");
+    private void pokazWykres() {
+       /*SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy ss");
 
 
         ObservableList<Inwestycja> items = listaAkcji.getSelectionModel().getSelectedItems();
@@ -153,12 +157,15 @@ public class MainViewController implements Initializable, Controllable{
                 //dane.add(new XYChart.Data<>(df.format(i),akcje.get(j).getWartosciAkcji().get(i)));
                 dane.add(new XYChart.Data<>(df.format(i),akcje.get(j).getWartosciAkcji().get(i)));
             } */
-            //dane.addAll(test,test2);
-        }
+        //dane.addAll(test,test2);
+        /*}
 
         XYChart.Series<String,Number> seria = new XYChart.Series<>();
         //seria.setData(dane);
         wykresWartosci.getData().clear();
-        wykresWartosci.getData().add(seria); */
+        wykresWartosci.getData().add(seria);
+
         }
+        */
+    }
 }
