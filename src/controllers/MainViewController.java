@@ -2,12 +2,14 @@ package controllers;
 
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.impl.FXRobotHelper;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import gield.Inwestycja;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Akcje;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.collections.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +26,7 @@ import javafx.stage.WindowEvent;
 import main.Main;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekwalut.Waluta;
 
 import java.beans.EventHandler;
 import java.net.URL;
@@ -34,22 +37,18 @@ public class MainViewController implements Initializable, Controllable {
     @FXML
     private ListView<Inwestycja> listaAkcji;
     @FXML
-    private Text titleText;
-    @FXML
     private LineChart<String, Number> wykresWartosci;
     @FXML
     private MenuItem delete, utworzGieldeMenuItem, closeMenuItem;
     @FXML
     private Button guzik;
     @FXML
-    private URL location;
-    @FXML
-    private ResourceBundle resource;
-
-    @FXML
     private TextField najmniejszaWartosc;
+    @FXML
+    private ChoiceBox<String> aktywaChoiceBox;
+    @FXML
+    private ChoiceBox<Rynek> rynekChoiceBox;
 
-    private Map<String, Akcje> akcje;
 
     private Stage myStage;
 
@@ -58,7 +57,17 @@ public class MainViewController implements Initializable, Controllable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        titleText.setText("sdad");
+        aktywaChoiceBox.getItems().addAll("Akcje Spolek","Indeksy","Waluty","Surowce");
+        synchronized (Main.getMonitor()){
+            rynekChoiceBox.getItems().addAll(Main.getContainer().getHashMapRynkow().values());
+        }
+        rynekChoiceBox.getSelectionModel().select(0);
+        aktywaChoiceBox.setOnAction(Event-> onAktywaChoiceBoxAction());
+        listaAkcji.getSelectionModel().selectedItemProperty().addListener((observable,old_val,new_val) ->{
+            if(new_val!=null){
+                onListaAkcjiChoice();
+            }
+        });
     }
 
     @FXML
@@ -79,20 +88,19 @@ public class MainViewController implements Initializable, Controllable {
     @FXML
     private void utworzGieldeMenuItemAction() throws Exception {
         boolean canCreate = true;
-        String title = "Kreator Gieldy";
+        String title = "Panel Kontrolny";
         for (Stage s : FXRobotHelper.getStages()
                 ) {
             if (s.getTitle().equals(title)) canCreate = false;
         }
         if (canCreate) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/KreatorRynkuView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/PanelKontrolnyView.fxml"));
             Parent root;
             root = loader.load();
             Controllable kontroler = loader.getController();
             Stage stage = new Stage();
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 500, 200));
-            stage.setResizable(false);
+            stage.setScene(new Scene(root, 900, 500));
             stage.initOwner(myStage);
             kontroler.setStage(stage);
             stage.show();
@@ -100,6 +108,22 @@ public class MainViewController implements Initializable, Controllable {
 
     }
 
+    @FXML
+    private void onAktywaChoiceBoxAction(){
+        Rynek rynek;
+        listaAkcji.getItems().clear();
+        switch (aktywaChoiceBox.getSelectionModel().getSelectedItem()){
+            case "Akcje Spolek":{
+                synchronized (Main.getMonitor()){
+                    rynek = rynekChoiceBox.getValue();
+                    if(rynek instanceof GieldaPapierowWartosciowych){
+                        Collection<Spolka> col = ((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().values();
+                        listaAkcji.getItems().addAll(col);
+                    }
+                }
+            }
+        }
+    }
     @FXML
     private void tester() {
         //testowo
@@ -110,7 +134,6 @@ public class MainViewController implements Initializable, Controllable {
             items.add(zbyszek);
         }*/
     }
-
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
@@ -167,5 +190,23 @@ public class MainViewController implements Initializable, Controllable {
 
         }
         */
+    }
+
+    private void onListaAkcjiChoice() {
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy ss");
+        ObservableList<XYChart.Data<String,Number>> dane = FXCollections.observableArrayList();
+        synchronized (Main.getMonitor()){
+            Spolka spolka = (Spolka) listaAkcji.getSelectionModel().getSelectedItem();
+            for (Date i :
+                    spolka.getAkcjaSpolki().getWartosciAkcji().keySet()){
+
+                dane.add(new XYChart.Data<>(df.format(i),spolka.getAkcjaSpolki().getWartosciAkcji().get(i)));
+                //System.out.println("1");
+            }
+            XYChart.Series<String,Number> seria = new XYChart.Series<>();
+            seria.setData(dane);
+            wykresWartosci.getData().clear();
+            wykresWartosci.getData().add(seria);
+        }
     }
 }

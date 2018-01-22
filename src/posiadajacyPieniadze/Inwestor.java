@@ -61,7 +61,7 @@ public class Inwestor extends PosiadajacyPieniadze {
             //System.out.println(this.getName());
 
             try {
-                Thread.sleep(0);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

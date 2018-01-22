@@ -47,14 +47,7 @@ public abstract class Rynek implements Listable{
 
     @Override
     public String toString() {
-        return "Rynek{" +
-                "nazwa='" + nazwa + '\'' +
-                ", kraj='" + kraj + '\'' +
-                ", waluta=" + waluta +
-                ", adres=" + adres +
-                ", indeks=" + indeks +
-                ", marzaOdTransakcji=" + marzaOdTransakcji +
-                '}';
+        return nazwa;
     }
 
     public String getNazwa() {
