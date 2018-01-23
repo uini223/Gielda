@@ -59,7 +59,7 @@ public class Inwestor extends PosiadajacyPieniadze {
             kupInwestycje();
             sprzedajInwestycje();
             //System.out.println(this.getName());
-
+            int czas = (int) (Math.random()*100000);
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {

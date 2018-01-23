@@ -18,7 +18,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainViewController">
    <center>
-      <LineChart fx:id="wykresWartosci" onMouseClicked="#pokazWykres" prefHeight="330.0" prefWidth="340.0" BorderPane.alignment="CENTER">
+      <LineChart fx:id="wykresWartosci" animated="false" onMouseClicked="#pokazWykres" prefHeight="330.0" prefWidth="340.0" BorderPane.alignment="CENTER">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -85,11 +85,17 @@
    <left>
       <VBox prefHeight="340.0" prefWidth="143.0" BorderPane.alignment="CENTER">
          <children>
-            <ChoiceBox fx:id="aktywaChoiceBox" prefWidth="150.0" />
+            <ChoiceBox fx:id="aktywaChoiceBox" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></ChoiceBox>
             <ListView fx:id="listaAkcji" onMouseClicked="#tester" prefHeight="361.0" prefWidth="163.0" VBox.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </ListView>
          </children>
       </VBox>
