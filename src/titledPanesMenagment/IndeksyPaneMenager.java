@@ -36,8 +36,8 @@ public class IndeksyPaneMenager extends Upper{
         if(!getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getContainer()){
                 Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
-                Main.getContainer().getHashMapIndeksow().remove(ind.getName());
-                ind.getRodzic().getHashMapIndeksow().remove(ind.getName());
+                Main.getContainer().getHashMapIndeksow().remove(ind.getNazwa());
+                ind.getRodzic().getHashMapIndeksow().remove(ind.getNazwa());
             }
         }
         wczytajListe();
@@ -61,7 +61,7 @@ public class IndeksyPaneMenager extends Upper{
                     ) {
                 spolkiListView.getItems().add(s);
             }
-            nazwaTextField.setText(ind.getName());
+            nazwaTextField.setText(ind.getNazwa());
             gieldaTextField.setText(ind.getRodzic().getNazwa());
         }
     }
@@ -71,13 +71,13 @@ public class IndeksyPaneMenager extends Upper{
         getLista().getItems().clear();
         clear();
         typChoiceBox.getItems().clear();
-        synchronized(Main.getContainer()){
+        synchronized(Main.getMonitor()){
             for (String s : Main.getContainer().getHashMapIndeksow().keySet()) {
                 getLista().getItems().add(Main.getContainer().getIndeks(s));
             }
         }
         if(typChoiceBox.getItems().isEmpty()){
-            synchronized(Main.getContainer()){
+            synchronized(Main.getMonitor()){
                 for (String s:Main.getContainer().getHashMapRynkow().keySet()
                         ) {
                     Rynek rynek = Main.getContainer().getRynek(s);

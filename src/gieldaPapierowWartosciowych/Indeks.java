@@ -15,8 +15,6 @@ public class Indeks extends Inwestycja implements Listable {
 
     private Map<String,Spolka> hashMapSpolek;
 
-    private String name;
-
     public Map<String, Spolka> getHashMapSpolek() {
         return hashMapSpolek;
     }
@@ -27,7 +25,7 @@ public class Indeks extends Inwestycja implements Listable {
 
     public Indeks(GieldaPapierowWartosciowych rodzic) {
         super("indeks" + Integer.toString((int)((Math.random())*10000)),0);
-        name = "indeks" + Integer.toString((int)((Math.random())*10000));
+        //name = "indeks" + Integer.toString((int)((Math.random())*10000));
         this.rodzic = rodzic;
         hashMapSpolek = new ConcurrentHashMap<>();
         Spolka spolka;
@@ -40,11 +38,7 @@ public class Indeks extends Inwestycja implements Listable {
 
     @Override
     public String toString() {
-        return name;
-    }
-
-    public String getName() {
-        return name;
+        return getNazwa();
     }
 
     public GieldaPapierowWartosciowych getRodzic() {
@@ -63,15 +57,19 @@ public class Indeks extends Inwestycja implements Listable {
         this.parametrDoboruSpolek = parametrDoboruSpolek;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private int parametrDoboruSpolek;
 
     public void dodajSpolke(Spolka a){
         hashMapSpolek.put(a.getName(),a);
         rodzic.aktualizujSpolki();
+    }
+    public void aktualizujWartosc(){
+        double wartosc = 0;
+        for (String s :
+                hashMapSpolek.keySet()) {
+            wartosc+=hashMapSpolek.get(s).getAkcjaSpolki().getAktualnaWartosc();
+        }
+        this.addWartoscAkcji(wartosc);
     }
     public void usunSpolke(Spolka a){
 

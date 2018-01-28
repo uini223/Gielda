@@ -29,11 +29,11 @@ public class GieldaPapierowWartosciowych extends Rynek{
     public GieldaPapierowWartosciowych() {
         super();
         hashMapIndeksow = new HashMap<>();
-        hashMapSpolek = new ConcurrentHashMap<>();
+        hashMapSpolek = new HashMap<>();
         Indeks ind;
         for(int i=0;i<1;i++){
             ind = new Indeks(this);
-            hashMapIndeksow.put(ind.getName(),ind);
+            hashMapIndeksow.put(ind.getNazwa(),ind);
         }
         aktualizujIndeksy();
 
@@ -46,15 +46,13 @@ public class GieldaPapierowWartosciowych extends Rynek{
 
 
     public void aktualizujIndeksy(){
-        for (String s:hashMapIndeksow.keySet()
-             ) {
-            synchronized(Main.getContainer()){
-                Main.getContainer().getHashMapIndeksow().put(s,hashMapIndeksow.get(s));
-            }
+        synchronized (Main.getMonitor()) {
+            Main.getContainer().getHashMapIndeksow().putAll(hashMapIndeksow);
         }
     }
+
     public void addIndeks(Indeks ind){
-        hashMapIndeksow.put(ind.getName(),ind);
+        hashMapIndeksow.put(ind.getNazwa(),ind);
         aktualizujIndeksy();
         aktualizujSpolki();
     }

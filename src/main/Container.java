@@ -56,7 +56,7 @@ public  class Container {
     }
 
     public void addIndeks(Indeks indeks){
-        hashMapIndeksow.put(indeks.getName(),indeks);
+        hashMapIndeksow.put(indeks.getNazwa(),indeks);
     }
 
     public HashMap<String, Waluta> getHashMapWalut() {
