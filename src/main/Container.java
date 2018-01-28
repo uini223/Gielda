@@ -24,6 +24,7 @@ public  class Container {
 
     private volatile HashMap<String, Indeks> hashMapIndeksow;
 
+    private volatile Boolean session;
 
     public  Container() {
         String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
@@ -34,9 +35,18 @@ public  class Container {
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
         for (String a: waluty
-             ) {
+                ) {
             hashMapWalut.put(a,new Waluta(a));
         }
+        session = false;
+    }
+
+    public Boolean getSession() {
+        return session;
+    }
+
+    public void setSession(Boolean session) {
+        this.session = session;
     }
 
     public Indeks getIndeks(String s){

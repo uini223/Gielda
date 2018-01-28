@@ -1,6 +1,7 @@
 package main;
 
 import controllers.Controllable;
+import daySimulation.DaySimulation;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +53,10 @@ public class Main extends Application {
 
         primaryStage.setOnCloseRequest(event -> {
         });
-
+//        DaySimulation day = new DaySimulation();
+//        Thread th = new Thread(day);
+//        th.setDaemon(true);
+//        th.start();
     }
 
     public void updateAll() {

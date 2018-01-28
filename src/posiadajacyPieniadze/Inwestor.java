@@ -28,15 +28,17 @@ public class Inwestor extends PosiadajacyPieniadze {
     @Override
     public void kupInwestycje() {
         synchronized(Main.getMonitor()){
-            int size,i=0,rnd;
-            size = Main.getContainer().getHashMapRynkow().keySet().size();
-            rnd = (int)(Math.random()*100)%size;
-            for (String s:Main.getContainer().getHashMapRynkow().keySet()
-                    ) {
-                if(i == rnd){
-                    Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+            if(Main.getContainer().getSession()) {
+                int size, i = 0, rnd;
+                size = Main.getContainer().getHashMapRynkow().keySet().size();
+                rnd = (int) (Math.random() * 100) % size;
+                for (String s : Main.getContainer().getHashMapRynkow().keySet()
+                        ) {
+                    if (i == rnd) {
+                        Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+                    }
+                    i++;
                 }
-                i++;
             }
         }
     }
@@ -55,13 +57,13 @@ public class Inwestor extends PosiadajacyPieniadze {
     @Override
     public void run() {
 
-        for (int i=0;i<10;i++){
+        for (int i=0;i<100;i++){
             kupInwestycje();
             sprzedajInwestycje();
             //System.out.println(this.getName());
-            int czas = (int) (Math.random()*100000);
+            int czas = (int) (Math.random()*10000);
             try {
-                Thread.sleep(10000);
+                Thread.sleep(czas);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
