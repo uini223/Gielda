@@ -7,6 +7,7 @@ import gield.Inwestycja;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Akcje;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
@@ -26,6 +27,8 @@ import javafx.stage.WindowEvent;
 import main.Main;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekSurowcow.RynekSurowcow;
+import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
 import java.beans.EventHandler;
@@ -57,12 +60,14 @@ public class MainViewController implements Initializable, Controllable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        aktywaChoiceBox.getItems().addAll("Akcje Spolek","Indeksy","Waluty","Surowce");
+        //aktywaChoiceBox.getItems().addAll("Akcje Spolek","Indeksy","Waluty","Surowce");
         synchronized (Main.getMonitor()){
             rynekChoiceBox.getItems().addAll(Main.getContainer().getHashMapRynkow().values());
         }
-        rynekChoiceBox.getSelectionModel().select(0);
+        rynekChoiceBox.setOnAction(Event->onRynkiChoiceboxAction());
         aktywaChoiceBox.setOnAction(Event-> onAktywaChoiceBoxAction());
+        rynekChoiceBox.getSelectionModel().select(0);
+        aktywaChoiceBox.getSelectionModel().select(0);
         listaAkcji.getSelectionModel().selectedItemProperty().addListener((observable,old_val,new_val) ->{
             if(new_val!=null){
                 onListaAkcjiChoice();
@@ -109,20 +114,52 @@ public class MainViewController implements Initializable, Controllable {
     }
 
     @FXML
-    private void onAktywaChoiceBoxAction(){
+    private synchronized void onAktywaChoiceBoxAction(){
         Rynek rynek;
         listaAkcji.getItems().clear();
-        switch (aktywaChoiceBox.getSelectionModel().getSelectedItem()){
-            case "Akcje Spolek":{
-                synchronized (Main.getMonitor()){
-                    rynek = rynekChoiceBox.getValue();
-                    if(rynek instanceof GieldaPapierowWartosciowych){
-                        Collection<Spolka> col = ((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().values();
-                        listaAkcji.getItems().addAll(col);
+        if(aktywaChoiceBox.getValue() != null) {
+            switch (aktywaChoiceBox.getValue()) {
+                case "Akcje Spolek": {
+                    synchronized (Main.getMonitor()) {
+                        rynek = rynekChoiceBox.getValue();
+                        if (rynek instanceof GieldaPapierowWartosciowych) {
+                            for (String s :
+                                    ((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().keySet()) {
+
+                                listaAkcji.getItems().add(((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().
+                                        get(s).getAkcjaSpolki());
+                            }
+                        }
                     }
+                    break;
+                }
+                case "Indeksy": {
+                    synchronized (Main.getMonitor()) {
+                        rynek = rynekChoiceBox.getValue();
+                        if(rynek instanceof GieldaPapierowWartosciowych){
+                            Collection<Indeks> col = ((GieldaPapierowWartosciowych) rynek).
+                                    getHashMapIndeksow().values();
+                            listaAkcji.getItems().addAll(col);
+                        }
+                    }
+                    break;
                 }
             }
         }
+    }
+    @FXML  synchronized void  onRynkiChoiceboxAction(){
+        aktywaChoiceBox.getItems().clear();
+        Rynek rynek = rynekChoiceBox.getSelectionModel().getSelectedItem();
+        if(rynek instanceof GieldaPapierowWartosciowych){
+            aktywaChoiceBox.getItems().addAll("Akcje Spolek","Indeksy");
+        }
+        if(rynek instanceof RynekWalut){
+            aktywaChoiceBox.getItems().add("Waluty");
+        }
+        if(rynek instanceof RynekSurowcow){
+            aktywaChoiceBox.getItems().add("Surowce");
+        }
+        aktywaChoiceBox.getSelectionModel().select(0);
     }
     @FXML
     private void tester() {
@@ -193,14 +230,13 @@ public class MainViewController implements Initializable, Controllable {
     }
 
     private void onListaAkcjiChoice() {
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy ss");
         ObservableList<XYChart.Data<String,Number>> dane = FXCollections.observableArrayList();
         synchronized (Main.getMonitor()){
-            Spolka spolka = (Spolka) listaAkcji.getSelectionModel().getSelectedItem();
-            for (Date i :
-                    spolka.getAkcjaSpolki().getWartosciAkcji().keySet()){
+            Inwestycja inwestycja =  listaAkcji.getSelectionModel().getSelectedItem();
+            for (String i :
+                    inwestycja.getWartosciAkcji().keySet()){
 
-                dane.add(new XYChart.Data<>(df.format(i),spolka.getAkcjaSpolki().getWartosciAkcji().get(i)));
+                dane.add(new XYChart.Data<>(i,inwestycja.getWartosciAkcji().get(i)));
                 //System.out.println("1");
             }
             XYChart.Series<String,Number> seria = new XYChart.Series<>();

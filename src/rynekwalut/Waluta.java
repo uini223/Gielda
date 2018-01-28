@@ -1,7 +1,6 @@
 package rynekwalut;
 
 import gield.Inwestycja;
-import main.Main;
 
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class Waluta extends Inwestycja {
     }
 
     public Waluta(String nazwa) {
+        super(nazwa,0);
         this.nazwa = nazwa;
         if(nazwa.equals("PLN")){
             przelicznik = 1;

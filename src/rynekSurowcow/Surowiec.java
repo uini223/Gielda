@@ -10,5 +10,6 @@ public class Surowiec extends Inwestycja{
 
     public Surowiec() {
 
+        super("s",0);
     }
 }

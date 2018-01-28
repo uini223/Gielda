@@ -1,11 +1,10 @@
 package gieldaPapierowWartosciowych;
 
 import gield.Inwestycja;
-import javafx.fxml.Initializable;
 
 import java.util.*;
 
-public class Spolka extends Inwestycja implements Runnable{
+public class Spolka implements Runnable{
     private String name;
     private Date dataPierwszejWyceny;
     private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy,  obroty, aktualnyKurs,
@@ -32,6 +31,7 @@ public class Spolka extends Inwestycja implements Runnable{
     }
 
     public Spolka() {
+        //super(nazwa);
         name = losowaNazwa();
         dataPierwszejWyceny = new Date();
         kapitalZakladowy = Math.random()*1000000;

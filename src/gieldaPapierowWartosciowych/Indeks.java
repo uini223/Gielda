@@ -1,6 +1,7 @@
 package gieldaPapierowWartosciowych;
 
 import controllers.Listable;
+import gield.Inwestycja;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Indeks implements Listable {
+public class Indeks extends Inwestycja implements Listable {
 
     private GieldaPapierowWartosciowych rodzic;
 
@@ -25,9 +26,10 @@ public class Indeks implements Listable {
     }
 
     public Indeks(GieldaPapierowWartosciowych rodzic) {
+        super("indeks" + Integer.toString((int)((Math.random())*10000)),0);
+        name = "indeks" + Integer.toString((int)((Math.random())*10000));
         this.rodzic = rodzic;
         hashMapSpolek = new ConcurrentHashMap<>();
-        name = "indeks" + Integer.toString((int)((Math.random())*10000));
         Spolka spolka;
         for (int i = 0; i < 3; i++) {
             spolka = new Spolka();
