@@ -1,6 +1,7 @@
 package main;
 
 import controllers.Controllable;
+import controllers.MainViewController;
 import daySimulation.DaySimulation;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import javafx.application.Application;
@@ -11,34 +12,65 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import posiadajacyPieniadze.Inwestor;
 
+import java.io.*;
+
 import static java.lang.Thread.sleep;
 
 public class Main extends Application {
-    private  Stage mainStage;
-    private volatile static Container kontener=new Container();
 
-    private static Object monitor = new Object();
+    private  Stage mainStage;
+
+    private volatile static Container kontener = new Container();
+
+    private volatile static Object monitor = new Object();
+
+    private volatile static Object lock = new Object();
 
     public static Object getMonitor() {
         return monitor;
     }
-    private javafx.event.EventHandler<WindowEvent> windowHandler;
-    @Override
-    public void stop(){
 
+    public static Object getLock() {
+        return lock;
+    }
+
+    private javafx.event.EventHandler<WindowEvent> windowHandler;
+
+    @Override
+    public void stop() throws FileNotFoundException {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(
+                            new BufferedOutputStream(
+                            new FileOutputStream("out.ser")));
+            out.writeObject(kontener);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void wczytajKontener() throws FileNotFoundException {
+        try {
+            ObjectInputStream in = new ObjectInputStream(
+                    new BufferedInputStream(
+                            new FileInputStream("out.ser")));
+            kontener = (Container) in.readObject();
+            Thread th;
+            for (String s :kontener.getHashMapInwestorow().keySet()
+                 ) {
+                th = new Thread(kontener.getHashMapInwestorow().get(s));
+                th.setDaemon(true);
+                th.start();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        wczytajKontener();
         Inwestor inwestor;
-        for(int i=0;i<10;i++){
-            inwestor = new Inwestor();
-            if(i<3) Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
-            Main.getContainer().addPosiadajacyPieniadze(inwestor);
-            Thread th;
-            th = new Thread(inwestor);
-            th.setDaemon(true);
-            th.start();
-        }
+        ThreadGroup threadGroup = new ThreadGroup("Ala");
         mainStage = primaryStage;
         String name = "../views/";
         Parent root;
@@ -50,18 +82,13 @@ public class Main extends Application {
         primaryStage.show();
         Controllable kontroler = loader.getController();
         kontroler.setStage(mainStage);
-
-        primaryStage.setOnCloseRequest(event -> {
-        });
-//        DaySimulation day = new DaySimulation();
-//        Thread th = new Thread(day);
-//        th.setDaemon(true);
-//        th.start();
+        DaySimulation day = new DaySimulation();
+        if(kontroler instanceof MainViewController) day.setMvc((MainViewController)kontroler);
+        Thread th = new Thread(day);
+        th.setDaemon(true);
+        th.start();
     }
 
-    public void updateAll() {
-
-    }
 
     public void setView(String name) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource(name));

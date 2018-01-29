@@ -70,8 +70,6 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
         spolkiPaneMenager = new SpolkiPaneMenager(lista,accordion);
 
-
-
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){
                 menager.onSelectedItem();

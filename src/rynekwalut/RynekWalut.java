@@ -1,6 +1,7 @@
 package rynekwalut;
 
 import gield.Adres;
+import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Indeks;
 import gield.Rynek;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
@@ -19,7 +20,7 @@ public class RynekWalut extends Rynek {
     }
 
     @Override
-    public void sprzedaz(PosiadajacyPieniadze pp) {
+    public void sprzedaz(Inwestycja inwestycja, PosiadajacyPieniadze pp) {
 
     }
 

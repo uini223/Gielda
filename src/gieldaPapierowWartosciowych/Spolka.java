@@ -1,10 +1,12 @@
 package gieldaPapierowWartosciowych;
 
 import gield.Inwestycja;
+import gield.Rynek;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Spolka implements Runnable{
+public class Spolka implements Runnable, Serializable{
     private String name;
     private Date dataPierwszejWyceny;
     private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy,  obroty, aktualnyKurs,
@@ -30,7 +32,7 @@ public class Spolka implements Runnable{
         this.name = name;
     }
 
-    public Spolka() {
+    public Spolka(Rynek rynek) {
         //super(nazwa);
         name = losowaNazwa();
         dataPierwszejWyceny = new Date();
@@ -45,7 +47,7 @@ public class Spolka implements Runnable{
         zysk = 0;
         wolumen = 0;
         obroty = 0;
-        akcjaSpolki = new Akcje(name,aktualnyKurs);
+        akcjaSpolki = new Akcje(rynek,name,aktualnyKurs);
     }
 
     private String losowaNazwa() {
@@ -89,6 +91,14 @@ public class Spolka implements Runnable{
     }
 
     public void sprzedajAkcje(int ilosc){
+        zmianaKursu();
+        liczbaAkcji-=ilosc;
+    }
+    public void kupAkcje(int ilosc){
+        zmianaKursu();
+        liczbaAkcji+=ilosc;
+    }
+    private void zmianaKursu(){
         int rnd = (int)(Math.random()*100)%10+1;
         double wartosc = (aktualnyKurs*((double)rnd/100));
         int plus = (int)(Math.random()*100);
@@ -99,9 +109,7 @@ public class Spolka implements Runnable{
             setAktualnyKurs(aktualnyKurs-wartosc);
         }
         getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
-        liczbaAkcji-=ilosc;
     }
-
     public double getAktualnyKurs() {
         return aktualnyKurs;
     }

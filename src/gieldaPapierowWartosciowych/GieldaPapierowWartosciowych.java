@@ -1,6 +1,7 @@
 package gieldaPapierowWartosciowych;
 
 import gield.Adres;
+import gield.Inwestycja;
 import gield.Rynek;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
@@ -28,6 +29,11 @@ public class GieldaPapierowWartosciowych extends Rynek{
 
     public GieldaPapierowWartosciowych() {
         super();
+        String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
+        int a = (int)((Math.random()*100)%waluty.length);
+        synchronized (Main.getContainer()) {
+            setWaluta(Main.getContainer().getHashMapWalut().get(waluty[a]));
+        }
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
         Indeks ind;
@@ -62,11 +68,6 @@ public class GieldaPapierowWartosciowych extends Rynek{
                 hashMapIndeksow.keySet()) {
             hashMapSpolek.putAll(hashMapIndeksow.get(s).getHashMapSpolek());
         }
-//        for (String s :
-//                hashMapSpolek.keySet()) {
-//            System.out.println(s);
-//        }
-//        System.out.println("___________");
     }
 
     @Override
@@ -93,11 +94,10 @@ public class GieldaPapierowWartosciowych extends Rynek{
                         pp.getHashMapInwestycji().put(spolka.getAkcjaSpolki(),ilosc);
                     }
                     spolka.sprzedajAkcje(ilosc);
-                    System.out.println(spolka.getAkcjaSpolki().getWartosciAkcji());
                     pp.setKapital(pp.getKapital()-kwota);
-                    System.out.printf("Name: %s Kapital: %.2f Ilosc %d kwota zakupu %.2f nazwa %s\n"
+                    /*System.out.printf("Name: %s Kapital: %.2f Ilosc %d kwota zakupu %.2f nazwa %s\n"
                             ,pp.getName(), pp.getKapital(),ilosc,kwota,spolka.getName());
-                    System.out.println("------------------------------");
+                    System.out.println("------------------------------"); */
                 }
             }
             i++;
@@ -110,8 +110,24 @@ public class GieldaPapierowWartosciowych extends Rynek{
     }
 
     @Override
-    public void sprzedaz(PosiadajacyPieniadze pp) {
-
+    public void sprzedaz(Inwestycja inwestycja,PosiadajacyPieniadze pp) {
+        Spolka s;
+        double kwota;
+        if(inwestycja instanceof Akcje){
+            s = hashMapSpolek.get(((Akcje) inwestycja).getNazwaSpolki());
+            int ilosc = (int) pp.getHashMapInwestycji().get(inwestycja);
+            ilosc = (int)(Math.random()*10000)%ilosc;
+            kwota = ilosc *s.getAktualnyKurs();
+            kwota = getWaluta().przeliczCene(kwota);
+            kwota = pobierzMarze(kwota);
+            if(ilosc>0){
+                if(ilosc == (int)pp.getHashMapInwestycji().get(inwestycja)){
+                    pp.getHashMapInwestycji().remove(inwestycja);
+                }
+                pp.setKapital(pp.getKapital()+kwota);
+                s.kupAkcje(ilosc);
+            }
+        }
     }
 
 }

@@ -148,6 +148,7 @@ public class MainViewController implements Initializable, Controllable {
         }
     }
     @FXML  synchronized void  onRynkiChoiceboxAction(){
+        String s = aktywaChoiceBox.getValue();
         aktywaChoiceBox.getItems().clear();
         Rynek rynek = rynekChoiceBox.getSelectionModel().getSelectedItem();
         if(rynek instanceof GieldaPapierowWartosciowych){
@@ -159,7 +160,12 @@ public class MainViewController implements Initializable, Controllable {
         if(rynek instanceof RynekSurowcow){
             aktywaChoiceBox.getItems().add("Surowce");
         }
-        aktywaChoiceBox.getSelectionModel().select(0);
+        if(aktywaChoiceBox.getItems().contains(s)){
+            aktywaChoiceBox.setValue(s);
+        }
+        else{
+            aktywaChoiceBox.getSelectionModel().select(0);
+        }
     }
     @FXML
     private void tester() {
@@ -228,7 +234,7 @@ public class MainViewController implements Initializable, Controllable {
         }
         */
     }
-
+    @FXML
     private void onListaAkcjiChoice() {
         ObservableList<XYChart.Data<String,Number>> dane = FXCollections.observableArrayList();
         synchronized (Main.getMonitor()){
@@ -237,12 +243,29 @@ public class MainViewController implements Initializable, Controllable {
                     inwestycja.getWartosciAkcji().keySet()){
 
                 dane.add(new XYChart.Data<>(i,inwestycja.getWartosciAkcji().get(i)));
-                //System.out.println("1");
             }
             XYChart.Series<String,Number> seria = new XYChart.Series<>();
-            seria.setData(dane);
+            seria.setData(dane.sorted());
             wykresWartosci.getData().clear();
             wykresWartosci.getData().add(seria);
         }
+    }
+
+    public void updateAll() {
+        Rynek rynek = rynekChoiceBox.getValue();
+        synchronized (Main.getMonitor()){
+            for (String s :
+                    Main.getContainer().getHashMapRynkow().keySet()) {
+                if (!rynekChoiceBox.getItems().contains(Main.getContainer().getRynek(s))) {
+                    rynekChoiceBox.getItems().add(Main.getContainer().getRynek(s));
+                }
+            }
+            for (String s :
+                    Main.getContainer().getHashMapIndeksow().keySet()) {
+                Main.getContainer().getIndeks(s).aktualizujWartosc();
+            }
+        }
+
+
     }
 }

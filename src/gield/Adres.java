@@ -1,6 +1,8 @@
 package gield;
 
-public class Adres {
+import java.io.Serializable;
+
+public class Adres implements Serializable{
     private String miasto,nazwaUlicy;
     private int numerDomu;
 

@@ -5,13 +5,16 @@ import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.stage.Stage;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public  class Container {
+public  class Container implements Serializable {
     private  volatile HashMap<String, Stage> stageHashMap ;
 
     private volatile HashMap<String, Rynek> hashMapRynkow;
@@ -24,7 +27,8 @@ public  class Container {
 
     private volatile HashMap<String, Indeks> hashMapIndeksow;
 
-    private volatile Boolean session;
+    private volatile RynekWalut rynekWalut;
+    private volatile Date date;
 
     public  Container() {
         String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
@@ -34,19 +38,20 @@ public  class Container {
         hashMapWalut = new HashMap<>();
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
+        rynekWalut = new RynekWalut();
+        date = new Date();
         for (String a: waluty
                 ) {
-            hashMapWalut.put(a,new Waluta(a));
+            hashMapWalut.put(a,new Waluta(a,rynekWalut));
         }
-        session = false;
     }
 
-    public Boolean getSession() {
-        return session;
+    public Date getDate() {
+        return date;
     }
 
-    public void setSession(Boolean session) {
-        this.session = session;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Indeks getIndeks(String s){

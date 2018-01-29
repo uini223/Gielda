@@ -6,9 +6,10 @@ import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.Waluta;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public abstract class Rynek implements Listable{
+public abstract class Rynek implements Listable, Serializable{
     private String nazwa, kraj;
     private Waluta waluta;
     private Adres adres;
@@ -30,20 +31,17 @@ public abstract class Rynek implements Listable{
             nazwyGield[i] += Integer.toString((int)(Math.random()*1000));
         }
 
-        String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
-        int a = (int)((Math.random()*100)%waluty.length);
+
         nazwa = nazwyGield[(int)(Math.random()*100)%nazwyGield.length];
         this.kraj = "kraj";
-        synchronized (Main.getContainer()) {
-          this.waluta = Main.getContainer().getHashMapWalut().get(waluty[a]);
-        }
+
         this.adres = new Adres();
         this.marzaOdTransakcji = 0.5;
     }
 
     public abstract void kupno(PosiadajacyPieniadze pp);
 
-    public abstract void sprzedaz(PosiadajacyPieniadze pp);
+    public abstract void sprzedaz(Inwestycja inwestycja, PosiadajacyPieniadze pp);
 
     @Override
     public String toString() {

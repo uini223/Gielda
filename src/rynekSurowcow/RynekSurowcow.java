@@ -1,6 +1,7 @@
 package rynekSurowcow;
 
 import gield.Adres;
+import gield.Inwestycja;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Indeks;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
@@ -20,7 +21,7 @@ public class RynekSurowcow extends Rynek{
     }
 
     @Override
-    public void sprzedaz(PosiadajacyPieniadze pp) {
+    public void sprzedaz(Inwestycja inwestycja,PosiadajacyPieniadze pp) {
 
     }
 

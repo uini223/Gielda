@@ -2,14 +2,14 @@ package gieldaPapierowWartosciowych;
 
 import controllers.Listable;
 import gield.Inwestycja;
+import gield.Rynek;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Indeks extends Inwestycja implements Listable {
+public class Indeks extends Inwestycja implements Listable, Serializable {
 
     private GieldaPapierowWartosciowych rodzic;
 
@@ -24,13 +24,13 @@ public class Indeks extends Inwestycja implements Listable {
     }
 
     public Indeks(GieldaPapierowWartosciowych rodzic) {
-        super("indeks" + Integer.toString((int)((Math.random())*10000)),0);
+        super(rodzic, "indeks" + Integer.toString((int)((Math.random())*10000)),0);
         //name = "indeks" + Integer.toString((int)((Math.random())*10000));
         this.rodzic = rodzic;
-        hashMapSpolek = new ConcurrentHashMap<>();
+        hashMapSpolek = new HashMap<>();
         Spolka spolka;
         for (int i = 0; i < 3; i++) {
-            spolka = new Spolka();
+            spolka = new Spolka(rodzic);
             hashMapSpolek.put(spolka.getName(),spolka);
         }
         rodzic.addIndeks(this);
@@ -70,6 +70,10 @@ public class Indeks extends Inwestycja implements Listable {
             wartosc+=hashMapSpolek.get(s).getAkcjaSpolki().getAktualnaWartosc();
         }
         this.addWartoscAkcji(wartosc);
+    }
+    @Override
+    public Rynek getRynek(){
+        return rodzic;
     }
     public void usunSpolke(Spolka a){
 

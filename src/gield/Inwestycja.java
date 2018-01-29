@@ -1,13 +1,15 @@
 package gield;
 
 import controllers.Listable;
+import main.Main;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Inwestycja implements Listable{
+public abstract class Inwestycja implements Listable, Serializable{
+    private Rynek rynek;
     private double aktualnaWartosc;
 
     private String nazwa;
@@ -22,17 +24,23 @@ public abstract class Inwestycja implements Listable{
 
     private Map<String,Number> listaWartosciWCzasie;
 
-    public Inwestycja(String nazwa,double aktualnaWartosc) {
+    public Inwestycja(Rynek rynek, String nazwa, double aktualnaWartosc) {
+        this.rynek = rynek;
         this.nazwa = nazwa;
         this.aktualnaWartosc = aktualnaWartosc;
         listaWartosciWCzasie = new HashMap<>();
     }
+
+    public Rynek getRynek() {
+        return rynek;
+    }
+
     public void addWartoscAkcji(double wartoscAkcji){
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy mm:ss");
-        aktualnaWartosc = wartoscAkcji;
-        Date data = new Date();
-        //data.setTime(data.getTime()+1000*86400);
-        listaWartosciWCzasie.put(df.format(data),wartoscAkcji);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh");
+        synchronized (Main.getMonitor()){
+            aktualnaWartosc = wartoscAkcji;
+            listaWartosciWCzasie.put(df.format(Main.getContainer().getDate()),wartoscAkcji);
+        }
     }
 
     public Map<String,Number> getWartosciAkcji(){

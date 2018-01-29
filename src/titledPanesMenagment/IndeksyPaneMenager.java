@@ -110,7 +110,7 @@ public class IndeksyPaneMenager extends Upper{
         if(!getLista().getSelectionModel().isEmpty()){
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
             synchronized(Main.getContainer()){
-                Spolka spolka = new Spolka();
+                Spolka spolka = new Spolka(ind.getRynek());
                 ind.dodajSpolke(spolka);
                 spolkiListView.getItems().add(spolka.getName());
             }

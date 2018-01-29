@@ -26,26 +26,34 @@ public class Inwestor extends PosiadajacyPieniadze {
     }
 
     @Override
-    public void kupInwestycje() {
-        synchronized(Main.getMonitor()){
-            if(Main.getContainer().getSession()) {
-                int size, i = 0, rnd;
-                size = Main.getContainer().getHashMapRynkow().keySet().size();
-                rnd = (int) (Math.random() * 100) % size;
-                for (String s : Main.getContainer().getHashMapRynkow().keySet()
-                        ) {
-                    if (i == rnd) {
-                        Main.getContainer().getHashMapRynkow().get(s).kupno(this);
-                    }
-                    i++;
-                }
+    public void kupInwestycje()  {
+        System.out.println("Kupuje");
+        int size, i = 0, rnd;
+        size = Main.getContainer().getHashMapRynkow().keySet().size();
+        rnd = (int) (Math.random() * 100) % size;
+        for (String s : Main.getContainer().getHashMapRynkow().keySet()
+                ) {
+            if (i == rnd) {
+                Main.getContainer().getHashMapRynkow().get(s).kupno(this);
             }
+            i++;
         }
     }
 
     @Override
     public void sprzedajInwestycje() {
-
+        System.out.println("Sprzedaje");
+        if(!getHashMapInwestycji().keySet().isEmpty()) {
+            int rnd = (int) (Math.random() * 100) % getHashMapInwestycji().keySet().size();
+            int i = 0;
+            for (Inwestycja inw : getHashMapInwestycji().keySet()
+                    ) {
+                if (rnd == i) {
+                    inw.getRynek().sprzedaz(inw,this);
+                }
+                i++;
+            }
+        }
     }
     public void kupJednostkiUczestictwa() {
 
@@ -58,15 +66,16 @@ public class Inwestor extends PosiadajacyPieniadze {
     public void run() {
 
         for (int i=0;i<100;i++){
-            kupInwestycje();
-            sprzedajInwestycje();
-            //System.out.println(this.getName());
-            int czas = (int) (Math.random()*10000);
             try {
-                Thread.sleep(czas);
+                synchronized(Main.getMonitor()) {
+                    Main.getMonitor().wait();
+                    kupInwestycje();
+                    sprzedajInwestycje();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //System.out.println(this.getName());
         }
     }
 }

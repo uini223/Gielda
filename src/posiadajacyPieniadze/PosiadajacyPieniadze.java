@@ -5,11 +5,12 @@ import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Akcje;
 import main.Main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class PosiadajacyPieniadze implements Listable, Runnable{
+public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serializable{
     private double kapital;
 
     private String imie, nazwisko;
