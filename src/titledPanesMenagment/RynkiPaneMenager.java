@@ -34,7 +34,7 @@ public class RynkiPaneMenager extends Upper {
     @Override
     public void onSelectedItem() {
         if(!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getContainer()) {
+            synchronized (Main.getMonitor()) {
                 Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
                 krajTextField.setText(rynek.getKraj());
                 miastoTextField.setText(rynek.getAdres().getMiasto());
@@ -53,7 +53,7 @@ public class RynkiPaneMenager extends Upper {
     @Override
     public void wczytajListe() {
         getLista().getItems().clear();
-        synchronized (Main.getContainer()) {
+        synchronized (Main.getMonitor()) {
             for (String r : Main.getContainer().getHashMapRynkow().keySet()) {
                 getLista().getItems().add(Main.getContainer().getRynek(r));
             }
@@ -79,7 +79,7 @@ public class RynkiPaneMenager extends Upper {
     @Override
     public void usun(){
         if(!getLista().getSelectionModel().isEmpty()){
-            synchronized (Main.getContainer()){
+            synchronized (Main.getMonitor()){
                 Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
                 Main.getContainer().getHashMapRynkow().remove(rynek.getNazwa());
             }
@@ -92,19 +92,19 @@ public class RynkiPaneMenager extends Upper {
         if(!typChoiceBox.getSelectionModel().isEmpty()) {
             switch (typChoiceBox.getSelectionModel().getSelectedItem()) {
                 case "Gielda Papierow Wartosciowych": {
-                    synchronized (Main.getContainer()) {
+                    synchronized (Main.getMonitor()) {
                         Main.getContainer().addRynek(new GieldaPapierowWartosciowych());
                     }
                     break;
                 }
                 case "Rynek Walut": {
-                    synchronized (Main.getContainer()) {
+                    synchronized (Main.getMonitor()) {
                         Main.getContainer().addRynek(new RynekWalut());
                     }
                     break;
                 }
                 case "Rynek Surowcow": {
-                    synchronized (Main.getContainer()) {
+                    synchronized (Main.getMonitor()) {
                         Main.getContainer().addRynek(new RynekSurowcow());
                     }
                     break;
@@ -118,7 +118,7 @@ public class RynkiPaneMenager extends Upper {
     @Override
     public void zapiszPola(){
         if (!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getContainer()) {
+            synchronized (Main.getMonitor()) {
                 Rynek gpw = (Rynek) getLista().getSelectionModel().getSelectedItem();
                 gpw.setNazwa(nazwaTextField.getText());
                 gpw.getAdres().setMiasto(miastoTextField.getText());

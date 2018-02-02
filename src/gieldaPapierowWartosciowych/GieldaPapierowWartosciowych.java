@@ -31,7 +31,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
         super();
         String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
         int a = (int)((Math.random()*100)%waluty.length);
-        synchronized (Main.getContainer()) {
+        synchronized (Main.getMonitor()) {
             setWaluta(Main.getContainer().getHashMapWalut().get(waluty[a]));
         }
         hashMapIndeksow = new HashMap<>();

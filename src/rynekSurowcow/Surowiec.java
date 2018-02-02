@@ -10,7 +10,8 @@ public class Surowiec extends Inwestycja{
     private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc;
 
     public Surowiec(Rynek rynek) {
-
         super(rynek, "s",0);
+        String[] surowce = {"Jabłka","Gruszki","Pomidory","Olej Silnikowy","Diament","Zboże","Opony","Ropa",""};
+
     }
 }
