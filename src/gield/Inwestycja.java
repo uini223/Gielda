@@ -24,8 +24,7 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     private Map<String,Number> listaWartosciWCzasie;
 
-    public Inwestycja(Rynek rynek, String nazwa, double aktualnaWartosc) {
-        this.rynek = rynek;
+    public Inwestycja(String nazwa, double aktualnaWartosc) {
         this.nazwa = nazwa;
         this.aktualnaWartosc = aktualnaWartosc;
         listaWartosciWCzasie = new HashMap<>();
@@ -41,6 +40,10 @@ public abstract class Inwestycja implements Listable, Serializable{
             aktualnaWartosc = wartoscAkcji;
             listaWartosciWCzasie.put(df.format(Main.getContainer().getDate()),wartoscAkcji);
         }
+    }
+
+    public void setRynek(Rynek rynek) {
+        this.rynek = rynek;
     }
 
     public Map<String,Number> getWartosciAkcji(){

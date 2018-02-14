@@ -44,7 +44,7 @@ public class MainViewController implements Initializable, Controllable {
     @FXML
     private MenuItem delete, utworzGieldeMenuItem, closeMenuItem;
     @FXML
-    private Button guzik;
+    private Button odswiezButton;
     @FXML
     private TextField najmniejszaWartosc;
     @FXML
@@ -60,7 +60,7 @@ public class MainViewController implements Initializable, Controllable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //aktywaChoiceBox.getItems().addAll("Akcje Spolek","Indeksy","Waluty","Surowce");
+        makeOdswiezButtonInvisible();
         synchronized (Main.getMonitor()){
             rynekChoiceBox.getItems().addAll(Main.getContainer().getHashMapRynkow().values());
         }
@@ -115,6 +115,7 @@ public class MainViewController implements Initializable, Controllable {
 
     @FXML
     private synchronized void onAktywaChoiceBoxAction(){
+        makeOdswiezButtonInvisible();
         Rynek rynek;
         listaAkcji.getItems().clear();
         if(aktywaChoiceBox.getValue() != null) {
@@ -148,6 +149,7 @@ public class MainViewController implements Initializable, Controllable {
         }
     }
     @FXML  synchronized void  onRynkiChoiceboxAction(){
+        makeOdswiezButtonInvisible();
         String s = aktywaChoiceBox.getValue();
         aktywaChoiceBox.getItems().clear();
         Rynek rynek = rynekChoiceBox.getSelectionModel().getSelectedItem();
@@ -188,69 +190,35 @@ public class MainViewController implements Initializable, Controllable {
     }
 
     @FXML
-    private void pokazWykres() {
-       /*SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy ss");
+    private void onListaAkcjiChoice() {
+        makeOdswiezButtonInvisible();
+        ObservableList<XYChart.Data<String, Number>> dane = FXCollections.observableArrayList();
+        if (!listaAkcji.getSelectionModel().isEmpty()) {
+            synchronized (Main.getMonitor()) {
+                Inwestycja inwestycja = listaAkcji.getSelectionModel().getSelectedItem();
+                for (String i :
+                        inwestycja.getWartosciAkcji().keySet()) {
 
-
-        ObservableList<Inwestycja> items = listaAkcji.getSelectionModel().getSelectedItems();
-
-        ObservableList<XYChart.Data<String,Number>> dane = FXCollections.observableArrayList();
-
-        List<XYChart.Data<String,Number>> dane = new ArrayList<>();
-        int i =0;
-        synchronized (Main.getMonitor()) {
-            Rynek gpw;
-            for (String s :
-                    Main.getContainer().getHashMapRynkow().keySet()) {
-                if (i == 1) {
-                    gpw = Main.getContainer().getRynek(s);
+                    dane.add(new XYChart.Data<>(i, inwestycja.getWartosciAkcji().get(i)));
                 }
-                i++;
-            }
-            if(gpw instanceof GieldaPapierowWartosciowych){
-                //gpw = (GieldaPapierowWartosciowych) gpw;
-                for (String s :
-                        ((GieldaPapierowWartosciowych) gpw).getHashMapSpolek().keySet()) {
-
-                }
+                XYChart.Series<String, Number> seria = new XYChart.Series<>();
+                seria.setData(dane.sorted());
+                wykresWartosci.getData().clear();
+                wykresWartosci.getData().add(seria);
             }
         }
-        for (Inwestycja j:items
-             ) {
-            akcje.get(j).getWartosciAkcji().put(new Date(),Math.random());
-            /*for (Date i: akcje.get(j).getWartosciAkcji().keySet()
-                    ) {
-                //dane.add(new XYChart.Data<>(df.format(i),akcje.get(j).getWartosciAkcji().get(i)));
-                dane.add(new XYChart.Data<>(df.format(i),akcje.get(j).getWartosciAkcji().get(i)));
-            } */
-        //dane.addAll(test,test2);
-        /*}
-
-        XYChart.Series<String,Number> seria = new XYChart.Series<>();
-        //seria.setData(dane);
-        wykresWartosci.getData().clear();
-        wykresWartosci.getData().add(seria);
-
-        }
-        */
+    }
+    public void makeOdswiezButtonVisible(){
+        odswiezButton.setVisible(true);
+    }
+    public void makeOdswiezButtonInvisible(){
+        odswiezButton.setVisible(false);
     }
     @FXML
-    private void onListaAkcjiChoice() {
-        ObservableList<XYChart.Data<String,Number>> dane = FXCollections.observableArrayList();
-        synchronized (Main.getMonitor()){
-            Inwestycja inwestycja =  listaAkcji.getSelectionModel().getSelectedItem();
-            for (String i :
-                    inwestycja.getWartosciAkcji().keySet()){
-
-                dane.add(new XYChart.Data<>(i,inwestycja.getWartosciAkcji().get(i)));
-            }
-            XYChart.Series<String,Number> seria = new XYChart.Series<>();
-            seria.setData(dane.sorted());
-            wykresWartosci.getData().clear();
-            wykresWartosci.getData().add(seria);
-        }
+    private void odswiez(){
+        updateAll();
+        onListaAkcjiChoice();
     }
-
     public void updateAll() {
         Rynek rynek = rynekChoiceBox.getValue();
         synchronized (Main.getMonitor()){
@@ -265,7 +233,7 @@ public class MainViewController implements Initializable, Controllable {
                 Main.getContainer().getIndeks(s).aktualizujWartosc();
             }
         }
-
+        makeOdswiezButtonInvisible();
 
     }
 }

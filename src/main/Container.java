@@ -27,22 +27,19 @@ public  class Container implements Serializable {
 
     private volatile HashMap<String, Indeks> hashMapIndeksow;
 
-    private volatile RynekWalut rynekWalut;
     private volatile Date date;
 
     public  Container() {
-        String[] waluty = {"PLN","GBP","USD","KYS","BTC"};
         stageHashMap = new HashMap<>();
         hashMapRynkow = new HashMap<>();
         hashMapInwestorow = new HashMap<>();
         hashMapWalut = new HashMap<>();
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
-        rynekWalut = new RynekWalut();
         date = new Date();
-        for (String a: waluty
-                ) {
-            hashMapWalut.put(a,new Waluta(a,rynekWalut));
+        hashMapWalut.put("PLN",new Waluta("PLN"));
+        for(int i=0;i<10;i++){
+            addNewWaluta();
         }
     }
 
@@ -118,4 +115,17 @@ public  class Container implements Serializable {
         return stageHashMap;
     }
 
+    public Waluta addNewWaluta(){
+        char characters[] = new char[26];
+        for(int i=0; i<26;i++){
+            characters[i]=(char)('A'+i);
+        }
+        String name="";
+        for(int i=0;i<4;i++){
+            name+=characters[(int)(Math.random()*1000)%26];
+        }
+        Waluta waluta = new Waluta(name);
+        addWaluta(name,waluta);
+        return waluta;
+    }
 }

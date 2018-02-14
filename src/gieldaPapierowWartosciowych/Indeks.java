@@ -24,9 +24,10 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
     }
 
     public Indeks(GieldaPapierowWartosciowych rodzic) {
-        super(rodzic, "indeks" + Integer.toString((int)((Math.random())*10000)),0);
+        super( "indeks" + Integer.toString((int)((Math.random())*10000)),0);
         //name = "indeks" + Integer.toString((int)((Math.random())*10000));
         this.rodzic = rodzic;
+        setRynek(rodzic);
         hashMapSpolek = new HashMap<>();
         Spolka spolka;
         for (int i = 0; i < 3; i++) {

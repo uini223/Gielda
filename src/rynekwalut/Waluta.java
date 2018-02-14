@@ -3,7 +3,9 @@ package rynekwalut;
 import gield.Inwestycja;
 import gield.Rynek;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Waluta extends Inwestycja {
     private List<String> listaKrajow;
@@ -20,8 +22,9 @@ public class Waluta extends Inwestycja {
         return cenaWPLN*przelicznik;
     }
 
-    public Waluta(String nazwa, Rynek rynek) {
-        super(rynek, nazwa,0);
+    public Waluta(String nazwa) {
+        super( nazwa,0);
+
         this.nazwa = nazwa;
         if(nazwa.equals("PLN")){
             przelicznik = 1;
@@ -41,8 +44,6 @@ public class Waluta extends Inwestycja {
 
     @Override
     public String toString() {
-        return "Waluta{" +
-                "nazwa='" + nazwa + '\'' +
-                '}';
+        return nazwa;
     }
 }

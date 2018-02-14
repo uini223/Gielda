@@ -48,6 +48,7 @@ public class Spolka implements Runnable, Serializable{
         wolumen = 0;
         obroty = 0;
         akcjaSpolki = new Akcje(rynek,name,aktualnyKurs);
+        akcjaSpolki.setRynek(rynek);
     }
 
     private String losowaNazwa() {

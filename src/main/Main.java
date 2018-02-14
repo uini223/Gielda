@@ -3,6 +3,7 @@ package main;
 import controllers.Controllable;
 import controllers.MainViewController;
 import daySimulation.DaySimulation;
+import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +50,7 @@ public class Main extends Application {
         }
 
     }
+    //TODO nowe watki, ogarnac rynek walut
     private void wczytajKontener() throws FileNotFoundException {
         try {
             ObjectInputStream in = new ObjectInputStream(
@@ -64,15 +66,32 @@ public class Main extends Application {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            System.out.println("Nie udało się wczytać zapisu");
+        }
+    }
+    private void nowyStan(){
+        ThreadGroup threadGroup = new ThreadGroup("Ala");
+        Inwestor inwestor;
+        Thread thread;
+        Rynek rynek;
+        for(int i=0;i<10;i++){
+            if(i<3){
+                rynek = new GieldaPapierowWartosciowych();
+                getContainer().addRynek(rynek);
+            }
+            inwestor = new Inwestor();
+            thread = new Thread(threadGroup,inwestor);
+            thread.setDaemon(true);
+            getContainer().addPosiadajacyPieniadze(inwestor);
+            thread.start();
         }
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        wczytajKontener();
-        Inwestor inwestor;
-        ThreadGroup threadGroup = new ThreadGroup("Ala");
+        //wczytajKontener();
+        nowyStan();
+
         mainStage = primaryStage;
-        String name = "../views/";
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/MainView.fxml"));
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
@@ -82,6 +101,7 @@ public class Main extends Application {
         primaryStage.show();
         Controllable kontroler = loader.getController();
         kontroler.setStage(mainStage);
+
         DaySimulation day = new DaySimulation();
         if(kontroler instanceof MainViewController) day.setMvc((MainViewController)kontroler);
         Thread th = new Thread(day);
