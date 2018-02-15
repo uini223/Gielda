@@ -1,6 +1,8 @@
 package titledPanesManagment;
 
 import controllers.Listable;
+import gield.Rynek;
+import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.scene.control.Accordion;
@@ -39,7 +41,18 @@ public class SpolkiPaneManager extends ManagerAbstract {
                 spolka.getAkcjaSpolki().wyprzedajWszystko();
                 getLista().getItems().remove(spolka);
                 Main.getContainer().getHashMapSpolek().remove(spolka.getName());
+
+                GieldaPapierowWartosciowych rynek = (GieldaPapierowWartosciowych) spolka.getAkcjaSpolki().getRynek();
+                if(spolka.getIndeksSpolki().getHashMapSpolek().size()==1){
+                    Indeks ind = spolka.getIndeksSpolki();
+                    Main.getContainer().getHashMapIndeksow().remove(ind.getNazwa());
+                    rynek.getHashMapIndeksow().remove(ind.getNazwa());
+                }
                 spolka.getIndeksSpolki().getHashMapSpolek().remove(spolka.getName());
+                if(rynek.getHashMapSpolek().size()==1){
+                    Main.getContainer().getHashMapRynkow().remove(rynek.getNazwa());
+                }
+                rynek.getHashMapSpolek().remove(spolka.getName());
             }
 
         }
@@ -85,7 +98,9 @@ public class SpolkiPaneManager extends ManagerAbstract {
 
     @Override
     public void dodajNowy() {
-
+        synchronized (Main.getMonitor()){
+            Main.getContainer().addNewWaluta();
+        }
     }
 
     @Override

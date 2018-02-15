@@ -39,8 +39,8 @@ public class Spolka implements Runnable, Serializable, Listable
         liczbaAkcji = (int)(Math.random()*1000000);
         kursOtwarcia = kapitalWlasny/liczbaAkcji;
         aktualnyKurs = kursOtwarcia;
-        minimalnyKurs = kursOtwarcia;
-        maksymalnyKurs = kursOtwarcia;
+        setMinimalnyKurs(kursOtwarcia);
+        setMaksymalnyKurs(kursOtwarcia);
         przychod = 0;
         zysk = 0;
         wolumen = 0;
@@ -123,6 +123,12 @@ public class Spolka implements Runnable, Serializable, Listable
         }
         else {
             setAktualnyKurs(aktualnyKurs-wartosc);
+        }
+        if(aktualnyKurs<getMinimalnyKurs()){
+            setMinimalnyKurs(aktualnyKurs);
+        }
+        if(aktualnyKurs>getMaksymalnyKurs()){
+            setMaksymalnyKurs(aktualnyKurs);
         }
         getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
     }

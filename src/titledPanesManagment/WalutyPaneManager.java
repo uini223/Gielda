@@ -57,6 +57,7 @@ public class WalutyPaneManager extends ManagerAbstract {
 
     @Override
     public void wczytajListe() {
+        getLista().getItems().clear();
         synchronized (Main.getMonitor()){
             getLista().getItems().addAll(Main.getContainer().getHashMapWalut().values());
         }
@@ -68,6 +69,7 @@ public class WalutyPaneManager extends ManagerAbstract {
         synchronized (Main.getMonitor()){
             Main.getContainer().addNewWaluta();
         }
+        wczytajListe();
     }
 
     @Override

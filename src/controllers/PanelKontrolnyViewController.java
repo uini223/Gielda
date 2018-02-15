@@ -49,7 +49,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
             spolkiGieldaTextField;
     @FXML
-    private TextField walutyNazwaTextField,walutyPczatkowyKursTextField,walutyObecnyKursTextField,
+    private TextField walutyNazwaTextField,walutyPoczatkowyKursTextField,walutyObecnyKursTextField,
             walutyGieldaTextField;
     @FXML
     private ListView<PosiadajacyPieniadze> spolkiInwestorzyListView,walutyInwestorzyListView;
@@ -75,7 +75,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                 spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
                 spolkiGieldaTextField, spolkiInwestorzyListView);
 
-        walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPczatkowyKursTextField,
+        walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPoczatkowyKursTextField,
                 walutyObecnyKursTextField, walutyGieldaTextField, walutyInwestorzyListView);
 
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

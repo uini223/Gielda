@@ -66,7 +66,7 @@ public class Inwestor extends PosiadajacyPieniadze {
     @Override
     public void run() {
 
-        for (int i=0;i<100;i++){
+        for (int i=0;i<1000;i++){
             try {
                 synchronized(Main.getMonitor()) {
                     Main.getMonitor().wait();

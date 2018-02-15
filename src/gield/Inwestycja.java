@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class Inwestycja implements Listable, Serializable{
     private Rynek rynek;
 
-    private double aktualnaWartosc;
+    private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc;
 
     private String nazwa;
 
@@ -69,5 +69,21 @@ public abstract class Inwestycja implements Listable, Serializable{
             pp.setKapital(kapital);
             pp.getHashMapInwestycji().remove(this);
         }
+    }
+
+    public double getNajwiekszaWartosc() {
+        return najwiekszaWartosc;
+    }
+
+    public void setNajwiekszaWartosc(double najwiekszaWartosc) {
+        this.najwiekszaWartosc = najwiekszaWartosc;
+    }
+
+    public double getNajmniejszaWartosc() {
+        return najmniejszaWartosc;
+    }
+
+    public void setNajmniejszaWartosc(double najmniejszaWartosc) {
+        this.najmniejszaWartosc = najmniejszaWartosc;
     }
 }

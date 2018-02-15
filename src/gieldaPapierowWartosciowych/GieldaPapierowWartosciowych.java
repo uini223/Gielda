@@ -65,15 +65,19 @@ public class GieldaPapierowWartosciowych extends Rynek{
     }
 
     public void addIndeks(Indeks ind){
-        hashMapIndeksow.put(ind.getNazwa(),ind);
-        aktualizujIndeksy();
-        aktualizujSpolki();
+        synchronized (Main.getMonitor()) {
+            hashMapIndeksow.put(ind.getNazwa(), ind);
+            aktualizujIndeksy();
+            aktualizujSpolki();
+        }
     }
 
     public void aktualizujSpolki(){
-        for (String s :
-                hashMapIndeksow.keySet()) {
-            hashMapSpolek.putAll(hashMapIndeksow.get(s).getHashMapSpolek());
+        synchronized (Main.getMonitor()) {
+            for (Indeks s :
+                    hashMapIndeksow.values()) {
+                hashMapSpolek.putAll(s.getHashMapSpolek());
+            }
         }
     }
 
