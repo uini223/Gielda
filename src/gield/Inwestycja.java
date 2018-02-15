@@ -2,17 +2,30 @@ package gield;
 
 import controllers.Listable;
 import main.Main;
+import posiadajacyPieniadze.Inwestor;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public abstract class Inwestycja implements Listable, Serializable{
     private Rynek rynek;
+
     private double aktualnaWartosc;
 
     private String nazwa;
+
+    private HashSet<PosiadajacyPieniadze> setInwestorow;
+
+    public Inwestycja(String nazwa, double aktualnaWartosc) {
+        this.nazwa = nazwa;
+        this.aktualnaWartosc = aktualnaWartosc;
+        listaWartosciWCzasie = new HashMap<>();
+        setInwestorow = new HashSet<>();
+    }
 
     public double getAktualnaWartosc() {
         return aktualnaWartosc;
@@ -23,12 +36,6 @@ public abstract class Inwestycja implements Listable, Serializable{
     }
 
     private Map<String,Number> listaWartosciWCzasie;
-
-    public Inwestycja(String nazwa, double aktualnaWartosc) {
-        this.nazwa = nazwa;
-        this.aktualnaWartosc = aktualnaWartosc;
-        listaWartosciWCzasie = new HashMap<>();
-    }
 
     public Rynek getRynek() {
         return rynek;
@@ -48,5 +55,9 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     public Map<String,Number> getWartosciAkcji(){
         return listaWartosciWCzasie;
+    }
+
+    public HashSet<PosiadajacyPieniadze> getSetInwestorow() {
+        return setInwestorow;
     }
 }

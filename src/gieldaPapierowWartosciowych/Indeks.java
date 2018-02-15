@@ -32,6 +32,7 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
         Spolka spolka;
         for (int i = 0; i < 3; i++) {
             spolka = new Spolka(rodzic);
+            spolka.setIndeksSpolki(this);
             hashMapSpolek.put(spolka.getName(),spolka);
         }
         rodzic.addIndeks(this);

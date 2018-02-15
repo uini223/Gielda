@@ -1,4 +1,4 @@
-package titledPanesMenagment;
+package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Inwestycja;
@@ -8,14 +8,14 @@ import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
-public class PPPaneMenager extends Upper{
+public class PPPaneManager extends ManagerAbstract {
 
     private TextField imieTextField,nazwiskoTextField,nazwaTextField,
         peselTextField,kapitalTextField,typTextField;
     private ChoiceBox<String> typChoiceBox;
     private ListView<String> inwestycjeListView;
 
-    public PPPaneMenager(ListView<Listable> lista, Accordion accordion, TextField imieTextField, TextField
+    public PPPaneManager(ListView<Listable> lista, Accordion accordion, TextField imieTextField, TextField
             nazwiskoTextField, TextField nazwaTextField, TextField peselTextField, TextField kapitalTextField,
                          TextField typTextField, ChoiceBox<String> inwestycjeChoiceBox,
                          ListView<String> inwestycjeListView) {

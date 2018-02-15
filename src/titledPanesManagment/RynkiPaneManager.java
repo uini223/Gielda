@@ -1,4 +1,4 @@
-package titledPanesMenagment;
+package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Rynek;
@@ -8,14 +8,14 @@ import main.Main;
 import rynekSurowcow.RynekSurowcow;
 import rynekwalut.RynekWalut;
 
-public class RynkiPaneMenager extends Upper {
+public class RynkiPaneManager extends ManagerAbstract {
 
     private TextField nazwaTextField,krajTextField,miastoTextField,ulicaTextField,
     typRynkuTextField,marzaTextField,walutaTextField;
 
     private ChoiceBox<String> typChoiceBox;
 
-    public RynkiPaneMenager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
+    public RynkiPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
                             TextField krajTextField, TextField miastoTextField, TextField ulicaTextField, TextField
                             typRynkuTextField, TextField marzaTextField, TextField walutaTextField,
                             ChoiceBox typChoiceBox) {

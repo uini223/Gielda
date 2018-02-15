@@ -1,4 +1,4 @@
-package titledPanesMenagment;
+package titledPanesManagment;
 
 import controllers.Listable;
 import javafx.scene.control.Accordion;
@@ -6,14 +6,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 
 public abstract
-class Upper {
+class ManagerAbstract {
     private ListView<Listable> lista;
 
     private Accordion accordion;
 
     private String name;
 
-    public Upper(ListView<Listable> lista, Accordion accordion) {
+    public ManagerAbstract(ListView<Listable> lista, Accordion accordion) {
 
         this.lista = lista;
         this.accordion = accordion;

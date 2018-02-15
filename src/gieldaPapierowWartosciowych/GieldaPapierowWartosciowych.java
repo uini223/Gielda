@@ -102,19 +102,14 @@ public class GieldaPapierowWartosciowych extends Rynek{
                     }
                     spolka.sprzedajAkcje(ilosc);
                     pp.setKapital(pp.getKapital()-kwota);
-                    /*System.out.printf("Name: %s Kapital: %.2f Ilosc %d kwota zakupu %.2f nazwa %s\n"
-                            ,pp.getName(), pp.getKapital(),ilosc,kwota,spolka.getName());
-                    System.out.println("------------------------------"); */
+                    spolka.getAkcjaSpolki().getSetInwestorow().add(pp);
                 }
             }
             i++;
         }
     }
 
-    private double pobierzMarze(double kwota) {
-        double marza = getMarzaOdTransakcji()/100;
-        return kwota-(kwota*marza);
-    }
+
 
     @Override
     public void sprzedaz(Inwestycja inwestycja,PosiadajacyPieniadze pp) {
@@ -130,6 +125,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
             if(ilosc>0){
                 if(ilosc == (int)pp.getHashMapInwestycji().get(inwestycja)){
                     pp.getHashMapInwestycji().remove(inwestycja);
+                    inwestycja.getSetInwestorow().remove(pp);
                 }
                 pp.setKapital(pp.getKapital()+kwota);
                 s.kupAkcje(ilosc);

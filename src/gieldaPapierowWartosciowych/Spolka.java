@@ -1,14 +1,18 @@
 package gieldaPapierowWartosciowych;
 
+import controllers.Listable;
 import gield.Inwestycja;
 import gield.Rynek;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class Spolka implements Runnable, Serializable{
+public class Spolka implements Runnable, Serializable, Listable
+{
     private String name;
+
     private Date dataPierwszejWyceny;
+
     private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy,  obroty, aktualnyKurs,
             maksymalnyKurs, minimalnyKurs,zysk;
 
@@ -24,13 +28,7 @@ public class Spolka implements Runnable, Serializable{
 
     private Akcje akcjaSpolki;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Indeks indeksSpolki;
 
     public Spolka(Rynek rynek) {
         //super(nazwa);
@@ -49,6 +47,24 @@ public class Spolka implements Runnable, Serializable{
         obroty = 0;
         akcjaSpolki = new Akcje(rynek,name,aktualnyKurs);
         akcjaSpolki.setRynek(rynek);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void run(){
+        while(true){
+            generujZysk();
+            zmienLiczbeAkcji();
+
+
+
+        }
     }
 
     private String losowaNazwa() {
@@ -73,11 +89,11 @@ public class Spolka implements Runnable, Serializable{
     public void generujPrzychod(){
         przychod+= Math.random()*10000;
     }
-
     public void generujZysk(){
         generujPrzychod();
         zysk = przychod - Math.random()*1000;
     }
+
     public void zmienLiczbeAkcji() {
         int znak = (int) (Math.random() * 100) % 2;
         if (znak == 0) liczbaAkcji += Math.random() * 100;
@@ -90,7 +106,6 @@ public class Spolka implements Runnable, Serializable{
         this.aktualnyKurs = aktualnyKurs;
         akcjaSpolki.addWartoscAkcji(aktualnyKurs);
     }
-
     public void sprzedajAkcje(int ilosc){
         zmianaKursu();
         liczbaAkcji-=ilosc;
@@ -111,17 +126,50 @@ public class Spolka implements Runnable, Serializable{
         }
         getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
     }
+
     public double getAktualnyKurs() {
         return aktualnyKurs;
     }
 
-    public void run(){
-        while(true){
-            generujZysk();
-            zmienLiczbeAkcji();
-
-
-
-        }
+    public double getKapitalWlasny() {
+        return kapitalWlasny;
     }
+
+    public void setKapitalWlasny(double kapitalWlasny) {
+        this.kapitalWlasny = kapitalWlasny;
+    }
+
+    public double getKapitalZakladowy() {
+        return kapitalZakladowy;
+    }
+
+    public void setKapitalZakladowy(double kapitalZakladowy) {
+        this.kapitalZakladowy = kapitalZakladowy;
+    }
+
+    public double getMaksymalnyKurs() {
+        return maksymalnyKurs;
+    }
+
+    public void setMaksymalnyKurs(double maksymalnyKurs) {
+        this.maksymalnyKurs = maksymalnyKurs;
+    }
+
+    public double getMinimalnyKurs() {
+        return minimalnyKurs;
+    }
+
+    public void setMinimalnyKurs(double minimalnyKurs) {
+        this.minimalnyKurs = minimalnyKurs;
+    }
+
+    public Indeks getIndeksSpolki() {
+        return indeksSpolki;
+    }
+
+    public void setIndeksSpolki(Indeks indeksSpolki) {
+        this.indeksSpolki = indeksSpolki;
+    }
+
 }
+

@@ -145,6 +145,15 @@ public class MainViewController implements Initializable, Controllable {
                     }
                     break;
                 }
+                case "Waluty":{
+                    synchronized (Main.getMonitor()){
+                        rynek = rynekChoiceBox.getValue();
+                        if(rynek instanceof RynekWalut){
+                            Collection<Waluta> col = ((RynekWalut) rynek).getHashMapWalut().values();
+                            listaAkcji.getItems().addAll(col);
+                        }
+                    }
+                }
             }
         }
     }

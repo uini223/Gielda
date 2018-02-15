@@ -1,17 +1,17 @@
-package titledPanesMenagment;
+package titledPanesManagment;
 
 import controllers.Listable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 
-public class SpolkiPaneMenager extends Upper {
-    public SpolkiPaneMenager(ListView<Listable> lista, Accordion accordion) {
+public class WalutyPaneManager extends ManagerAbstract {
+    public WalutyPaneManager(ListView<Listable> lista, Accordion accordion) {
         super(lista, accordion);
     }
 
     @Override
     public void usun() {
-
+        //TODO safe clear
     }
 
     @Override

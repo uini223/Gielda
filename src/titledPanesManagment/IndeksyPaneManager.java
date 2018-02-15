@@ -1,4 +1,4 @@
-package titledPanesMenagment;
+package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Rynek;
@@ -11,7 +11,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import main.Main;
 
-public class IndeksyPaneMenager extends Upper{
+import java.util.Collection;
+
+public class IndeksyPaneManager extends ManagerAbstract {
     //hello
     private TextField nazwaTextField,gieldaTextField;
 
@@ -19,7 +21,7 @@ public class IndeksyPaneMenager extends Upper{
 
     private ListView<String> spolkiListView;
 
-    public IndeksyPaneMenager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
+    public IndeksyPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
                               TextField gieldaTextField, ChoiceBox<String>
                                       typChoiceBox, ListView<String> spolkiListView) {
         super(lista, accordion);
@@ -55,12 +57,14 @@ public class IndeksyPaneMenager extends Upper{
         //wczytajListe();
         clear();
         Indeks ind;
-        synchronized(Main.getContainer()){
+        synchronized(Main.getMonitor()){
             ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
-            for (String s: ind.getHashMapSpolek().keySet()
+            /*for (String s: ind.getHashMapSpolek().keySet()
                     ) {
                 spolkiListView.getItems().add(s);
-            }
+            } */
+            Collection<String> col = ind.getHashMapSpolek().keySet();
+            spolkiListView.getItems().addAll(col);
             nazwaTextField.setText(ind.getNazwa());
             gieldaTextField.setText(ind.getRodzic().getNazwa());
         }
@@ -94,7 +98,7 @@ public class IndeksyPaneMenager extends Upper{
         if(!typChoiceBox.getSelectionModel().isEmpty()){
             String s = typChoiceBox.getSelectionModel().getSelectedItem();
             GieldaPapierowWartosciowych gpw;
-            synchronized(Main.getContainer()){
+            synchronized(Main.getMonitor()){
                 gpw = (GieldaPapierowWartosciowych) Main.getContainer().getRynek(s);
                 Indeks ind = new Indeks(gpw);
                 gpw.addIndeks(ind);
@@ -109,8 +113,9 @@ public class IndeksyPaneMenager extends Upper{
     public void dodajSpolkeDoIndeksu(){
         if(!getLista().getSelectionModel().isEmpty()){
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
-            synchronized(Main.getContainer()){
+            synchronized(Main.getMonitor()){
                 Spolka spolka = new Spolka(ind.getRynek());
+                spolka.setIndeksSpolki(ind);
                 ind.dodajSpolke(spolka);
                 spolkiListView.getItems().add(spolka.getName());
             }

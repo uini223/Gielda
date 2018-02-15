@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import posiadajacyPieniadze.Inwestor;
+import rynekwalut.RynekWalut;
 
 import java.io.*;
 
@@ -75,8 +76,10 @@ public class Main extends Application {
         Thread thread;
         Rynek rynek;
         for(int i=0;i<10;i++){
-            if(i<3){
+            if(i<2){
                 rynek = new GieldaPapierowWartosciowych();
+                getContainer().addRynek(rynek);
+                rynek = new RynekWalut();
                 getContainer().addRynek(rynek);
             }
             inwestor = new Inwestor();

@@ -9,10 +9,7 @@ import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public  class Container implements Serializable {
     private  volatile HashMap<String, Stage> stageHashMap ;
@@ -23,6 +20,8 @@ public  class Container implements Serializable {
 
     private volatile HashMap<String, Waluta> hashMapWalut;
 
+    private volatile HashSet<Waluta> walutaSet;
+
     private volatile HashMap<String, Spolka> hashMapSpolek;
 
     private volatile HashMap<String, Indeks> hashMapIndeksow;
@@ -30,6 +29,7 @@ public  class Container implements Serializable {
     private volatile Date date;
 
     public  Container() {
+        walutaSet = new HashSet<>();
         stageHashMap = new HashMap<>();
         hashMapRynkow = new HashMap<>();
         hashMapInwestorow = new HashMap<>();
@@ -125,7 +125,16 @@ public  class Container implements Serializable {
             name+=characters[(int)(Math.random()*1000)%26];
         }
         Waluta waluta = new Waluta(name);
+        walutaSet.add(waluta);
         addWaluta(name,waluta);
         return waluta;
+    }
+
+    public HashSet<Waluta> getWalutaSet() {
+        return walutaSet;
+    }
+
+    public void setWalutaSet(HashSet<Waluta> walutaSet) {
+        this.walutaSet = walutaSet;
     }
 }

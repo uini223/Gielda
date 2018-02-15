@@ -2,6 +2,7 @@ package posiadajacyPieniadze;
 
 import gield.Inwestycja;
 import main.Main;
+import rynekwalut.Waluta;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

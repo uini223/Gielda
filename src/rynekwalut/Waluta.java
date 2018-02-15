@@ -22,6 +22,14 @@ public class Waluta extends Inwestycja {
         return cenaWPLN*przelicznik;
     }
 
+    public double getPrzelicznik() {
+        return przelicznik;
+    }
+
+    public void setPrzelicznik(double przelicznik) {
+        this.przelicznik = przelicznik;
+    }
+
     public Waluta(String nazwa) {
         super( nazwa,0);
 

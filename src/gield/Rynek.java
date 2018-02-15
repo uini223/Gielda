@@ -95,6 +95,10 @@ public abstract class Rynek implements Listable, Serializable{
     public double getMarzaOdTransakcji() {
         return marzaOdTransakcji;
     }
+    public double pobierzMarze(double kwota) {
+        double marza = getMarzaOdTransakcji()/100;
+        return kwota+(kwota*marza);
+    }
 
     public void setMarzaOdTransakcji(double marzaOdTransakcji) {
         this.marzaOdTransakcji = marzaOdTransakcji;

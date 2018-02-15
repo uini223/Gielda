@@ -65,34 +65,31 @@
                </padding></ListView>
             <Accordion fx:id="accordion" HBox.hgrow="ALWAYS">
               <panes>
-                <TitledPane animated="false" text="Spolki">
+                  <TitledPane animated="false" layoutX="13.0" layoutY="38.0" text="Waluty">
                      <content>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Nazwa" />
-                                    <TextField />
-                                    <Label text="Kapiał Własny" />
-                                    <TextField />
-                                    <Label text="Kapitał Zakładowy" />
-                                    <TextField />
-                                    <Label text="Liczba Akcji" />
-                                    <TextField />
+                                    <TextField fx:id="walutyNazwaTextField1" />
+                                    <Label text="Początkowy kurs" />
+                                    <TextField fx:id="walutyPoczatkowyKurs" />
+                                    <Label text="Obecny kurs" />
+                                    <TextField fx:id="walutyObecnyKurs" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding></VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 </padding>
+                              </VBox>
+                              <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Indeks" />
-                                    <TextField />
                                     <Label text="Gielda" />
-                                    <TextField />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Button" HBox.hgrow="ALWAYS">
+                                    <TextField fx:id="walutyGieldaTextField1" />
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
@@ -105,7 +102,69 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </VBox>
+                              <VBox prefHeight="385.0" prefWidth="182.0">
+                                 <children>
+                                    <Label text="Inwestorzy" />
+                                    <ListView fx:id="walutyInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
                            </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </TitledPane>
+                <TitledPane animated="false" text="Spolki">
+                     <content>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Nazwa" />
+                                    <TextField fx:id="spolkiNazwaTextField" />
+                                    <Label text="Kapiał Własny" />
+                                    <TextField fx:id="spolkiKapitalWlasnyTextField" />
+                                    <Label text="Kapitał Zakładowy" />
+                                    <TextField fx:id="spolkiKapitalZakladowyTextField" />
+                                    <Label text="Liczba Akcji" />
+                                    <TextField fx:id="spolkiLiczbaAkcjiTextField" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding></VBox>
+                              <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Indeks" />
+                                    <TextField fx:id="spolkiIndeksTextField" />
+                                    <Label text="Gielda" />
+                                    <TextField fx:id="spolkiGieldaTextField" />
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox prefHeight="385.0" prefWidth="182.0">
+                                 <children>
+                                    <Label text="Inwestorzy" />
+                                    <ListView fx:id="spolkiInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
                         </HBox>
                      </content></TitledPane>
                   <TitledPane animated="false" text="Indeksy">
