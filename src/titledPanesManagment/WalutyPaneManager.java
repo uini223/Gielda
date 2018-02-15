@@ -39,6 +39,7 @@ public class WalutyPaneManager extends ManagerAbstract {
 
     @Override
     public void onSelectedItem() {
+        inwestorzyListView.getItems().clear();
         Waluta waluta = (Waluta) getLista().getSelectionModel().getSelectedItem();
         synchronized (Main.getMonitor()){
             nazwyTextField.setText(waluta.toString());

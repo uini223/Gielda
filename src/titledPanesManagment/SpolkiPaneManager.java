@@ -33,6 +33,16 @@ public class SpolkiPaneManager extends ManagerAbstract {
     @Override
     public void usun() {
         //TODO safe delete
+        if(!getLista().getSelectionModel().isEmpty()){
+            synchronized (Main.getMonitor()) {
+                Spolka spolka = (Spolka) getLista().getSelectionModel().getSelectedItem();
+                spolka.getAkcjaSpolki().wyprzedajWszystko();
+                getLista().getItems().remove(spolka);
+                Main.getContainer().getHashMapSpolek().remove(spolka.getName());
+                spolka.getIndeksSpolki().getHashMapSpolek().remove(spolka.getName());
+            }
+
+        }
     }
 
     @Override

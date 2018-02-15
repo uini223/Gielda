@@ -56,6 +56,7 @@ public class RynekWalut extends Rynek {
     public void setHashMapWalut(HashMap<String, Waluta> hashMapWalut) {
         this.hashMapWalut = hashMapWalut;
     }
+
     private void kup(Waluta waluta,PosiadajacyPieniadze pp){
         int ilosc = (int)(Math.random()*10000);
         double kwota = ilosc*waluta.getPrzelicznik();
@@ -70,6 +71,7 @@ public class RynekWalut extends Rynek {
                 pp.getHashMapInwestycji().put(waluta,ilosc);
             }
             pp.setKapital(pp.getKapital()-kwota);
+            waluta.getSetInwestorow().add(pp);
             zmienKurs(waluta);
             waluta.addWartoscAkcji(waluta.getPrzelicznik());
         }
@@ -110,6 +112,7 @@ public class RynekWalut extends Rynek {
         kwota = pobierzMarze(kwota);
         if(ileSprzedanych==ilosc){
             pp.getHashMapInwestycji().remove(inwestycja);
+            waluta.getSetInwestorow().remove(pp);
         }
         else{
             pp.getHashMapInwestycji().put(inwestycja,ilosc-ileSprzedanych);

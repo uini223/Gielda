@@ -74,7 +74,7 @@
                                     <Label text="Nazwa" />
                                     <TextField fx:id="walutyNazwaTextField" />
                                     <Label text="Początkowy kurs" />
-                                    <TextField fx:id="walutyPoczatkowyKurs" />
+                                    <TextField fx:id="walutyPoczatkowyKursTextField" />
                                     <Label text="Obecny kurs" />
                                     <TextField fx:id="walutyObecnyKursTextField" />
                                  </children>
@@ -89,7 +89,12 @@
                                  <children>
                                     <Label text="Gielda" />
                                     <TextField fx:id="walutyGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata" HBox.hgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Walut">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
@@ -142,7 +147,7 @@
                                     <TextField fx:id="spolkiIndeksTextField" />
                                     <Label text="Gielda" />
                                     <TextField fx:id="spolkiGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>

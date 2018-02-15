@@ -3,6 +3,7 @@ package titledPanesManagment;
 import controllers.Listable;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.Indeks;
 import javafx.scene.control.*;
 import main.Main;
 import rynekSurowcow.RynekSurowcow;
