@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import posiadajacyPieniadze.Inwestor;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.RynekWalut;
 
 import java.io.*;
@@ -51,7 +52,6 @@ public class Main extends Application {
         }
 
     }
-    //TODO nowe watki, ogarnac rynek walut
     private void wczytajKontener() throws FileNotFoundException {
         try {
             ObjectInputStream in = new ObjectInputStream(
@@ -67,25 +67,24 @@ public class Main extends Application {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.out.println("Nie udało się wczytać zapisu");
         }
     }
     private void nowyStan(){
         ThreadGroup threadGroup = new ThreadGroup("Ala");
-        Inwestor inwestor;
-        Thread thread;
         Rynek rynek;
+        PosiadajacyPieniadze pp;
+        Thread thread;
         for(int i=0;i<10;i++){
             if(i<2){
                 rynek = new GieldaPapierowWartosciowych();
-                getContainer().addRynek(rynek);
+                kontener.addRynek(rynek);
                 rynek = new RynekWalut();
-                getContainer().addRynek(rynek);
+                kontener.addRynek(rynek);
             }
-            inwestor = new Inwestor();
-            thread = new Thread(threadGroup,inwestor);
+            pp = new Inwestor();
+            kontener.addPosiadajacyPieniadze(pp);
+            thread = new Thread(threadGroup,pp);
             thread.setDaemon(true);
-            getContainer().addPosiadajacyPieniadze(inwestor);
             thread.start();
         }
     }
@@ -93,8 +92,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         //wczytajKontener();
         nowyStan();
-
         mainStage = primaryStage;
+        String name = "../views/";
         Parent root;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/MainView.fxml"));
         setUserAgentStylesheet(STYLESHEET_CASPIAN);

@@ -21,6 +21,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private IndeksyPaneManager indeksyPaneManager;
     private SpolkiPaneManager spolkiPaneManager;
     private ManagerAbstract manager;
+    private WalutyPaneManager walutyPaneManager;
     @FXML
     private BorderPane layout;
     @FXML
@@ -48,6 +49,9 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
             spolkiGieldaTextField;
     @FXML
+    private TextField walutyNazwaTextField,walutyPczatkowyKursTextField,walutyObecnyKursTextField,
+            walutyGieldaTextField;
+    @FXML
     private ListView<PosiadajacyPieniadze> spolkiInwestorzyListView,walutyInwestorzyListView;
 
     public PanelKontrolnyViewController(){
@@ -70,6 +74,9 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         spolkiPaneManager = new SpolkiPaneManager(lista,accordion, spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
                 spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
                 spolkiGieldaTextField, spolkiInwestorzyListView);
+
+        walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPczatkowyKursTextField,
+                walutyObecnyKursTextField, walutyGieldaTextField, walutyInwestorzyListView);
 
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){
@@ -133,13 +140,11 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     }
 
     @FXML
-    private void dodajNowyButtonAction(){
-        manager.dodajNowy();
-    }
+    private void dodajNowyButtonAction(){ manager.dodajNowy(); }
 
     @FXML
     private void dodajSpolkeAction(){
-        indeksyPanemanager.dodajSpolkeDoIndeksu();
+        indeksyPaneManager.dodajSpolkeDoIndeksu();
     }
 
 }

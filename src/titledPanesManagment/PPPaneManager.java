@@ -88,11 +88,9 @@ public class PPPaneManager extends ManagerAbstract {
 
     @Override
     public void wczytajListe() {
-        getLista().getItems().clear();
+        //getLista().getItems().clear();
         synchronized (Main.getMonitor()) {
-            for (String r : Main.getContainer().getHashMapInwestorow().keySet()) {
-                getLista().getItems().add(Main.getContainer().getPP(r));
-            }
+            getLista().getItems().addAll(Main.getContainer().getHashMapInwestorow().values());
         }
         if (typChoiceBox.getItems().isEmpty()) {
             typChoiceBox.getItems().add("Fundusz Inwestycyjny");
