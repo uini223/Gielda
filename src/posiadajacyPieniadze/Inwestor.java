@@ -28,33 +28,36 @@ public class Inwestor extends PosiadajacyPieniadze {
 
     @Override
     public void kupInwestycje()  {
-        System.out.println("Kupuje");
-        int size, i = 0, rnd;
-        size = Main.getContainer().getHashMapRynkow().keySet().size();
-        rnd = (int) (Math.random() * 100) % size;
-        for (String s : Main.getContainer().getHashMapRynkow().keySet()
-                ) {
-            if (i == rnd) {
-                Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+        synchronized (Main.getMonitor()) {
+            int size, i = 0, rnd;
+            size = Main.getContainer().getHashMapRynkow().keySet().size();
+            rnd = (int) (Math.random() * 100) % size;
+            for (String s : Main.getContainer().getHashMapRynkow().keySet()
+                    ) {
+                if (i == rnd) {
+                    Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+                }
+                i++;
             }
-            i++;
         }
     }
 
     @Override
     public void sprzedajInwestycje() {
-        System.out.println("Sprzedaje");
-        if(!getHashMapInwestycji().keySet().isEmpty()) {
+        if (!getHashMapInwestycji().keySet().isEmpty()) {
             int rnd = (int) (Math.random() * 100) % getHashMapInwestycji().keySet().size();
             int i = 0;
+            Inwestycja inwestycja = null;
             for (Inwestycja inw : getHashMapInwestycji().keySet()
                     ) {
                 if (rnd == i) {
-                    inw.getRynek().sprzedaz(inw,this);
+                    inwestycja = inw;
                 }
                 i++;
             }
+            inwestycja.getRynek().sprzedaz(inwestycja,this);
         }
+
     }
     public void kupJednostkiUczestictwa() {
 
@@ -71,6 +74,7 @@ public class Inwestor extends PosiadajacyPieniadze {
                 synchronized(Main.getMonitor()) {
                     Main.getMonitor().wait();
                     kupInwestycje();
+
                     sprzedajInwestycje();
                 }
             } catch (InterruptedException e) {

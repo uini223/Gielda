@@ -5,6 +5,7 @@ import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.stage.Stage;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekSurowcow.Surowiec;
 import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
@@ -26,9 +27,15 @@ public  class Container implements Serializable {
 
     private volatile HashMap<String, Indeks> hashMapIndeksow;
 
+    private volatile HashMap<String, Surowiec> hashMapSurowcow;
+
+    private volatile HashSet<Surowiec> surowiecSet;
+
     private volatile Date date;
 
     public  Container() {
+        surowiecSet = new HashSet<>();
+        hashMapSurowcow = new HashMap<>();
         walutaSet = new HashSet<>();
         stageHashMap = new HashMap<>();
         hashMapRynkow = new HashMap<>();
@@ -136,5 +143,37 @@ public  class Container implements Serializable {
 
     public void setWalutaSet(HashSet<Waluta> walutaSet) {
         this.walutaSet = walutaSet;
+    }
+
+    public Surowiec addNewSurowiec(){
+        Waluta waluta=null;
+        int a = (int)(Math.random()*1000)%hashMapWalut.values().size();
+        int n = 0;
+        for (Waluta w :
+                hashMapWalut.values()) {
+            if (a == n) {
+                waluta = w;
+            }
+            n++;
+        }
+        Surowiec surowiec = new Surowiec("Maliny"+String.valueOf(Math.random()*100),"Kg",waluta);
+        surowiecSet.add(surowiec);
+        hashMapSurowcow.put(surowiec.getNazwa(),surowiec);
+        return surowiec;
+    }
+    public HashMap<String, Surowiec> getHashMapSurowcow() {
+        return hashMapSurowcow;
+    }
+
+    public void setHashMapSurowcow(HashMap<String, Surowiec> hashMapSurowcow) {
+        this.hashMapSurowcow = hashMapSurowcow;
+    }
+
+    public HashSet<Surowiec> getSurowiecSet() {
+        return surowiecSet;
+    }
+
+    public void setSurowiecSet(HashSet<Surowiec> surowiecSet) {
+        this.surowiecSet = surowiecSet;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class Inwestycja implements Listable, Serializable{
     private Rynek rynek;
 
-    private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc;
+    private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc,poczatkowaWartosc;
 
     private String nazwa;
 
@@ -23,6 +23,8 @@ public abstract class Inwestycja implements Listable, Serializable{
     public Inwestycja(String nazwa, double aktualnaWartosc) {
         this.nazwa = nazwa;
         this.aktualnaWartosc = aktualnaWartosc;
+        najmniejszaWartosc = aktualnaWartosc;
+        najwiekszaWartosc = aktualnaWartosc;
         listaWartosciWCzasie = new HashMap<>();
         setInwestorow = new HashSet<>();
     }
@@ -44,6 +46,12 @@ public abstract class Inwestycja implements Listable, Serializable{
     public void addWartoscAkcji(double wartoscAkcji){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh");
         synchronized (Main.getMonitor()){
+            if(wartoscAkcji<najmniejszaWartosc){
+                najmniejszaWartosc = wartoscAkcji;
+            }
+            if(wartoscAkcji>najwiekszaWartosc){
+                najwiekszaWartosc = wartoscAkcji;
+            }
             aktualnaWartosc = wartoscAkcji;
             listaWartosciWCzasie.put(df.format(Main.getContainer().getDate()),wartoscAkcji);
         }
@@ -85,5 +93,17 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     public void setNajmniejszaWartosc(double najmniejszaWartosc) {
         this.najmniejszaWartosc = najmniejszaWartosc;
+    }
+
+    public void setAktualnaWartosc(double aktualnaWartosc) {
+        this.aktualnaWartosc = aktualnaWartosc;
+    }
+
+    public double getPoczatkowaWartosc() {
+        return poczatkowaWartosc;
+    }
+
+    public void setPoczatkowaWartosc(double poczatkowaWartosc) {
+        this.poczatkowaWartosc = poczatkowaWartosc;
     }
 }

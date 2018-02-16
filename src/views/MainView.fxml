@@ -42,7 +42,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" onAction="#openOknoUjeciaView" text="Delete" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -70,11 +70,11 @@
       <VBox prefHeight="340.0" prefWidth="111.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Najmniejsza Wartość" />
-            <TextField />
+            <TextField fx:id="najmniejszaWartoscTextField" />
             <Label text="Największa Wartość" />
-            <TextField />
+            <TextField fx:id="najwiekszaWartoscTextField" />
             <Label text="Obecna Wartość" />
-            <TextField />
+            <TextField fx:id="obecnaWartoscTextField" />
             <Label text="Label" />
          </children>
          <BorderPane.margin>

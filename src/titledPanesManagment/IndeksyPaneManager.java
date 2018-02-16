@@ -115,7 +115,8 @@ public class IndeksyPaneManager extends ManagerAbstract {
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
             synchronized(Main.getMonitor()){
                 Spolka spolka = new Spolka(ind.getRynek());
-                spolka.setIndeksSpolki(ind);
+                spolka.getHashSetIndeksow().add(ind);
+                Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
                 ind.dodajSpolke(spolka);
                 spolkiListView.getItems().add(spolka.getName());
             }

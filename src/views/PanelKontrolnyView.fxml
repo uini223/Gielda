@@ -65,6 +65,68 @@
                </padding></ListView>
             <Accordion fx:id="accordion" HBox.hgrow="ALWAYS">
               <panes>
+                  <TitledPane animated="false" layoutX="13.0" layoutY="13.0" text="Surowce">
+                     <content>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Nazwa" />
+                                    <TextField fx:id="surowceNazwaTextField" />
+                                    <Label text="Początkowy kurs" />
+                                    <TextField fx:id="surowcePoczatkowyKursTextField" />
+                                    <Label text="Obecny kurs" />
+                                    <TextField fx:id="surowceObecnyKursTextField" />
+                                    <Label text="Jednostka Handlowa" />
+                                    <TextField fx:id="surowceJednostkaTextField" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Gielda" />
+                                    <TextField fx:id="surowceGieldaTextField" />
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata" HBox.hgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Walut">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="22.0" prefWidth="155.0" text="Dodaj Walute do swiata">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox prefHeight="385.0" prefWidth="182.0">
+                                 <children>
+                                    <Label text="Inwestorzy" />
+                                    <ListView fx:id="surowceInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </TitledPane>
                   <TitledPane animated="false" layoutX="13.0" layoutY="38.0" text="Waluty">
                      <content>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
@@ -139,6 +201,13 @@
                                     <TextField fx:id="spolkiKapitalZakladowyTextField" />
                                     <Label text="Liczba Akcji" />
                                     <TextField fx:id="spolkiLiczbaAkcjiTextField" />
+                                    <Label text="Gielda" />
+                                    <TextField fx:id="spolkiGieldaTextField" />
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -148,15 +217,8 @@
                                  </padding></VBox>
                               <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label text="Indeks" />
-                                    <TextField fx:id="spolkiIndeksTextField" />
-                                    <Label text="Gielda" />
-                                    <TextField fx:id="spolkiGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Button>
+                                    <Label text="Indeksy" />
+                                    <ListView fx:id="spolkiIndeksListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

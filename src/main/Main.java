@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekSurowcow.RynekSurowcow;
 import rynekwalut.RynekWalut;
 
 import java.io.*;
@@ -74,11 +75,13 @@ public class Main extends Application {
         Rynek rynek;
         PosiadajacyPieniadze pp;
         Thread thread;
-        for(int i=0;i<10;i++){
+        for(int i=0;i<15;i++){
             if(i<2){
                 rynek = new GieldaPapierowWartosciowych();
                 kontener.addRynek(rynek);
                 rynek = new RynekWalut();
+                kontener.addRynek(rynek);
+                rynek = new RynekSurowcow();
                 kontener.addRynek(rynek);
             }
             pp = new Inwestor();

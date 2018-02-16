@@ -1,5 +1,6 @@
 package controllers;
 
+import gieldaPapierowWartosciowych.Indeks;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private SpolkiPaneManager spolkiPaneManager;
     private ManagerAbstract manager;
     private WalutyPaneManager walutyPaneManager;
+    private SurowcePaneManager surowcePaneManager;
     @FXML
     private BorderPane layout;
     @FXML
@@ -43,16 +45,20 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             ppTypTextField;
     @FXML
     private TextField indeksyNazwaTextField,indeksyGieldaTextField;
-
+    @FXML
+    private ListView<Indeks> spolkiIndeksListView;
     @FXML
     private TextField spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
-            spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
-            spolkiGieldaTextField;
+            spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiGieldaTextField;
     @FXML
     private TextField walutyNazwaTextField,walutyPoczatkowyKursTextField,walutyObecnyKursTextField,
             walutyGieldaTextField;
     @FXML
-    private ListView<PosiadajacyPieniadze> spolkiInwestorzyListView,walutyInwestorzyListView;
+    private TextField surowceNazwaTextField,surowcePoczatkowyKursTextField,surowceObecnyKursTextField,
+            surowceJednostkaTextField,surowceGieldaTextField;
+    @FXML
+    private ListView<PosiadajacyPieniadze> spolkiInwestorzyListView,walutyInwestorzyListView,
+            surowceInwestorzyListView;
 
     public PanelKontrolnyViewController(){
 
@@ -72,11 +78,15 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                 ,indeksyTypChoiceBox,indeksySpolkiListView);
 
         spolkiPaneManager = new SpolkiPaneManager(lista,accordion, spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
-                spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksTextField,
+                spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksListView,
                 spolkiGieldaTextField, spolkiInwestorzyListView);
 
         walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPoczatkowyKursTextField,
                 walutyObecnyKursTextField, walutyGieldaTextField, walutyInwestorzyListView);
+
+        surowcePaneManager = new SurowcePaneManager(lista,accordion,surowceNazwaTextField,
+                surowcePoczatkowyKursTextField,surowceObecnyKursTextField,surowceJednostkaTextField,
+                surowceGieldaTextField,surowceInwestorzyListView);
 
         lista.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){
@@ -110,7 +120,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                                 break;
                             }
                             case "Surowce":{
-
+                                manager = surowcePaneManager;
                                 break;
                             }
                         }

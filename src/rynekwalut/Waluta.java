@@ -40,6 +40,9 @@ public class Waluta extends Inwestycja {
         else{
             przelicznik = Math.random()*5;
         }
+        setAktualnaWartosc(przelicznik);
+        setNajmniejszaWartosc(przelicznik);
+        setNajwiekszaWartosc(przelicznik);
     }
 
     @Override

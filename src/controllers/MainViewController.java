@@ -32,6 +32,7 @@ import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
 import java.beans.EventHandler;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -46,7 +47,7 @@ public class MainViewController implements Initializable, Controllable {
     @FXML
     private Button odswiezButton;
     @FXML
-    private TextField najmniejszaWartosc;
+    private TextField najmniejszaWartoscTextField,najwiekszaWartoscTextField,obecnaWartoscTextField;
     @FXML
     private ChoiceBox<String> aktywaChoiceBox;
     @FXML
@@ -154,6 +155,14 @@ public class MainViewController implements Initializable, Controllable {
                         }
                     }
                 }
+                case "Surowce":{
+                    synchronized (Main.getMonitor()){
+                        rynek = rynekChoiceBox.getValue();
+                        if(rynek instanceof RynekSurowcow){
+                            listaAkcji.getItems().addAll(((RynekSurowcow) rynek).getHashMapSurowcow().values());
+                        }
+                    }
+                }
             }
         }
     }
@@ -214,6 +223,9 @@ public class MainViewController implements Initializable, Controllable {
                 seria.setData(dane.sorted());
                 wykresWartosci.getData().clear();
                 wykresWartosci.getData().add(seria);
+                najmniejszaWartoscTextField.setText(String.valueOf(inwestycja.getNajmniejszaWartosc()));
+                najwiekszaWartoscTextField.setText(String.valueOf(inwestycja.getNajwiekszaWartosc()));
+                obecnaWartoscTextField.setText(String.valueOf(inwestycja.getAktualnaWartosc()));
             }
         }
     }
@@ -244,5 +256,27 @@ public class MainViewController implements Initializable, Controllable {
         }
         makeOdswiezButtonInvisible();
 
+    }
+    @FXML
+    private void openOknoUjeciaView() throws IOException {
+        boolean canCreate = true;
+        String title = "Okno Rysowania Ujecia Procentowego";
+        for (Stage s : FXRobotHelper.getStages()
+                ) {
+            if (s.getTitle().equals(title)) canCreate = false;
+        }
+        if (canCreate) {
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("../views/OknoUjeciaProcentowegoView.fxml"));
+            Parent root;
+            root = loader.load();
+            Controllable kontroler = loader.getController();
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, 900, 500));
+            stage.initOwner(myStage);
+            kontroler.setStage(stage);
+            stage.show();
+        }
     }
 }

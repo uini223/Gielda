@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RynekWalut extends Rynek {
+
     private HashMap<String,Waluta> hashMapWalut;
+
     public RynekWalut() {
         super();
         hashMapWalut = new HashMap<>();
@@ -22,6 +24,10 @@ public class RynekWalut extends Rynek {
             this.setWaluta(Main.getContainer().getHashMapWalut().get("PLN"));
         }
     }
+
+    /**
+     * Dodaje nową walute do rynku
+     */
     private void addNewWaluta() {
        synchronized (Main.getMonitor()){
             int size = Main.getContainer().getWalutaSet().size();
@@ -57,6 +63,11 @@ public class RynekWalut extends Rynek {
         this.hashMapWalut = hashMapWalut;
     }
 
+    /**
+     * @param waluta
+     * @param pp
+     * Funkcja pomocnicza do operacji zakupu na rynku walut
+     */
     private void kup(Waluta waluta,PosiadajacyPieniadze pp){
         int ilosc = (int)(Math.random()*10000);
         double kwota = ilosc*waluta.getPrzelicznik();
@@ -78,18 +89,28 @@ public class RynekWalut extends Rynek {
     }
 
 
+    /**
+     * @param waluta
+     * ustala nowy kurs po zakupie
+     */
     private void zmienKurs(Waluta waluta){
-        double old = waluta.getPrzelicznik();
-        int rnd = (int)(Math.random()*100)%10+1;
-        double wartosc = (old*((double)rnd/100));
-        int plus = (int)(Math.random()*100);
-        if(plus%2==0){
-            waluta.setPrzelicznik(old+wartosc);
-        }
-        else {
-            waluta.setPrzelicznik(old-wartosc);
+        synchronized (Main.getMonitor()) {
+            double old = waluta.getPrzelicznik();
+            int rnd = (int) (Math.random() * 100) % 10 + 1;
+            double wartosc = (old * ((double) rnd / 100));
+            int plus = (int) (Math.random() * 100);
+            if (plus % 2 == 0) {
+                waluta.setPrzelicznik(old + wartosc);
+            } else {
+                waluta.setPrzelicznik(old - wartosc);
+            }
         }
     }
+
+    /**
+     * @param pp
+     * metoda wywoływana przez inwestorow/fundusze do zakupu losowego towaru z rynku
+     */
     @Override
     public void kupno(PosiadajacyPieniadze pp) {
         int a =(int)(Math.random()*1000)%hashMapWalut.keySet().size();
@@ -103,11 +124,16 @@ public class RynekWalut extends Rynek {
         }
     }
 
+    /**
+     * @param inwestycja
+     * @param pp
+     * metoda wywoływana przez inwestorow/fundusze do sprzedazy posiadanego aktywa, ktore jest w tym rynku
+     */
     @Override
     public void sprzedaz(Inwestycja inwestycja, PosiadajacyPieniadze pp) {
         Waluta waluta = (Waluta) inwestycja;
         int ilosc = (int) pp.getHashMapInwestycji().get(inwestycja);
-        int ileSprzedanych = (int) (Math.random()*10000)%ilosc;
+        int ileSprzedanych = (int) (Math.random()*10000)%ilosc+1;
         double kwota = ileSprzedanych*waluta.getPrzelicznik();
         kwota = pobierzMarze(kwota);
         if(ileSprzedanych==ilosc){

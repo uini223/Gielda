@@ -3,6 +3,7 @@ package gieldaPapierowWartosciowych;
 import controllers.Listable;
 import gield.Inwestycja;
 import gield.Rynek;
+import main.Main;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -32,7 +33,8 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
         Spolka spolka;
         for (int i = 0; i < 3; i++) {
             spolka = new Spolka(rodzic);
-            spolka.setIndeksSpolki(this);
+            spolka.getHashSetIndeksow().add(this);
+            Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
             hashMapSpolek.put(spolka.getName(),spolka);
         }
         rodzic.addIndeks(this);

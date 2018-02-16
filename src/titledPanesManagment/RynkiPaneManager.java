@@ -42,8 +42,13 @@ public class RynkiPaneManager extends ManagerAbstract {
                 nazwaTextField.setText(rynek.getNazwa());
                 ulicaTextField.setText(rynek.getAdres().getNazwaUlicy());
                 marzaTextField.setText(String.valueOf(rynek.getMarzaOdTransakcji()));
-                walutaTextField.setText(rynek.getWaluta().toString());
                 typRynkuTextField.setText(rynek.getClass().toString());
+                if(rynek instanceof RynekSurowcow){
+                    walutaTextField.setText("<none>");
+                }
+                else{
+                    walutaTextField.setText(rynek.getWaluta().toString());
+                }
             }
 
         }

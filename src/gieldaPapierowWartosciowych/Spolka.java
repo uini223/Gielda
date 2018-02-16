@@ -30,8 +30,11 @@ public class Spolka implements Runnable, Serializable, Listable
 
     private Indeks indeksSpolki;
 
+    private HashSet<Indeks> hashSetIndeksow;
+
     public Spolka(Rynek rynek) {
         //super(nazwa);
+        hashSetIndeksow = new HashSet<>();
         name = losowaNazwa();
         dataPierwszejWyceny = new Date();
         kapitalZakladowy = Math.random()*1000000;
@@ -126,9 +129,11 @@ public class Spolka implements Runnable, Serializable, Listable
         }
         if(aktualnyKurs<getMinimalnyKurs()){
             setMinimalnyKurs(aktualnyKurs);
+            akcjaSpolki.setNajmniejszaWartosc(aktualnyKurs);
         }
         if(aktualnyKurs>getMaksymalnyKurs()){
             setMaksymalnyKurs(aktualnyKurs);
+            akcjaSpolki.setNajwiekszaWartosc(aktualnyKurs);
         }
         getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
     }
@@ -177,5 +182,12 @@ public class Spolka implements Runnable, Serializable, Listable
         this.indeksSpolki = indeksSpolki;
     }
 
+    public HashSet<Indeks> getHashSetIndeksow() {
+        return hashSetIndeksow;
+    }
+
+    public void setHashSetIndeksow(HashSet<Indeks> hashSetIndeksow) {
+        this.hashSetIndeksow = hashSetIndeksow;
+    }
 }
 

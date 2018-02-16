@@ -13,20 +13,22 @@ import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 public class SpolkiPaneManager extends ManagerAbstract {
 
-    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,indeks,gielda;
+    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,gielda;
 
     private ListView<PosiadajacyPieniadze> listaInwestorow;
 
+    private ListView<Indeks> listaIndeksow;
+
     public SpolkiPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwa,
                              TextField kapitalWlasny, TextField kapitalZakladowy, TextField liczbaAkcji,
-                             TextField indeks, TextField gielda, ListView<PosiadajacyPieniadze> listaInwestorow) {
+                             ListView<Indeks> listaIndeksow, TextField gielda, ListView<PosiadajacyPieniadze>
+                                     listaInwestorow) {
         super(lista, accordion);
+        this.listaIndeksow = listaIndeksow;
         this.nazwa = nazwa;
         this.kapitalWlasny = kapitalWlasny;
         this.kapitalZakladowy = kapitalZakladowy;
         this.liczbaAkcji = liczbaAkcji;
-        this.indeks = indeks;
-
         this.gielda = gielda;
         this.listaInwestorow = listaInwestorow;
         setName("Spolki");
@@ -43,12 +45,14 @@ public class SpolkiPaneManager extends ManagerAbstract {
                 Main.getContainer().getHashMapSpolek().remove(spolka.getName());
 
                 GieldaPapierowWartosciowych rynek = (GieldaPapierowWartosciowych) spolka.getAkcjaSpolki().getRynek();
-                if(spolka.getIndeksSpolki().getHashMapSpolek().size()==1){
-                    Indeks ind = spolka.getIndeksSpolki();
-                    Main.getContainer().getHashMapIndeksow().remove(ind.getNazwa());
-                    rynek.getHashMapIndeksow().remove(ind.getNazwa());
+                for (Indeks i :
+                        spolka.getHashSetIndeksow()) {
+                    if(i.getHashMapSpolek().size()==1){
+                        Main.getContainer().getHashMapIndeksow().remove(i.getNazwa());
+                        rynek.getHashMapIndeksow().remove(i.getNazwa());
+                    }
+                    i.getHashMapSpolek().remove(spolka.getName());
                 }
-                spolka.getIndeksSpolki().getHashMapSpolek().remove(spolka.getName());
                 if(rynek.getHashMapSpolek().size()==1){
                     Main.getContainer().getHashMapRynkow().remove(rynek.getNazwa());
                 }
@@ -62,16 +66,16 @@ public class SpolkiPaneManager extends ManagerAbstract {
     public void clear() {
         nazwa.clear();
         kapitalWlasny.clear();
+        listaIndeksow.getItems().clear();
+        gielda.clear();
         kapitalZakladowy.clear();
         liczbaAkcji.clear();
-        indeks.clear();
-        gielda.clear();
         listaInwestorow.getItems().clear();
     }
 
     @Override
     public void onSelectedItem() {
-        listaInwestorow.getItems().clear();
+        clear();
         Spolka spolka;
         spolka = (Spolka) getLista().getSelectionModel().getSelectedItem();
         synchronized (Main.getMonitor()){
@@ -80,8 +84,8 @@ public class SpolkiPaneManager extends ManagerAbstract {
             kapitalZakladowy.setText(String.valueOf(spolka.getKapitalZakladowy()));
             kapitalWlasny.setText(String.valueOf(spolka.getKapitalWlasny()));
             liczbaAkcji.setText(String.valueOf(spolka.getLiczbaAkcji()));
-            indeks.setText(spolka.getIndeksSpolki().getNazwa());
             gielda.setText(spolka.getAkcjaSpolki().getRynek().getNazwa());
+            listaIndeksow.getItems().addAll(spolka.getHashSetIndeksow());
         }
     }
 
