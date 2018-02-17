@@ -7,6 +7,8 @@ import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.Waluta;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Rynek implements Listable, Serializable{
@@ -16,6 +18,7 @@ public abstract class Rynek implements Listable, Serializable{
     private Indeks indeks;
     private double marzaOdTransakcji;
     private double przelicznik;
+    private HashMap<String,Inwestycja> hashMapInwestycji;
 
     public double getPrzelicznik() {
         return przelicznik;
@@ -31,7 +34,7 @@ public abstract class Rynek implements Listable, Serializable{
             nazwyGield[i] += Integer.toString((int)(Math.random()*1000));
         }
 
-
+        hashMapInwestycji = new HashMap<>();
         nazwa = nazwyGield[(int)(Math.random()*100)%nazwyGield.length];
         this.kraj = "kraj";
 
@@ -102,6 +105,14 @@ public abstract class Rynek implements Listable, Serializable{
 
     public void setMarzaOdTransakcji(double marzaOdTransakcji) {
         this.marzaOdTransakcji = marzaOdTransakcji;
+    }
+
+    public HashMap<String, Inwestycja> getHashMapInwestycji() {
+        return hashMapInwestycji;
+    }
+
+    public void setHashMapInwestycji(HashMap<String, Inwestycja> hashMapInwestycji) {
+        this.hashMapInwestycji = hashMapInwestycji;
     }
 }
 

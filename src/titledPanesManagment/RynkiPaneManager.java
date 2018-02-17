@@ -1,9 +1,11 @@
 package titledPanesManagment;
 
 import controllers.Listable;
+import gield.Inwestycja;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
+import gieldaPapierowWartosciowych.Spolka;
 import javafx.scene.control.*;
 import main.Main;
 import rynekSurowcow.RynekSurowcow;
@@ -14,12 +16,16 @@ public class RynkiPaneManager extends ManagerAbstract {
     private TextField nazwaTextField,krajTextField,miastoTextField,ulicaTextField,
     typRynkuTextField,marzaTextField,walutaTextField;
 
+    private Button dodajButton;
+
     private ChoiceBox<String> typChoiceBox;
+
+    private ListView<Inwestycja> inwestycjaListView;
 
     public RynkiPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
                             TextField krajTextField, TextField miastoTextField, TextField ulicaTextField, TextField
-                            typRynkuTextField, TextField marzaTextField, TextField walutaTextField,
-                            ChoiceBox typChoiceBox) {
+                                    typRynkuTextField, TextField marzaTextField, TextField walutaTextField,
+                            Button dodajButton, ChoiceBox typChoiceBox, ListView<Inwestycja> inwestycjaListView) {
         super(lista,accordion);
         this.nazwaTextField = nazwaTextField;
         this.krajTextField = krajTextField;
@@ -28,13 +34,16 @@ public class RynkiPaneManager extends ManagerAbstract {
         this.typRynkuTextField = typRynkuTextField;
         this.marzaTextField = marzaTextField;
         this.walutaTextField = walutaTextField;
+        this.dodajButton = dodajButton;
         this.typChoiceBox = typChoiceBox;
+        this.inwestycjaListView = inwestycjaListView;
         setName("Rynki");
     }
 
     @Override
     public void onSelectedItem() {
         if(!getLista().getSelectionModel().isEmpty()) {
+            inwestycjaListView.getItems().clear();
             synchronized (Main.getMonitor()) {
                 Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
                 krajTextField.setText(rynek.getKraj());
@@ -46,13 +55,23 @@ public class RynkiPaneManager extends ManagerAbstract {
                 if(rynek instanceof RynekSurowcow){
                     walutaTextField.setText("<none>");
                     typRynkuTextField.setText("Rynek Surowcow");
+                    dodajButton.setText("Dodaj Surowiec");
+                    inwestycjaListView.getItems().addAll(((RynekSurowcow) rynek).getHashMapSurowcow().values());
                 }
                 else if (rynek instanceof RynekWalut){
                     walutaTextField.setText(rynek.getWaluta().toString());
                     typRynkuTextField.setText("Rynek Walut");
+                    dodajButton.setText("Dodaj Walute");
+                    inwestycjaListView.getItems().addAll(((RynekWalut) rynek).getHashMapWalut().values());
                 }
                 else if (rynek instanceof  GieldaPapierowWartosciowych){
                     typRynkuTextField.setText("GPW");
+                    dodajButton.setText("Dodaj Spółke");
+                    for (Spolka s :
+                            ((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().values()) {
+                        inwestycjaListView.getItems().add(s.getAkcjaSpolki());
+                    }
+
                 }
             }
 
@@ -86,6 +105,7 @@ public class RynkiPaneManager extends ManagerAbstract {
         walutaTextField.setText("");
         typRynkuTextField.clear();
         typChoiceBox.getItems().clear();
+        inwestycjaListView.getItems().clear();
     }
     @Override
     public void usun(){
@@ -141,5 +161,42 @@ public class RynkiPaneManager extends ManagerAbstract {
         clear();
         wczytajListe();
     }
-
+    public void dodajDoRynku(){
+        if(!getLista().getSelectionModel().isEmpty()){
+            Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
+            switch (dodajButton.getText()){
+                case "Dodaj Spółke":{
+                    if(rynek instanceof GieldaPapierowWartosciowych){
+                        int a = (int)(Math.random()*1000)%((GieldaPapierowWartosciowych) rynek).
+                                getHashMapIndeksow().values().size();
+                        int n=0;
+                        for (Indeks indeks :
+                                ((GieldaPapierowWartosciowych) rynek).getHashMapIndeksow().values()) {
+                            if (a == n) {
+                                Spolka s = new Spolka(rynek);
+                                indeks.dodajSpolke(s);
+                                Main.getContainer().getHashMapSpolek().put(s.getName(),s);
+                                s.getHashSetIndeksow().add(indeks);
+                            }
+                            n++;
+                        }
+                    }
+                    break;
+                }
+                case "Dodaj Walute":{
+                    if(rynek instanceof RynekWalut){
+                        ((RynekWalut) rynek).addNewWaluta();
+                    }
+                    break;
+                }
+                case "Dodaj Surowiec":{
+                    if(rynek instanceof RynekSurowcow){
+                        ((RynekSurowcow) rynek).addSurowiec();
+                    }
+                    break;
+                }
+            }
+            onSelectedItem();
+        }
+    }
 }

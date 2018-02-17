@@ -4,6 +4,8 @@ import controllers.Listable;
 import gield.Inwestycja;
 import gield.Rynek;
 import main.Main;
+import posiadajacyPieniadze.Inwestor;
+import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.io.Serializable;
 import java.util.*;
@@ -208,6 +210,15 @@ public class Spolka implements Runnable, Serializable, Listable
 
     public void setDataPierwszejWyceny(Date dataPierwszejWyceny) {
         this.dataPierwszejWyceny = dataPierwszejWyceny;
+    }
+
+    public void wyprzedajSpolke(double cena){
+        for (PosiadajacyPieniadze inwestor :
+                akcjaSpolki.getSetInwestorow()) {
+            double kwota = (int)inwestor.getHashMapInwestycji().get(akcjaSpolki)*cena;
+            inwestor.setKapital(inwestor.getKapital()+kwota);
+            inwestor.getHashMapInwestycji().remove(akcjaSpolki);
+        }
     }
 }
 

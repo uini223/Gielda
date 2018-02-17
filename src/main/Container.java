@@ -1,5 +1,6 @@
 package main;
 
+import daySimulation.DaySimulation;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
@@ -32,6 +33,8 @@ public  class Container implements Serializable {
     private volatile HashSet<Surowiec> surowiecSet;
 
     private volatile Date date;
+
+    private volatile transient DaySimulation daySimulation;
 
     public  Container() {
         surowiecSet = new HashSet<>();
@@ -175,5 +178,13 @@ public  class Container implements Serializable {
 
     public void setSurowiecSet(HashSet<Surowiec> surowiecSet) {
         this.surowiecSet = surowiecSet;
+    }
+
+    public DaySimulation getDaySimulation() {
+        return daySimulation;
+    }
+
+    public void setDaySimulation(DaySimulation daySimulation) {
+        this.daySimulation = daySimulation;
     }
 }

@@ -1,13 +1,17 @@
 package daySimulation;
 
 import controllers.MainViewController;
+import controllers.OknoUjeciaProcentowegoViewController;
+import javafx.application.Platform;
 import main.Main;
 
 public class DaySimulation implements Runnable{
 
     private volatile MainViewController mvc;
+    private volatile Refresher refresher;
 
     public DaySimulation() {
+        refresher = new Refresher();
     }
 
     public void setMvc(MainViewController mvc) {
@@ -17,6 +21,7 @@ public class DaySimulation implements Runnable{
     @Override
     public void run() {
         int i=0;
+        refresher.setMvc(mvc);
         while (true){
 
             synchronized (Main.getMonitor()) {
@@ -24,7 +29,8 @@ public class DaySimulation implements Runnable{
                 Main.getMonitor().notifyAll();
 
             }
-            mvc.updateAll();
+            //mvc.updateAll();
+            Platform.runLater(refresher);
             mvc.makeOdswiezButtonVisible();
 
             try {
@@ -33,5 +39,13 @@ public class DaySimulation implements Runnable{
                 e.printStackTrace();
             }
         }
+    }
+
+    public Refresher getRefresher() {
+        return refresher;
+    }
+
+    public void setRefresher(Refresher refresher) {
+        this.refresher = refresher;
     }
 }

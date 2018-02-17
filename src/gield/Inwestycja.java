@@ -72,11 +72,11 @@ public abstract class Inwestycja implements Listable, Serializable{
         return setInwestorow;
     }
 
-    public void wyprzedajWszystko(){
+    public void wyprzedajWszystko(double cena){
         for (PosiadajacyPieniadze pp :
                 getSetInwestorow()) {
             int ilosc = (int) pp.getHashMapInwestycji().get(this);
-            double kapital = pp.getKapital() + ilosc*getAktualnaWartosc();
+            double kapital = pp.getKapital() + ilosc * cena;
             pp.setKapital(kapital);
             pp.getHashMapInwestycji().remove(this);
         }

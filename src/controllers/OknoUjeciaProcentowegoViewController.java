@@ -26,6 +26,9 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
     private ListView<Inwestycja> allListView,usedListView;
     @FXML
     private LineChart<String,Number> wykresWartosci;
+
+    private Stage myStage;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         synchronized (Main.getMonitor()){
@@ -37,16 +40,22 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
             allListView.getItems().addAll(Main.getContainer().getHashMapIndeksow().values());
             allListView.getItems().addAll(Main.getContainer().getHashMapWalut().values());
         }
+
     }
 
     @Override
     public void setStage(Stage stage) {
-
+        myStage = stage;
+        myStage.setOnCloseRequest(event -> {
+            synchronized (Main.getMonitor()){
+                Main.getContainer().getDaySimulation().getRefresher().setOupvc(null);
+            }
+        });
     }
 
     @Override
     public Stage getStage() {
-        return null;
+        return myStage;
     }
     @FXML
     private void pokazWykres(){
@@ -54,13 +63,9 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
         ArrayList<String> listaDat = new ArrayList<>();
         ArrayList<String> pom = new ArrayList<>();
         int notowania;
-        boolean var;
         synchronized (Main.getMonitor()) {
             for (Inwestycja i :
                     usedListView.getItems()) {
-                System.out.println(i.getNazwa());
-                System.out.println("-------");
-                var = false;
                 ObservableList<XYChart.Data<String, Number>> lista = FXCollections.observableArrayList();
                 XYChart.Series<String, Number> seria = new XYChart.Series<>();
                 int lp = 0;
@@ -91,7 +96,6 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
                 seria.setName(i.getNazwa());
                 wykresWartosci.getData().add(seria);
                 listaDat.clear();
-                System.out.println("-------");
             }
         }
     }
@@ -112,5 +116,8 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
             wykresWartosci.getData().remove(i);
             usedListView.getItems().remove(i);
         }
+    }
+    public void odswiez(){
+        pokazWykres();
     }
 }

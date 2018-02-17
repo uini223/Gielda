@@ -1,12 +1,12 @@
 package controllers;
 
+import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Indeks;
+import gieldaPapierowWartosciowych.Spolka;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import titledPanesManagment.*;
@@ -24,8 +24,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private ManagerAbstract manager;
     private WalutyPaneManager walutyPaneManager;
     private SurowcePaneManager surowcePaneManager;
-    @FXML
-    private BorderPane layout;
+
     @FXML
     ResourceBundle resources;
     @FXML
@@ -36,7 +35,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private ListView<Listable> lista;
     @FXML
-    private ListView<String> indeksySpolkiListView,ppInwestycjeListView;
+    private ListView<String> ppInwestycjeListView;
     @FXML
     private TextField rynkiNazwaTextField,rynkiKrajTextField,rynkiMiastoTextField,rynkiUlicaTextField,
             rynkiTypRynkuTextField,rynkiMarzaTextField,rynkiWalutaTextField;
@@ -48,7 +47,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private ListView<Indeks> spolkiIndeksListView;
     @FXML
-    private TextField spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
+    private TextField spolkiNazwaTextField, spolkiKapitalWlasnyTextField,spolkiNowaCenaTextField,
             spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiGieldaTextField;
     @FXML
     private TextField walutyNazwaTextField,walutyPoczatkowyKursTextField,walutyObecnyKursTextField,
@@ -59,7 +58,16 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private ListView<PosiadajacyPieniadze> spolkiInwestorzyListView,walutyInwestorzyListView,
             surowceInwestorzyListView;
-
+    @FXML
+    private Button rynkiDodajButton;
+    @FXML
+    private ListView<Inwestycja> rynkiInwestycjaListView;
+    @FXML
+    private ListView<Spolka> dostepneSpolkiListVIiew,indeksySpolkiListView;
+    @FXML
+    private ToggleGroup spolkiWykupToggleGroup;
+    @FXML
+    private RadioButton spolkiNowaCena,spolkiAktualnaCena;
     public PanelKontrolnyViewController(){
 
     }
@@ -69,17 +77,18 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
         rynkiPaneManager = new RynkiPaneManager(lista,accordion,rynkiNazwaTextField,rynkiKrajTextField,
                 rynkiMiastoTextField, rynkiUlicaTextField,rynkiTypRynkuTextField,rynkiMarzaTextField,
-                rynkiWalutaTextField, rynkiTypChoiceBox);
+                rynkiWalutaTextField, rynkiDodajButton, rynkiTypChoiceBox, rynkiInwestycjaListView);
 
         ppPaneManager = new PPPaneManager(lista,accordion,ppImieTextField,ppNazwiskoTextField,ppNazwaTextField,
                 ppPeselTextField,ppKapitalTextField,ppTypTextField,ppTypChoiceBox,ppInwestycjeListView);
 
         indeksyPaneManager = new IndeksyPaneManager(lista, accordion, indeksyNazwaTextField,indeksyGieldaTextField
-                ,indeksyTypChoiceBox,indeksySpolkiListView);
+                ,indeksyTypChoiceBox,indeksySpolkiListView, dostepneSpolkiListVIiew);
 
         spolkiPaneManager = new SpolkiPaneManager(lista,accordion, spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
-                spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiIndeksListView,
-                spolkiGieldaTextField, spolkiInwestorzyListView);
+                spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiNowaCenaTextField,
+                spolkiIndeksListView, spolkiGieldaTextField, spolkiInwestorzyListView,spolkiNowaCena,spolkiAktualnaCena,
+                spolkiWykupToggleGroup);
 
         walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPoczatkowyKursTextField,
                 walutyObecnyKursTextField, walutyGieldaTextField, walutyInwestorzyListView);
@@ -164,5 +173,17 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
     public void setMvc(MainViewController mvc) {
         this.mvc = mvc;
+    }
+    @FXML
+    private void dodajDoRynkuButtonAction(){
+        rynkiPaneManager.dodajDoRynku();
+    }
+    @FXML
+    private void usunSpolkeZIndeksu(){
+        indeksyPaneManager.usunSpolkeZIndeksu();
+    }
+    @FXML
+    private void dodajIstniejacaDoIndeksu(){
+        indeksyPaneManager.dodajInstiejacaDoIndeksu();
     }
 }

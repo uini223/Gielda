@@ -1,29 +1,32 @@
 package titledPanesManagment;
 
 import controllers.Listable;
-import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 public class SpolkiPaneManager extends ManagerAbstract {
 
-    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,gielda;
+    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,gielda,nowaCena;
 
     private ListView<PosiadajacyPieniadze> listaInwestorow;
 
     private ListView<Indeks> listaIndeksow;
 
+    private RadioButton nowaCenaRadioButton,aktualnaCenaRadioButton;
+
+    private ToggleGroup tg;
+
     public SpolkiPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwa,
                              TextField kapitalWlasny, TextField kapitalZakladowy, TextField liczbaAkcji,
-                             ListView<Indeks> listaIndeksow, TextField gielda, ListView<PosiadajacyPieniadze>
-                                     listaInwestorow) {
+                             TextField nowaCena, ListView<Indeks> listaIndeksow, TextField gielda,
+                             ListView<PosiadajacyPieniadze> listaInwestorow, RadioButton nowaCenaRadioButton,
+                             RadioButton aktualnaCenaRadioButton, ToggleGroup tg) {
         super(lista, accordion);
+        this.nowaCena = nowaCena;
         this.listaIndeksow = listaIndeksow;
         this.nazwa = nazwa;
         this.kapitalWlasny = kapitalWlasny;
@@ -31,6 +34,9 @@ public class SpolkiPaneManager extends ManagerAbstract {
         this.liczbaAkcji = liczbaAkcji;
         this.gielda = gielda;
         this.listaInwestorow = listaInwestorow;
+        this.nowaCenaRadioButton = nowaCenaRadioButton;
+        this.aktualnaCenaRadioButton = aktualnaCenaRadioButton;
+        this.tg = tg;
         setName("Spolki");
     }
 
@@ -39,11 +45,18 @@ public class SpolkiPaneManager extends ManagerAbstract {
         //TODO safe delete
         if(!getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getMonitor()) {
+                double cena=0;
                 Spolka spolka = (Spolka) getLista().getSelectionModel().getSelectedItem();
-                spolka.getAkcjaSpolki().wyprzedajWszystko();
+
+                if(tg.getSelectedToggle().equals(nowaCenaRadioButton)){
+                    cena = Double.parseDouble(nowaCena.getText());
+                }
+                else if(tg.getSelectedToggle().equals(aktualnaCenaRadioButton)){
+                    cena = spolka.getAktualnyKurs();
+                }
+                spolka.getAkcjaSpolki().wyprzedajWszystko(cena);
                 getLista().getItems().remove(spolka);
                 Main.getContainer().getHashMapSpolek().remove(spolka.getName());
-
                 GieldaPapierowWartosciowych rynek = (GieldaPapierowWartosciowych) spolka.getAkcjaSpolki().getRynek();
                 for (Indeks i :
                         spolka.getHashSetIndeksow()) {

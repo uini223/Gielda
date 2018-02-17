@@ -248,14 +248,24 @@ public class MainViewController implements Initializable, Controllable {
     }
 
     public void updateAll() {
-        Rynek rynek = rynekChoiceBox.getValue();
+        //Rynek rynek = rynekChoiceBox.getValue();
+        //rynekChoiceBox.getItems().clear();
+        HashSet<Rynek> rynekSet = new HashSet<>();
         synchronized (Main.getMonitor()){
-            for (String s :
-                    Main.getContainer().getHashMapRynkow().keySet()) {
-                if (!rynekChoiceBox.getItems().contains(Main.getContainer().getRynek(s))) {
-                    rynekChoiceBox.getItems().add(Main.getContainer().getRynek(s));
+            onListaAkcjiChoice();
+            for (Rynek rynek :
+                    Main.getContainer().getHashMapRynkow().values()) {
+                if(!rynekChoiceBox.getItems().contains(rynek)){
+                    rynekChoiceBox.getItems().add(rynek);
                 }
             }
+            for (Rynek rynek :
+                    rynekChoiceBox.getItems()) {
+                if (!Main.getContainer().getHashMapRynkow().containsValue(rynek)) {
+                    rynekSet.add(rynek);
+                }
+            }
+            rynekChoiceBox.getItems().removeAll(rynekSet);
             for (Indeks i :
                     Main.getContainer().getHashMapIndeksow().values()) {
                 i.aktualizujWartosc(1);
@@ -295,6 +305,10 @@ public class MainViewController implements Initializable, Controllable {
             stage.setScene(new Scene(root, 900, 500));
             stage.initOwner(myStage);
             kontroler.setStage(stage);
+            synchronized (Main.getMonitor()){
+                Main.getContainer().getDaySimulation().getRefresher().
+                        setOupvc((OknoUjeciaProcentowegoViewController) kontroler);
+            }
             stage.show();
         }
     }

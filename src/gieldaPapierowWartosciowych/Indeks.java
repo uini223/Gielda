@@ -87,7 +87,8 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
         return rodzic;
     }
     public void usunSpolke(Spolka a){
-
+        hashMapSpolek.remove(a.getName(),a);
+        rodzic.aktualizujSpolki();
     }
 
 }

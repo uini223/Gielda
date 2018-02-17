@@ -7,8 +7,10 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -167,7 +169,7 @@
                      <content>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Nazwa" />
                                     <TextField fx:id="spolkiNazwaTextField" />
@@ -179,11 +181,29 @@
                                     <TextField fx:id="spolkiLiczbaAkcjiTextField" />
                                     <Label text="Gielda" />
                                     <TextField fx:id="spolkiGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń">
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Wykup wszystkie akcje">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
+                                    <RadioButton fx:id="spolkiAktualnaCena" mnemonicParsing="false" text="Obecna cena">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="spolkiWykupToggleGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="162.0">
+                                       <children>
+                                          <RadioButton fx:id="spolkiNowaCena" mnemonicParsing="false" text="Cena w PLN" toggleGroup="$spolkiWykupToggleGroup" />
+                                          <TextField fx:id="spolkiNowaCenaTextField" alignment="CENTER" prefHeight="25.0" prefWidth="71.0">
+                                             <HBox.margin>
+                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                                             </padding>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -225,7 +245,7 @@
                                     <TextField fx:id="indeksyNazwaTextField" prefHeight="21.0" prefWidth="104.0" />
                                     <Label text="Giełda" />
                                     <TextField fx:id="indeksyGieldaTextField" prefHeight="23.0" prefWidth="103.0" />
-                                    <Button mnemonicParsing="false" onAction="#dodajSpolkeAction" prefHeight="30.0" prefWidth="150.0" text="Dodaj Spółke do Indeksu">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#dodajSpolkeAction" prefHeight="49.0" prefWidth="150.0" text="Dodaj nową spółke do indeksu" wrapText="true">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin></Button>
@@ -237,7 +257,7 @@
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin></Button>
-                                    <Button minHeight="-Infinity" mnemonicParsing="false" onAction="#usunButtonAction" prefWidth="100.0" text="Usuń">
+                                    <Button alignment="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#usunButtonAction" prefWidth="100.0" text="Usuń">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin></Button>
@@ -256,14 +276,19 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                    <ListView fx:id="dostepneSpolkiListVIiew" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" />
+                                          <Insets left="5.0" right="5.0" />
                                        </VBox.margin>
                                        <padding>
                                           <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                        </padding>
                                     </ListView>
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#dodajIstniejacaDoIndeksu" text="Dodaj do Indeksu" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -279,6 +304,11 @@
                                        <padding>
                                           <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                        </padding></ListView>
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#usunSpolkeZIndeksu" text="Usuń z indeksu" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                            </children>
@@ -376,7 +406,7 @@
                                     <Button fx:id="rynkiZapiszButton" alignment="CENTER" mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="29.0" prefWidth="103.0" text="Zapisz Pola" />
                                     <ChoiceBox fx:id="rynkiTypChoiceBox" prefWidth="150.0" />
                                     <Button fx:id="rynkiDodajNowyButton" mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="30.0" prefWidth="136.0" text="Dodaj Nowy Rynek" />
-                                    <Button fx:id="dodajButton" mnemonicParsing="false" />
+                                    <Button fx:id="rynkiDodajButton" mnemonicParsing="false" onAction="#dodajDoRynkuButtonAction" />
                                  </children>
                                  <padding>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -385,7 +415,7 @@
                               <VBox prefHeight="335.0" prefWidth="237.0">
                                  <children>
                                     <Label text="Aktywa Na Rynku" />
-                                    <ListView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                    <ListView fx:id="rynkiInwestycjaListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                        </VBox.margin>

@@ -34,12 +34,6 @@ public class Main extends Application {
         return monitor;
     }
 
-    public static Object getLock() {
-        return lock;
-    }
-
-    private javafx.event.EventHandler<WindowEvent> windowHandler;
-
     @Override
     public void stop() throws FileNotFoundException {
         try {
@@ -110,6 +104,7 @@ public class Main extends Application {
         DaySimulation day = new DaySimulation();
         if(kontroler instanceof MainViewController) day.setMvc((MainViewController)kontroler);
         Thread th = new Thread(day);
+        getContainer().setDaySimulation(day);
         th.setDaemon(true);
         th.start();
     }
@@ -127,4 +122,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

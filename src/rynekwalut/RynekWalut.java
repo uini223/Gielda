@@ -28,7 +28,7 @@ public class RynekWalut extends Rynek {
     /**
      * Dodaje nową walute do rynku
      */
-    private void addNewWaluta() {
+    public void addNewWaluta() {
        synchronized (Main.getMonitor()){
             int size = Main.getContainer().getWalutaSet().size();
             if(size>0) {
