@@ -87,8 +87,6 @@ public class RynekSurowcow extends Rynek{
                 }
                 pp.setKapital(pp.getKapital()-kwota);
                 surowiec.getSetInwestorow().add(pp);
-                zmienKurs(surowiec);
-                surowiec.addWartoscAkcji(surowiec.getAktualnaWartosc());
             }
         }
     }

@@ -36,8 +36,11 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
             spolka.getHashSetIndeksow().add(this);
             Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
             hashMapSpolek.put(spolka.getName(),spolka);
+            spolka.getAkcjaSpolki().addWartoscAkcji(spolka.getAktualnyKurs());
         }
         rodzic.addIndeks(this);
+        aktualizujWartosc(0);
+
     }
 
     @Override
@@ -67,11 +70,15 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
         hashMapSpolek.put(a.getName(),a);
         rodzic.aktualizujSpolki();
     }
-    public void aktualizujWartosc(){
+    public void aktualizujWartosc(int a){
         double wartosc = 0;
         for (String s :
                 hashMapSpolek.keySet()) {
             wartosc+=hashMapSpolek.get(s).getAkcjaSpolki().getAktualnaWartosc();
+        }
+        if(a==0) {
+            setNajmniejszaWartosc(wartosc);
+            setNajwiekszaWartosc(wartosc);
         }
         this.addWartoscAkcji(wartosc);
     }

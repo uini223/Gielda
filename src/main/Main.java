@@ -75,7 +75,7 @@ public class Main extends Application {
         Rynek rynek;
         PosiadajacyPieniadze pp;
         Thread thread;
-        for(int i=0;i<15;i++){
+        for(int i=0;i<10;i++){
             if(i<2){
                 rynek = new GieldaPapierowWartosciowych();
                 kontener.addRynek(rynek);

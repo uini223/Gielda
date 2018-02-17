@@ -4,6 +4,7 @@ import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
@@ -16,9 +17,7 @@ import main.Main;
 
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OknoUjeciaProcentowegoViewController implements Initializable, Controllable {
     @FXML
@@ -52,28 +51,48 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
     @FXML
     private void pokazWykres(){
         wykresWartosci.getData().clear();
-        for (Inwestycja i :
-                usedListView.getItems()) {
-            ObservableList<XYChart.Data<String,Number>> lista = FXCollections.observableArrayList();
-            XYChart.Series<String,Number> seria = new XYChart.Series<>();
-            int lp=0;
-            double value,valPom=0;
-            for (String s :
-                 i.getWartosciAkcji().keySet()) {
-                if(lp==0){
-                    value = ((double)i.getWartosciAkcji().get(s) - i.getPoczatkowaWartosc())/100;
+        ArrayList<String> listaDat = new ArrayList<>();
+        ArrayList<String> pom = new ArrayList<>();
+        int notowania;
+        boolean var;
+        synchronized (Main.getMonitor()) {
+            for (Inwestycja i :
+                    usedListView.getItems()) {
+                System.out.println(i.getNazwa());
+                System.out.println("-------");
+                var = false;
+                ObservableList<XYChart.Data<String, Number>> lista = FXCollections.observableArrayList();
+                XYChart.Series<String, Number> seria = new XYChart.Series<>();
+                int lp = 0;
+                double value, valPom = 0, wartosc;
+                listaDat.addAll(i.getWartosciAkcji().keySet());
+                Collections.sort(listaDat);
+                notowania = 30;
+                if(listaDat.size()>notowania+1){
+                    pom.clear();
+                    Collections.reverse(listaDat);
+                    pom.addAll(listaDat.subList(0,notowania));
+                    listaDat.clear();
+                    listaDat.addAll(pom);
+                    Collections.sort(listaDat);
                 }
-                else{
-                    value = ((double)i.getWartosciAkcji().get(s)-valPom)/100;
+                for (String s :
+                        listaDat) {
+                    wartosc = (double) i.getWartosciAkcji().get(s);
+                    if(lp>1){
+                        value = (wartosc - valPom) / 100;
+                        lista.add(new XYChart.Data<>(s, value));
+                    }
+                    valPom = (double) i.getWartosciAkcji().get(s);
+                    lp++;
                 }
-                valPom = (double) i.getWartosciAkcji().get(s);
-                lista.add(new XYChart.Data<>(s,value));
-                lp++;
+
+                seria.setData(lista);
+                seria.setName(i.getNazwa());
+                wykresWartosci.getData().add(seria);
+                listaDat.clear();
+                System.out.println("-------");
             }
-            seria.setData(lista.sorted()
-            );
-            seria.setName(i.getNazwa());
-            wykresWartosci.getData().add(seria);
         }
     }
     @FXML

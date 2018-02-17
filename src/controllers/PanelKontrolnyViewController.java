@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class PanelKontrolnyViewController implements Initializable, Controllable {
     private Stage myStage;
-    private ObservableList<TextField> textFields;
+    private MainViewController mvc;
     private RynkiPaneManager rynkiPaneManager;
     private PPPaneManager ppPaneManager;
     private IndeksyPaneManager indeksyPaneManager;
@@ -127,6 +127,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                     }
                     manager.onExtendedPropertyChange(old_val,new_val);
                 });
+
     }
 
     @Override
@@ -157,4 +158,11 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         indeksyPaneManager.dodajSpolkeDoIndeksu();
     }
 
+    public MainViewController getMvc() {
+        return mvc;
+    }
+
+    public void setMvc(MainViewController mvc) {
+        this.mvc = mvc;
+    }
 }

@@ -28,6 +28,7 @@ import main.Main;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekSurowcow.RynekSurowcow;
+import rynekSurowcow.Surowiec;
 import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
@@ -47,7 +48,8 @@ public class MainViewController implements Initializable, Controllable {
     @FXML
     private Button odswiezButton;
     @FXML
-    private TextField najmniejszaWartoscTextField,najwiekszaWartoscTextField,obecnaWartoscTextField;
+    private TextField najmniejszaWartoscTextField,najwiekszaWartoscTextField,obecnaWartoscTextField,
+            dataPierwszejWycenyTextField;
     @FXML
     private ChoiceBox<String> aktywaChoiceBox;
     @FXML
@@ -92,7 +94,7 @@ public class MainViewController implements Initializable, Controllable {
     }
 
     @FXML
-    private void utworzGieldeMenuItemAction() throws Exception {
+    private void openPanelKontrolnyView() throws Exception {
         boolean canCreate = true;
         String title = "Panel Kontrolny";
         for (Stage s : FXRobotHelper.getStages()
@@ -108,6 +110,9 @@ public class MainViewController implements Initializable, Controllable {
             stage.setTitle(title);
             stage.setScene(new Scene(root, 900, 500));
             stage.initOwner(myStage);
+            if(kontroler instanceof PanelKontrolnyViewController){
+                ((PanelKontrolnyViewController) kontroler).setMvc(this);
+            }
             kontroler.setStage(stage);
             stage.show();
         }
@@ -166,7 +171,8 @@ public class MainViewController implements Initializable, Controllable {
             }
         }
     }
-    @FXML  synchronized void  onRynkiChoiceboxAction(){
+    @FXML
+    public void  onRynkiChoiceboxAction(){
         makeOdswiezButtonInvisible();
         String s = aktywaChoiceBox.getValue();
         aktywaChoiceBox.getItems().clear();
@@ -187,16 +193,7 @@ public class MainViewController implements Initializable, Controllable {
             aktywaChoiceBox.getSelectionModel().select(0);
         }
     }
-    @FXML
-    private void tester() {
-        //testowo
-       /* if(listaAkcji.getSelectionModel().isEmpty()) {
-            ObservableList<PosiadajacyPieniadze> items = listaAkcji.getItems();
-            PosiadajacyPieniadze zbyszek = new Inwestor();
-            //najmniejszaWartosc.setText(zbyszek.getImie());
-            items.add(zbyszek);
-        }*/
-    }
+
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
@@ -221,11 +218,20 @@ public class MainViewController implements Initializable, Controllable {
                 }
                 XYChart.Series<String, Number> seria = new XYChart.Series<>();
                 seria.setData(dane.sorted());
+                seria.setName(inwestycja.getNazwa());
                 wykresWartosci.getData().clear();
                 wykresWartosci.getData().add(seria);
                 najmniejszaWartoscTextField.setText(String.valueOf(inwestycja.getNajmniejszaWartosc()));
                 najwiekszaWartoscTextField.setText(String.valueOf(inwestycja.getNajwiekszaWartosc()));
                 obecnaWartoscTextField.setText(String.valueOf(inwestycja.getAktualnaWartosc()));
+                if(inwestycja instanceof Akcje){
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date =((Akcje) inwestycja).getSpolka().getDataPierwszejWyceny();
+                    dataPierwszejWycenyTextField.setText(df.format(date));
+                }
+                else {
+                    dataPierwszejWycenyTextField.setText("Brak Danych");
+                }
             }
         }
     }
@@ -235,11 +241,12 @@ public class MainViewController implements Initializable, Controllable {
     public void makeOdswiezButtonInvisible(){
         odswiezButton.setVisible(false);
     }
+
     @FXML
     private void odswiez(){
-        updateAll();
         onListaAkcjiChoice();
     }
+
     public void updateAll() {
         Rynek rynek = rynekChoiceBox.getValue();
         synchronized (Main.getMonitor()){
@@ -249,9 +256,21 @@ public class MainViewController implements Initializable, Controllable {
                     rynekChoiceBox.getItems().add(Main.getContainer().getRynek(s));
                 }
             }
-            for (String s :
-                    Main.getContainer().getHashMapIndeksow().keySet()) {
-                Main.getContainer().getIndeks(s).aktualizujWartosc();
+            for (Indeks i :
+                    Main.getContainer().getHashMapIndeksow().values()) {
+                i.aktualizujWartosc(1);
+            }
+            for (Spolka s:
+                    Main.getContainer().getHashMapSpolek().values()){
+                s.getAkcjaSpolki().obliczNowyKurs();
+            }
+            for(Waluta w:
+                    Main.getContainer().getHashMapWalut().values()){
+                w.obliczNowyKurs();
+            }
+            for(Surowiec s:
+                    Main.getContainer().getHashMapSurowcow().values()){
+                s.obliczNowyKurs();
             }
         }
         makeOdswiezButtonInvisible();

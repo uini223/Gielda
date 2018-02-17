@@ -4,8 +4,9 @@ import gield.Inwestycja;
 import gield.Rynek;
 
 public class Akcje extends Inwestycja{
+    private Spolka spolka;
 
-    public Akcje(Rynek rynek, String nazwaSpolki, double aktualnaWartosc) {
+    public Akcje(String nazwaSpolki, double aktualnaWartosc) {
         super(nazwaSpolki,aktualnaWartosc);
     }
 
@@ -16,5 +17,13 @@ public class Akcje extends Inwestycja{
     @Override
     public String toString() {
         return getNazwa();
+    }
+
+    public Spolka getSpolka() {
+        return spolka;
+    }
+
+    public void setSpolka(Spolka spolka) {
+        this.spolka = spolka;
     }
 }

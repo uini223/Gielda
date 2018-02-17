@@ -18,13 +18,15 @@ public class DaySimulation implements Runnable{
     public void run() {
         int i=0;
         while (true){
-            mvc.updateAll();
+
             synchronized (Main.getMonitor()) {
-                Main.getContainer().getDate().setTime(Main.getContainer().getDate().getTime()+43200*1000);
+                Main.getContainer().getDate().setTime(Main.getContainer().getDate().getTime()+86400*1000);
                 Main.getMonitor().notifyAll();
 
             }
+            mvc.updateAll();
             mvc.makeOdswiezButtonVisible();
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

@@ -83,8 +83,6 @@ public class RynekWalut extends Rynek {
             }
             pp.setKapital(pp.getKapital()-kwota);
             waluta.getSetInwestorow().add(pp);
-            zmienKurs(waluta);
-            waluta.addWartoscAkcji(waluta.getPrzelicznik());
         }
     }
 

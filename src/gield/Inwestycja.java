@@ -16,6 +16,8 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc,poczatkowaWartosc;
 
+    private int kupujacy,sprzedajacy;
+
     private String nazwa;
 
     private HashSet<PosiadajacyPieniadze> setInwestorow;
@@ -27,6 +29,7 @@ public abstract class Inwestycja implements Listable, Serializable{
         najwiekszaWartosc = aktualnaWartosc;
         listaWartosciWCzasie = new HashMap<>();
         setInwestorow = new HashSet<>();
+        resetujSprzedajacychKupujacych();
     }
 
     public double getAktualnaWartosc() {
@@ -44,7 +47,7 @@ public abstract class Inwestycja implements Listable, Serializable{
     }
 
     public void addWartoscAkcji(double wartoscAkcji){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         synchronized (Main.getMonitor()){
             if(wartoscAkcji<najmniejszaWartosc){
                 najmniejszaWartosc = wartoscAkcji;
@@ -105,5 +108,36 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     public void setPoczatkowaWartosc(double poczatkowaWartosc) {
         this.poczatkowaWartosc = poczatkowaWartosc;
+    }
+
+    public void dodajKupujacego(){
+        kupujacy+=1;
+    }
+
+    public void dodajSprzedajacego(){
+        sprzedajacy+=1;
+    }
+
+    public void resetujSprzedajacychKupujacych(){
+        sprzedajacy = 0;
+        kupujacy =0;
+    }
+
+    public void obliczNowyKurs(){
+        if(rynek!=null) {
+            double kurs;
+            synchronized (Main.getMonitor()) {
+                double old = aktualnaWartosc;
+                int rnd = (int) (Math.random() * 100) % 10 + 1;
+                double wartosc = (old * ((double) rnd / 100));
+                int plus = (int) (Math.random() * 100);
+                if (plus % 2 == 0) {
+                    kurs = old + wartosc;
+                } else {
+                    kurs = old - wartosc;
+                }
+            }
+            addWartoscAkcji(kurs);
+        }
     }
 }

@@ -9,9 +9,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -33,25 +30,6 @@
    <top>
       <VBox alignment="CENTER" minHeight="60.0" minWidth="60.0" prefHeight="56.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#utworzGieldeMenuItemAction" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#openOknoUjeciaView" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
             <ChoiceBox fx:id="rynekChoiceBox" prefHeight="30.0" prefWidth="245.0">
                <VBox.margin>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -75,7 +53,8 @@
             <TextField fx:id="najwiekszaWartoscTextField" />
             <Label text="Obecna Wartość" />
             <TextField fx:id="obecnaWartoscTextField" />
-            <Label text="Label" />
+            <Label text="Data Pierwszej Wyceny" />
+            <TextField fx:id="dataPierwszejWycenyTextField" />
          </children>
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" />
@@ -103,8 +82,8 @@
    <bottom>
       <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="600.0" BorderPane.alignment="CENTER_LEFT">
         <buttons>
-          <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+          <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#openOknoUjeciaView" text="Wykresy Ujecia Procentowego" />
+            <Button mnemonicParsing="false" onAction="#openPanelKontrolnyView" text="Panel Kontrolny" />
             <Button fx:id="odswiezButton" mnemonicParsing="false" onAction="#odswiez" text="Odśwież" />
         </buttons>
       </ButtonBar>

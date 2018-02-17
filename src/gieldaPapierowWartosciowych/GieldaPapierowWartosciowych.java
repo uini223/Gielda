@@ -104,7 +104,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
                     else {
                         pp.getHashMapInwestycji().put(spolka.getAkcjaSpolki(),ilosc);
                     }
-                    spolka.sprzedajAkcje(ilosc);
+                    spolka.sprzedajAkcje(ilosc,kwota);
                     pp.setKapital(pp.getKapital()-kwota);
                     spolka.getAkcjaSpolki().getSetInwestorow().add(pp);
                 }
@@ -132,7 +132,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
                     inwestycja.getSetInwestorow().remove(pp);
                 }
                 pp.setKapital(pp.getKapital()+kwota);
-                s.kupAkcje(ilosc);
+                s.kupAkcje(ilosc,kwota);
             }
         }
     }

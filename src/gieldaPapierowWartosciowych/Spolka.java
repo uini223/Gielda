@@ -3,6 +3,7 @@ package gieldaPapierowWartosciowych;
 import controllers.Listable;
 import gield.Inwestycja;
 import gield.Rynek;
+import main.Main;
 
 import java.io.Serializable;
 import java.util.*;
@@ -36,7 +37,9 @@ public class Spolka implements Runnable, Serializable, Listable
         //super(nazwa);
         hashSetIndeksow = new HashSet<>();
         name = losowaNazwa();
-        dataPierwszejWyceny = new Date();
+        synchronized (Main.getMonitor()){
+            dataPierwszejWyceny = new Date(Main.getContainer().getDate().getTime());
+        }
         kapitalZakladowy = Math.random()*1000000;
         kapitalWlasny = kapitalZakladowy+Math.random()*1000000;
         liczbaAkcji = (int)(Math.random()*1000000);
@@ -48,8 +51,9 @@ public class Spolka implements Runnable, Serializable, Listable
         zysk = 0;
         wolumen = 0;
         obroty = 0;
-        akcjaSpolki = new Akcje(rynek,name,aktualnyKurs);
+        akcjaSpolki = new Akcje(name,aktualnyKurs);
         akcjaSpolki.setRynek(rynek);
+        akcjaSpolki.setSpolka(this);
     }
 
     public String getName() {
@@ -109,19 +113,26 @@ public class Spolka implements Runnable, Serializable, Listable
         this.aktualnyKurs = aktualnyKurs;
         akcjaSpolki.addWartoscAkcji(aktualnyKurs);
     }
-    public void sprzedajAkcje(int ilosc){
-        zmianaKursu();
+    public void sprzedajAkcje(int ilosc,double kwota){
+        //zmianaKursu();
+        akcjaSpolki.dodajKupujacego();
         liczbaAkcji-=ilosc;
+        wolumen+=ilosc;
+        obroty+=kwota;
     }
-    public void kupAkcje(int ilosc){
-        zmianaKursu();
+    public void kupAkcje(int ilosc,double kwota){
+        //zmianaKursu();
+        akcjaSpolki.dodajSprzedajacego();
         liczbaAkcji+=ilosc;
+        wolumen+=ilosc;
+        obroty+=kwota;
     }
     private void zmianaKursu(){
-        int rnd = (int)(Math.random()*100)%10+1;
+        /*
+        int rnd = (int)(Math.random()*100)%25+1;
         double wartosc = (aktualnyKurs*((double)rnd/100));
         int plus = (int)(Math.random()*100);
-        if(plus>=50){
+        if(plus%10<6){
             setAktualnyKurs(aktualnyKurs+wartosc);
         }
         else {
@@ -135,7 +146,8 @@ public class Spolka implements Runnable, Serializable, Listable
             setMaksymalnyKurs(aktualnyKurs);
             akcjaSpolki.setNajwiekszaWartosc(aktualnyKurs);
         }
-        getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);
+        getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);*/
+
     }
 
     public double getAktualnyKurs() {
@@ -188,6 +200,14 @@ public class Spolka implements Runnable, Serializable, Listable
 
     public void setHashSetIndeksow(HashSet<Indeks> hashSetIndeksow) {
         this.hashSetIndeksow = hashSetIndeksow;
+    }
+
+    public Date getDataPierwszejWyceny() {
+        return dataPierwszejWyceny;
+    }
+
+    public void setDataPierwszejWyceny(Date dataPierwszejWyceny) {
+        this.dataPierwszejWyceny = dataPierwszejWyceny;
     }
 }
 
