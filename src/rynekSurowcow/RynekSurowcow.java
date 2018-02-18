@@ -74,39 +74,10 @@ public class RynekSurowcow extends Rynek{
             n++;
         }
         if(surowiec!=null){
-            double kwota = ilosc*surowiec.getWaluta().getPrzelicznik();
+            double kwota = ilosc*surowiec.getAktualnaWartosc();
             kwota = pobierzMarze(kwota);
-            int pom;
-            if(kwota<= pp.getKapital() && ilosc>0){
-                if(pp.getHashMapInwestycji().containsKey(surowiec)){
-                    pom = pp.getHashMapInwestycji().get(surowiec).intValue();
-                    pp.getHashMapInwestycji().put(surowiec,pom+ilosc);
-                }
-                else {
-                    pp.getHashMapInwestycji().put(surowiec,ilosc);
-                }
-                pp.setKapital(pp.getKapital()-kwota);
-                surowiec.getSetInwestorow().add(pp);
-            }
-        }
-    }
-    private void zmienKurs(Surowiec s){
-        synchronized (Main.getMonitor()) {
-            double old = s.getAktualnaWartosc();
-            int rnd = (int) (Math.random() * 100) % 10 + 1;
-            double wartosc = (old * ((double) rnd / 100));
-            int plus = (int) (Math.random() * 100);
-            if (plus % 2 == 0) {
-                s.setAktualnaWartosc(old + wartosc);
-            } else {
-                s.setAktualnaWartosc(old - wartosc);
-            }
-            if (s.getAktualnaWartosc() > s.getNajwiekszaWartosc()) {
-                s.setNajwiekszaWartosc(s.getAktualnaWartosc());
-            }
-            if (s.getNajwiekszaWartosc() < s.getNajmniejszaWartosc()) {
-                s.setNajmniejszaWartosc(s.getAktualnaWartosc());
-            }
+            kwota=kwota*surowiec.getWaluta().getAktualnaWartosc();
+            kupno(kwota,ilosc,pp,surowiec);
         }
     }
     @Override
@@ -114,16 +85,10 @@ public class RynekSurowcow extends Rynek{
         Surowiec surowiec = (Surowiec) inwestycja;
         int size = (int) pp.getHashMapInwestycji().get(surowiec);
         int ilosc = (int) (Math.random()*10000)%size+1;
-        double kwota = ilosc*surowiec.getWaluta().getPrzelicznik();
+        double kwota = ilosc*surowiec.getAktualnaWartosc();
         pobierzMarze(kwota);
-        if(size==ilosc){
-            pp.getHashMapInwestycji().remove(surowiec);
-            surowiec.getSetInwestorow().remove(pp);
-        }
-        else {
-            pp.getHashMapInwestycji().put(surowiec,size-ilosc);
-        }
-        pp.setKapital(pp.getKapital()+kwota);
+        kwota = kwota*surowiec.getWaluta().getPrzelicznik();
+        sprzedaz(kwota,ilosc,pp,inwestycja);
     }
 
 }

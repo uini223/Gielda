@@ -16,7 +16,7 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     private double aktualnaWartosc,najmniejszaWartosc,najwiekszaWartosc,poczatkowaWartosc;
 
-    private int kupujacy,sprzedajacy;
+    private int kupujacy,sprzedajacy,licznik;
 
     private String nazwa;
 
@@ -30,6 +30,7 @@ public abstract class Inwestycja implements Listable, Serializable{
         listaWartosciWCzasie = new HashMap<>();
         setInwestorow = new HashSet<>();
         resetujSprzedajacychKupujacych();
+        licznik =0;
     }
 
     public double getAktualnaWartosc() {
@@ -131,13 +132,23 @@ public abstract class Inwestycja implements Listable, Serializable{
                 int rnd = (int) (Math.random() * 100) % 10 + 1;
                 double wartosc = (old * ((double) rnd / 100));
                 int plus = (int) (Math.random() * 100);
-                if (plus % 2 == 0) {
-                    kurs = old + wartosc;
-                } else {
-                    kurs = old - wartosc;
+                if(kupujacy+sprzedajacy==0 && licznik<5){
+                    kurs = old;
+                    licznik++;
                 }
+                else {
+                    if (plus % 2 == 0) {
+                        kurs = old + wartosc;
+                    } else {
+                        kurs = old - wartosc;
+                    }
+                    licznik=0;
+                }
+
+
             }
             addWartoscAkcji(kurs);
         }
     }
+
 }

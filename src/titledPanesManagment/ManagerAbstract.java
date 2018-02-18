@@ -43,7 +43,7 @@ class ManagerAbstract {
 
     public abstract void dodajNowy();
 
-    public abstract void zapiszPola();
+    public abstract void refresh();
 
     public ListView<Listable> getLista() {
         return lista;

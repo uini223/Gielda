@@ -47,62 +47,14 @@ public class RynekWalut extends Rynek {
                 if(x!=null) Main.getContainer().getWalutaSet().remove(x);
             }
             else{
+                System.out.println("dodaje Walute");
                 Waluta waluta = Main.getContainer().addNewWaluta();
                 hashMapWalut.put(waluta.getNazwa(), waluta);
+                Main.getContainer().getWalutaSet().remove(waluta);
                 waluta.setRynek(this);
             }
 
        }
-    }
-
-    public HashMap<String, Waluta> getHashMapWalut() {
-        return hashMapWalut;
-    }
-
-    public void setHashMapWalut(HashMap<String, Waluta> hashMapWalut) {
-        this.hashMapWalut = hashMapWalut;
-    }
-
-    /**
-     * @param waluta
-     * @param pp
-     * Funkcja pomocnicza do operacji zakupu na rynku walut
-     */
-    private void kup(Waluta waluta,PosiadajacyPieniadze pp){
-        int ilosc = (int)(Math.random()*10000);
-        double kwota = ilosc*waluta.getPrzelicznik();
-        int pom;
-        kwota = pobierzMarze(kwota);
-        if( kwota <= pp.getKapital() && ilosc>0) {
-            if(pp.getHashMapInwestycji().containsKey(waluta)) {
-                pom = pp.getHashMapInwestycji().get(waluta).intValue();
-                pp.getHashMapInwestycji().put(waluta,pom+ilosc);
-            }
-            else {
-                pp.getHashMapInwestycji().put(waluta,ilosc);
-            }
-            pp.setKapital(pp.getKapital()-kwota);
-            waluta.getSetInwestorow().add(pp);
-        }
-    }
-
-
-    /**
-     * @param waluta
-     * ustala nowy kurs po zakupie
-     */
-    private void zmienKurs(Waluta waluta){
-        synchronized (Main.getMonitor()) {
-            double old = waluta.getPrzelicznik();
-            int rnd = (int) (Math.random() * 100) % 10 + 1;
-            double wartosc = (old * ((double) rnd / 100));
-            int plus = (int) (Math.random() * 100);
-            if (plus % 2 == 0) {
-                waluta.setPrzelicznik(old + wartosc);
-            } else {
-                waluta.setPrzelicznik(old - wartosc);
-            }
-        }
     }
 
     /**
@@ -116,7 +68,11 @@ public class RynekWalut extends Rynek {
         for (String s :
                 hashMapWalut.keySet()) {
             if (a == n) {
-                kup(hashMapWalut.get(s),pp);
+                Waluta waluta = hashMapWalut.get(s);
+                int ilosc = (int)(Math.random()*10000);
+                double kwota = ilosc*waluta.getAktualnaWartosc();
+                kwota = pobierzMarze(kwota);
+                kupno(kwota,ilosc,pp,waluta);
             }
             n++;
         }
@@ -134,14 +90,11 @@ public class RynekWalut extends Rynek {
         int ileSprzedanych = (int) (Math.random()*10000)%ilosc+1;
         double kwota = ileSprzedanych*waluta.getPrzelicznik();
         kwota = pobierzMarze(kwota);
-        if(ileSprzedanych==ilosc){
-            pp.getHashMapInwestycji().remove(inwestycja);
-            waluta.getSetInwestorow().remove(pp);
-        }
-        else{
-            pp.getHashMapInwestycji().put(inwestycja,ilosc-ileSprzedanych);
-        }
-        pp.setKapital(pp.getKapital()+kwota);
+        sprzedaz(kwota,ileSprzedanych,pp,inwestycja);
+    }
+
+    public HashMap<String, Waluta> getHashMapWalut() {
+        return hashMapWalut;
     }
 
 }

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -16,21 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="600" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanelKontrolnyViewController">
-   <bottom>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0">
-        <buttons>
-          <Button alignment="CENTER" mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button fx:id="zapisButton" mnemonicParsing="false" onAction="#zapiszButtonAction" text="Zapisz" />
-        </buttons>
-         <padding>
-            <Insets bottom="8.0" left="5.0" right="8.0" top="5.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-         </BorderPane.margin>
-      </ButtonBar>
-   </bottom>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -69,17 +53,12 @@
                                  <children>
                                     <Label text="Gielda" />
                                     <TextField fx:id="surowceGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata" HBox.hgrow="ALWAYS">
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Surowców">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="22.0" prefWidth="155.0" text="Dodaj Suroweicdo swiata">
+                                    <Button mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="22.0" prefWidth="155.0" text="Dodaj do świata">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
@@ -117,24 +96,14 @@
                                     <TextField fx:id="walutyPoczatkowyKursTextField" />
                                     <Label text="Obecny kurs" />
                                     <TextField fx:id="walutyObecnyKursTextField" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
-                                 <children>
                                     <Label text="Gielda" />
                                     <TextField fx:id="walutyGieldaTextField" />
-                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata" HBox.hgrow="ALWAYS">
+                                    <Button alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#usunZeSwiataButtonAction" prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Walut">
+                                    <Button mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Walut">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
@@ -151,6 +120,20 @@
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="Lista państw gdzie obowiązuje waluta" />
+                                    <ListView fx:id="walutyPanstwaListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" onAction="#dodajNowePanstwo" text="Dodaj nowe Państwo" />
+                                    <TextField fx:id="dodajNowePanstwoTextField" />
+                                 </children>
                               </VBox>
                               <VBox prefHeight="385.0" prefWidth="182.0">
                                  <children>
@@ -346,11 +329,6 @@
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin></Button>
-                                    <Button mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="30.0" prefWidth="100.0" text="Zapisz Pola">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </VBox.margin>
-                                    </Button>
                                     <ChoiceBox fx:id="ppTypChoiceBox" prefWidth="150.0">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -403,7 +381,6 @@
                                  <children>
                                     <VBox alignment="CENTER" spacing="5.0" />
                                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#usunButtonAction" prefHeight="29.0" prefWidth="96.0" text="Usuń" VBox.vgrow="ALWAYS" />
-                                    <Button fx:id="rynkiZapiszButton" alignment="CENTER" mnemonicParsing="false" onAction="#zapiszButtonAction" prefHeight="29.0" prefWidth="103.0" text="Zapisz Pola" />
                                     <ChoiceBox fx:id="rynkiTypChoiceBox" prefWidth="150.0" />
                                     <Button fx:id="rynkiDodajNowyButton" mnemonicParsing="false" onAction="#dodajNowyButtonAction" prefHeight="30.0" prefWidth="136.0" text="Dodaj Nowy Rynek" />
                                     <Button fx:id="rynkiDodajButton" mnemonicParsing="false" onAction="#dodajDoRynkuButtonAction" />

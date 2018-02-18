@@ -6,15 +6,19 @@ import rynekwalut.Waluta;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Inwestor extends PosiadajacyPieniadze {
 
+    private HashMap<FunduszInwestycyjny,Number> fiHashMap;
 
     private int pesel;
 
     public Inwestor() {
         super();
+        fiHashMap = new HashMap<>();
         pesel = (int)(Math.random()*10000000);
     }
 
@@ -26,61 +30,79 @@ public class Inwestor extends PosiadajacyPieniadze {
         this.pesel = pesel;
     }
 
-    @Override
-    public void kupInwestycje()  {
-        synchronized (Main.getMonitor()) {
-            int size, i = 0, rnd;
-            size = Main.getContainer().getHashMapRynkow().keySet().size();
-            rnd = (int) (Math.random() * 100) % size;
-            for (String s : Main.getContainer().getHashMapRynkow().keySet()
-                    ) {
-                if (i == rnd) {
-                    Main.getContainer().getHashMapRynkow().get(s).kupno(this);
-                }
-                i++;
-            }
-        }
-    }
-
-    @Override
-    public void sprzedajInwestycje() {
-        if (!getHashMapInwestycji().keySet().isEmpty()) {
-            int rnd = (int) (Math.random() * 100) % getHashMapInwestycji().keySet().size();
-            int i = 0;
-            Inwestycja inwestycja = null;
-            for (Inwestycja inw : getHashMapInwestycji().keySet()
-                    ) {
-                if (rnd == i) {
-                    inwestycja = inw;
-                }
-                i++;
-            }
-            inwestycja.getRynek().sprzedaz(inwestycja,this);
-        }
-
-    }
     public void kupJednostkiUczestictwa() {
-
+        int size = Main.getContainer().getHashMapFunduszy().size();
+        if (size > 0) {
+            int a = (int) (Math.random() * 10000) % size;
+            int n=0;
+            FunduszInwestycyjny fi=null;
+            for (FunduszInwestycyjny fundusz :
+                    Main.getContainer().getHashMapFunduszy().values()) {
+                if (a == n) {
+                    fi = fundusz;
+                }
+                n++;
+            }
+            if(fi!=null) {
+                double kwota = Math.random() * 1000;
+                fi.setKapital(fi.getKapital() + kwota);
+                if (fiHashMap.containsKey(fi)) {
+                    kwota = kwota + (double) fiHashMap.get(fi);
+                }
+                fiHashMap.put(fi, kwota);
+            }
+        }
     }
     public void sperzedajJednostkiUczestnictwa(){
-
+        if(fiHashMap.size()>0){
+            int a = (int)(Math.random()*10000)%fiHashMap.size();
+            int n=0;
+            for (FunduszInwestycyjny fi :
+                    fiHashMap.keySet()) {
+                if(a==n){
+                    double kwota = Math.random()*(double)fiHashMap.get(fi);
+                    if(kwota==(double)fiHashMap.get(fi)){
+                        fiHashMap.remove(fi);
+                    }
+                    else{
+                        double pom = (double) fiHashMap.get(fi);
+                        fiHashMap.put(fi,pom-kwota);
+                    }
+                    setKapital(getKapital()+kwota);
+                }
+            }
+        }
     }
 
     @Override
     public void run() {
 
-        for (int i=0;i<1000;i++){
+        while(getRunning()){
             try {
                 synchronized(Main.getMonitor()) {
                     Main.getMonitor().wait();
+                    int a = (int)(Math.random()*10000)%10;
+                    if(a<=1){
+                        kupJednostkiUczestictwa();
+                    }
+                    else if(a>=8){
+                        sperzedajJednostkiUczestnictwa();
+                    }
                     kupInwestycje();
-
                     sprzedajInwestycje();
+                    generujKapital();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //System.out.println(this.getName());
         }
+    }
+
+    public HashMap<FunduszInwestycyjny, Number> getFiHashMap() {
+        return fiHashMap;
+    }
+
+    public void setFiHashMap(HashMap<FunduszInwestycyjny, Number> fiHashMap) {
+        this.fiHashMap = fiHashMap;
     }
 }

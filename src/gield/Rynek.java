@@ -17,16 +17,7 @@ public abstract class Rynek implements Listable, Serializable{
     private Adres adres;
     private Indeks indeks;
     private double marzaOdTransakcji;
-    private double przelicznik;
     private HashMap<String,Inwestycja> hashMapInwestycji;
-
-    public double getPrzelicznik() {
-        return przelicznik;
-    }
-
-    public void setPrzelicznik(double przelicznik) {
-        this.przelicznik = przelicznik;
-    }
 
     public Rynek() {
         String[] nazwyGield = {"GPW","NYM","WSP","PPP","APS","STH","UNE","OMA","PPA","ASA","PLN"};
@@ -98,6 +89,7 @@ public abstract class Rynek implements Listable, Serializable{
     public double getMarzaOdTransakcji() {
         return marzaOdTransakcji;
     }
+
     public double pobierzMarze(double kwota) {
         double marza = getMarzaOdTransakcji()/100;
         return kwota+(kwota*marza);
@@ -113,6 +105,35 @@ public abstract class Rynek implements Listable, Serializable{
 
     public void setHashMapInwestycji(HashMap<String, Inwestycja> hashMapInwestycji) {
         this.hashMapInwestycji = hashMapInwestycji;
+    }
+
+    public void kupno(double kwota,int ilosc,PosiadajacyPieniadze pp, Inwestycja inwestycja){
+        int pom;
+        if(kwota<= pp.getKapital() && ilosc>0){
+            if(pp.getHashMapInwestycji().containsKey(inwestycja)){
+                pom = pp.getHashMapInwestycji().get(inwestycja).intValue();
+                pp.getHashMapInwestycji().put(inwestycja,pom+ilosc);
+            }
+            else {
+                pp.getHashMapInwestycji().put(inwestycja,ilosc);
+            }
+            pp.setKapital(pp.getKapital()-kwota);
+            inwestycja.getSetInwestorow().add(pp);
+            inwestycja.dodajKupujacego();
+        }
+    }
+
+    public void sprzedaz(double kwota,int ileSprzedanych,PosiadajacyPieniadze pp, Inwestycja inwestycja){
+        int ilosc = (int) pp.getHashMapInwestycji().get(inwestycja);
+        if(ileSprzedanych==ilosc){
+            pp.getHashMapInwestycji().remove(inwestycja);
+            inwestycja.getSetInwestorow().remove(pp);
+        }
+        else{
+            pp.getHashMapInwestycji().put(inwestycja,ilosc-ileSprzedanych);
+        }
+        pp.setKapital(pp.getKapital()+kwota);
+        inwestycja.dodajSprzedajacego();
     }
 }
 

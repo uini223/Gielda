@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+import rynekSurowcow.RynekSurowcow;
 import rynekSurowcow.Surowiec;
 
 public class SurowcePaneManager extends ManagerAbstract {
@@ -31,7 +32,25 @@ public class SurowcePaneManager extends ManagerAbstract {
 
     @Override
     public void usun() {
-
+        if(!getLista().getSelectionModel().isEmpty()){
+            synchronized (Main.getMonitor()){
+                Surowiec surowiec = (Surowiec) getLista().getSelectionModel().getSelectedItem();
+                Main.getContainer().getHashMapSurowcow().remove(surowiec.getNazwa());
+                for (PosiadajacyPieniadze pp :
+                        surowiec.getSetInwestorow()) {
+                    pp.setKapital(pp.getKapital()+surowiec.getAktualnaWartosc()*
+                            (int)pp.getHashMapInwestycji().get(surowiec));
+                    pp.getHashMapInwestycji().remove(surowiec);
+                }
+                if(surowiec.getRynek() instanceof RynekSurowcow){
+                    ((RynekSurowcow) surowiec.getRynek()).getHashMapSurowcow().remove(surowiec.getNazwa());
+                    if(((RynekSurowcow) surowiec.getRynek()).getHashMapSurowcow().size()==0){
+                        Main.getContainer().getHashMapRynkow().remove(surowiec.getRynek().getNazwa());
+                    }
+                }
+                getLista().getItems().remove(surowiec);
+            }
+        }
     }
 
     @Override
@@ -46,10 +65,11 @@ public class SurowcePaneManager extends ManagerAbstract {
 
     @Override
     public void onSelectedItem() {
+        listaInwestorow.getItems().clear();
         synchronized (Main.getMonitor()) {
             Surowiec surowiec = (Surowiec) getLista().getSelectionModel().getSelectedItem();
             nazwaTextField.setText(surowiec.getNazwa());
-            poczatkowyKursTextField.setText("");
+            poczatkowyKursTextField.setText(String.valueOf(surowiec.getPoczatkowaWartosc()));
             obecnyKursTextField.setText(String.valueOf(surowiec.getAktualnaWartosc()));
             jednostkaTextField.setText(surowiec.getJednostkaHandlowa());
             if (surowiec.getRynek() != null) {
@@ -57,6 +77,7 @@ public class SurowcePaneManager extends ManagerAbstract {
             } else {
                 gieldaTextField.setText("<none>");
             }
+            listaInwestorow.getItems().addAll(surowiec.getSetInwestorow());
         }
     }
 
@@ -70,11 +91,26 @@ public class SurowcePaneManager extends ManagerAbstract {
 
     @Override
     public void dodajNowy() {
-
+        synchronized (Main.getMonitor()){
+            getLista().getItems().add(Main.getContainer().addNewSurowiec());
+        }
     }
 
     @Override
-    public void zapiszPola() {
-
+    public void refresh() {
+        if(!getLista().getSelectionModel().isEmpty()){
+            Surowiec surowiec = (Surowiec) getLista().getSelectionModel().getSelectedItem();
+            obecnyKursTextField.setText(String.valueOf(surowiec.getAktualnaWartosc()));
+            int i=-1;
+            if(!listaInwestorow.getSelectionModel().isEmpty()){
+                i=listaInwestorow.getSelectionModel().getSelectedIndex();
+            }
+            listaInwestorow.getItems().clear();
+            listaInwestorow.getItems().addAll(surowiec.getSetInwestorow());
+            if(i>=0){
+                listaInwestorow.getSelectionModel().select(i);
+            }
+        }
     }
+
 }

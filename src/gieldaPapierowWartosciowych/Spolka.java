@@ -35,6 +35,8 @@ public class Spolka implements Runnable, Serializable, Listable
 
     private HashSet<Indeks> hashSetIndeksow;
 
+    private Boolean running;
+
     public Spolka(Rynek rynek) {
         //super(nazwa);
         hashSetIndeksow = new HashSet<>();
@@ -44,7 +46,7 @@ public class Spolka implements Runnable, Serializable, Listable
         }
         kapitalZakladowy = Math.random()*1000000;
         kapitalWlasny = kapitalZakladowy+Math.random()*1000000;
-        liczbaAkcji = (int)(Math.random()*1000000);
+        liczbaAkcji = (int)(Math.random()*1000000)%100001+50000;
         kursOtwarcia = kapitalWlasny/liczbaAkcji;
         aktualnyKurs = kursOtwarcia;
         setMinimalnyKurs(kursOtwarcia);
@@ -56,6 +58,7 @@ public class Spolka implements Runnable, Serializable, Listable
         akcjaSpolki = new Akcje(name,aktualnyKurs);
         akcjaSpolki.setRynek(rynek);
         akcjaSpolki.setSpolka(this);
+        running = true;
     }
 
     public String getName() {
@@ -67,10 +70,19 @@ public class Spolka implements Runnable, Serializable, Listable
     }
 
     public void run(){
-        while(true){
-            generujZysk();
-            zmienLiczbeAkcji();
-
+        while(running){
+            double a = Math.random()*1000;
+            if(a<50) {
+                synchronized (Main.getMonitor()) {
+                    generujZysk();
+                    zmienLiczbeAkcji();
+                }
+            }
+            try {
+                Thread.sleep(1000*10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
 
         }
@@ -105,16 +117,17 @@ public class Spolka implements Runnable, Serializable, Listable
 
     public void zmienLiczbeAkcji() {
         int znak = (int) (Math.random() * 100) % 2;
-        if (znak == 0) liczbaAkcji += Math.random() * 100;
-        else liczbaAkcji -= Math.random() * 100;
+        if(liczbaAkcji>0){
+            if (znak == 0) liczbaAkcji += (int)(Math.random() *liczbaAkcji);
+            else{
+                liczbaAkcji -= (int)(Math.random() * liczbaAkcji);
+            }
+        }
+        if(liczbaAkcji==0){
+            liczbaAkcji+=(int)(Math.random()*1000);
+        }
     }
 
-    public void setAktualnyKurs(double aktualnyKurs) {
-        if(aktualnyKurs<minimalnyKurs) minimalnyKurs = aktualnyKurs;
-        if(aktualnyKurs>maksymalnyKurs) maksymalnyKurs = aktualnyKurs;
-        this.aktualnyKurs = aktualnyKurs;
-        akcjaSpolki.addWartoscAkcji(aktualnyKurs);
-    }
     public void sprzedajAkcje(int ilosc,double kwota){
         //zmianaKursu();
         akcjaSpolki.dodajKupujacego();
@@ -128,28 +141,6 @@ public class Spolka implements Runnable, Serializable, Listable
         liczbaAkcji+=ilosc;
         wolumen+=ilosc;
         obroty+=kwota;
-    }
-    private void zmianaKursu(){
-        /*
-        int rnd = (int)(Math.random()*100)%25+1;
-        double wartosc = (aktualnyKurs*((double)rnd/100));
-        int plus = (int)(Math.random()*100);
-        if(plus%10<6){
-            setAktualnyKurs(aktualnyKurs+wartosc);
-        }
-        else {
-            setAktualnyKurs(aktualnyKurs-wartosc);
-        }
-        if(aktualnyKurs<getMinimalnyKurs()){
-            setMinimalnyKurs(aktualnyKurs);
-            akcjaSpolki.setNajmniejszaWartosc(aktualnyKurs);
-        }
-        if(aktualnyKurs>getMaksymalnyKurs()){
-            setMaksymalnyKurs(aktualnyKurs);
-            akcjaSpolki.setNajwiekszaWartosc(aktualnyKurs);
-        }
-        getAkcjaSpolki().addWartoscAkcji(aktualnyKurs);*/
-
     }
 
     public double getAktualnyKurs() {
@@ -219,6 +210,14 @@ public class Spolka implements Runnable, Serializable, Listable
             inwestor.setKapital(inwestor.getKapital()+kwota);
             inwestor.getHashMapInwestycji().remove(akcjaSpolki);
         }
+    }
+
+    public Boolean getRunning() {
+        return running;
+    }
+
+    public void setRunning(Boolean running) {
+        this.running = running;
     }
 }
 

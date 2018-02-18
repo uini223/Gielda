@@ -65,7 +65,6 @@
       <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="600.0" BorderPane.alignment="CENTER_LEFT">
         <buttons>
           <Button fx:id="usunButton" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#usunSerie" text="Usuń z wykresu" />
-            <Button fx:id="pokazButton" mnemonicParsing="false" onAction="#pokazWykres" text="Pokaż Wykres" />
             <Button fx:id="dodajButton" mnemonicParsing="false" onAction="#dodajDoUsed" text="Dodaj do wykresu" />
         </buttons>
          <BorderPane.margin>

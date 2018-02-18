@@ -146,21 +146,12 @@ public class RynkiPaneManager extends ManagerAbstract {
 
         }
     }
+
     @Override
-    public void zapiszPola(){
-        if (!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getMonitor()) {
-                Rynek gpw = (Rynek) getLista().getSelectionModel().getSelectedItem();
-                gpw.setNazwa(nazwaTextField.getText());
-                gpw.getAdres().setMiasto(miastoTextField.getText());
-                gpw.getAdres().setNazwaUlicy(ulicaTextField.getText());
-                gpw.setKraj(krajTextField.getText());
-                gpw.setMarzaOdTransakcji(Double.parseDouble(marzaTextField.getText()));
-            }
-        }
-        clear();
-        wczytajListe();
+    public void refresh() {
+
     }
+
     public void dodajDoRynku(){
         if(!getLista().getSelectionModel().isEmpty()){
             Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
@@ -177,6 +168,9 @@ public class RynkiPaneManager extends ManagerAbstract {
                                 indeks.dodajSpolke(s);
                                 Main.getContainer().getHashMapSpolek().put(s.getName(),s);
                                 s.getHashSetIndeksow().add(indeks);
+                                Thread th = new Thread(s);
+                                th.setDaemon(false);
+                                th.start();
                             }
                             n++;
                         }

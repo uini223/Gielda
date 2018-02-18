@@ -84,7 +84,6 @@
         <buttons>
           <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#openOknoUjeciaView" text="Wykresy Ujecia Procentowego" />
             <Button mnemonicParsing="false" onAction="#openPanelKontrolnyView" text="Panel Kontrolny" />
-            <Button fx:id="odswiezButton" mnemonicParsing="false" onAction="#odswiez" text="Odśwież" />
         </buttons>
       </ButtonBar>
    </bottom>

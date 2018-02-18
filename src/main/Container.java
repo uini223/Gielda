@@ -5,6 +5,7 @@ import gield.Rynek;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.stage.Stage;
+import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekSurowcow.Surowiec;
 import rynekwalut.RynekWalut;
@@ -30,6 +31,8 @@ public  class Container implements Serializable {
 
     private volatile HashMap<String, Surowiec> hashMapSurowcow;
 
+    private volatile HashMap<String, FunduszInwestycyjny> hashMapFunduszy;
+
     private volatile HashSet<Surowiec> surowiecSet;
 
     private volatile Date date;
@@ -37,6 +40,7 @@ public  class Container implements Serializable {
     private volatile transient DaySimulation daySimulation;
 
     public  Container() {
+        hashMapFunduszy = new HashMap<>();
         surowiecSet = new HashSet<>();
         hashMapSurowcow = new HashMap<>();
         walutaSet = new HashSet<>();
@@ -186,5 +190,13 @@ public  class Container implements Serializable {
 
     public void setDaySimulation(DaySimulation daySimulation) {
         this.daySimulation = daySimulation;
+    }
+
+    public HashMap<String, FunduszInwestycyjny> getHashMapFunduszy() {
+        return hashMapFunduszy;
+    }
+
+    public void setHashMapFunduszy(HashMap<String, FunduszInwestycyjny> hashMapFunduszy) {
+        this.hashMapFunduszy = hashMapFunduszy;
     }
 }

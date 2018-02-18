@@ -21,8 +21,6 @@ import java.util.*;
 
 public class OknoUjeciaProcentowegoViewController implements Initializable, Controllable {
     @FXML
-    private Button dodajButton,pokazButton,usunButton;
-    @FXML
     private ListView<Inwestycja> allListView,usedListView;
     @FXML
     private LineChart<String,Number> wykresWartosci;
@@ -85,7 +83,7 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
                         listaDat) {
                     wartosc = (double) i.getWartosciAkcji().get(s);
                     if(lp>1){
-                        value = (wartosc - valPom) / 100;
+                        value = ((wartosc - valPom) / valPom )*100;
                         lista.add(new XYChart.Data<>(s, value));
                     }
                     valPom = (double) i.getWartosciAkcji().get(s);

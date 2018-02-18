@@ -1,7 +1,9 @@
 package posiadajacyPieniadze;
 
 
-public class FunduszInwestycyjny extends PosiadajacyPieniadze {
+import main.Main;
+
+public class FunduszInwestycyjny extends PosiadajacyPieniadze  {
     private String nazwa;
 
     public String getNazwa() {
@@ -18,17 +20,17 @@ public class FunduszInwestycyjny extends PosiadajacyPieniadze {
     }
 
     @Override
-    public void kupInwestycje() {
-
-    }
-
-    @Override
-    public void sprzedajInwestycje() {
-
-    }
-
-    @Override
     public void run() {
-
+        while (getRunning()){
+            try {
+                synchronized(Main.getMonitor()) {
+                    Main.getMonitor().wait();
+                    kupInwestycje();
+                    sprzedajInwestycje();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

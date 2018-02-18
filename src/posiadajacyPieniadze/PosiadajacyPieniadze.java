@@ -11,15 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serializable{
+
     private double kapital;
 
     private String imie, nazwisko;
 
-    private List<Inwestycja> listaInwestycji;
-
     private HashMap<Inwestycja,Number> hashMapInwestycji;
 
     private String name;
+
+    private Boolean running;
 
     public HashMap<Inwestycja, Number> getHashMapInwestycji() {
         return hashMapInwestycji;
@@ -30,12 +31,12 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
     }
 
     public PosiadajacyPieniadze(){
-        listaInwestycji = new ArrayList<>();
         hashMapInwestycji = new HashMap<>();
         imie = generujImie();
         nazwisko = generujNazwisko();
-        kapital = Math.random()*1000000+1000000;
+        kapital = Math.random()*1000000+1000;
         name = imie+nazwisko+" "+Integer.toString((int)(Math.random()*10000));
+        running=true;
     }
 
     public String getName() {
@@ -68,14 +69,6 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         updateName();
     }
 
-    public List<Inwestycja> getListaInwestycji() {
-        return listaInwestycji;
-    }
-
-    public void setListaInwestycji(List<Inwestycja> listaInwestycji) {
-        this.listaInwestycji = listaInwestycji;
-    }
-
     public double getKapital() {
         return kapital;
     }
@@ -96,10 +89,46 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         "Nowak", "Kowalski", "Predator", "Gossling", "Omen", "Sinus", "Cosinus", "Johanson", "Drop", "8bit"};
         return nazwiska[(int)(Math.random()*100)%nazwiska.length];
     }
-    public abstract void kupInwestycje();
+    public void kupInwestycje(){
+        synchronized (Main.getMonitor()) {
+            int size, i = 0, rnd;
+            size = Main.getContainer().getHashMapRynkow().keySet().size();
+            rnd = (int) (Math.random() * 100) % size;
+            for (String s : Main.getContainer().getHashMapRynkow().keySet()
+                    ) {
+                if (i == rnd) {
+                    Main.getContainer().getHashMapRynkow().get(s).kupno(this);
+                }
+                i++;
+            }
+        }
+    }
 
-    public abstract void sprzedajInwestycje();
+    public  void sprzedajInwestycje(){
+        if (!getHashMapInwestycji().keySet().isEmpty()) {
+            int rnd = (int) (Math.random() * 100) % getHashMapInwestycji().keySet().size();
+            int i = 0;
+            Inwestycja inwestycja = null;
+            for (Inwestycja inw : getHashMapInwestycji().keySet()
+                    ) {
+                if (rnd == i) {
+                    inwestycja = inw;
+                }
+                i++;
+            }
+            if(inwestycja.getRynek()!=null){
+                inwestycja.getRynek().sprzedaz(inwestycja,this);
+            }
+        }
+    }
 
+    public void generujKapital(){
+        double kwota = Math.random()*100000;
+        int a = (int)(Math.random()*10000)%15;
+        if(a==3){
+            setKapital(getKapital()+kwota);
+        }
+    }
     public String getImie(){
         return this.imie;
     }
@@ -107,5 +136,13 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
     @Override
     public String toString() {
         return name;
+    }
+
+    public Boolean getRunning() {
+        return running;
+    }
+
+    public void setRunning(Boolean running) {
+        this.running = running;
     }
 }

@@ -2,6 +2,7 @@ package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Inwestycja;
+import gieldaPapierowWartosciowych.Akcje;
 import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.FunduszInwestycyjny;
@@ -36,10 +37,21 @@ public class PPPaneManager extends ManagerAbstract {
             synchronized (Main.getMonitor()){
                 PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
                 Main.getContainer().getHashMapInwestorow().remove(pp.getName());
-
+                getLista().getItems().remove(pp);
+                for (Inwestycja i :
+                        pp.getHashMapInwestycji().keySet()) {
+                    if(i instanceof Akcje){
+                        ((Akcje) i).getSpolka().setLiczbaAkcji(((Akcje) i).getSpolka().
+                                getLiczbaAkcji()+(int)pp.getHashMapInwestycji().get(i));
+                    }
+                }
+                if(pp instanceof FunduszInwestycyjny){
+                    Main.getContainer().getHashMapFunduszy().remove(((FunduszInwestycyjny) pp).getNazwa());
+                }
+                pp.setRunning(false);
             }
         }
-        wczytajListe();
+
 
     }
     @Override
@@ -106,6 +118,7 @@ public class PPPaneManager extends ManagerAbstract {
                     synchronized (Main.getMonitor()) {
                         Inwestor inwestor = new Inwestor();
                         Main.getContainer().addPosiadajacyPieniadze(inwestor);
+                        getLista().getItems().add(inwestor);
                         Thread thread = new Thread(inwestor);
                         thread.setDaemon(true);
                         thread.start();
@@ -114,35 +127,30 @@ public class PPPaneManager extends ManagerAbstract {
                 }
                 case "Fundusz Inwestycyjny": {
                     synchronized (Main.getMonitor()) {
-                        Main.getContainer().addPosiadajacyPieniadze(new FunduszInwestycyjny());
+                        FunduszInwestycyjny fi = new FunduszInwestycyjny();
+                        Main.getContainer().addPosiadajacyPieniadze(fi);
+                        Main.getContainer().getHashMapFunduszy().put(fi.getNazwa(),fi);
+                        getLista().getItems().add(fi);
+                        Thread thread = new Thread(fi);
+                        thread.setDaemon(true);
+                        thread.start();
                     }
                     break;
                 }
             }
-            wczytajListe();
         }
     }
 
     @Override
-    public void zapiszPola() {
-        if (!getLista().getSelectionModel().isEmpty()) {
-            synchronized (Main.getMonitor()) {
-                PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
-                pp.setNazwisko(nazwiskoTextField.getText());
-                pp.setKapital(Double.valueOf(kapitalTextField.getText()));
-                pp.setImie(imieTextField.getText());
-                if(pp instanceof Inwestor){
-                    ((Inwestor) pp).setPesel(Integer.valueOf(peselTextField.getText()));
-                }
-                if (pp instanceof FunduszInwestycyjny){
-                    ((FunduszInwestycyjny) pp).setNazwa(nazwaTextField.getText());
-                }
+    public void refresh() {
+        if(!getLista().getSelectionModel().isEmpty()){
+            PosiadajacyPieniadze pp = (PosiadajacyPieniadze) getLista().getSelectionModel().getSelectedItem();
+            inwestycjeListView.getItems().clear();
+            for (Inwestycja i : pp.getHashMapInwestycji().keySet()
+                    ) {
+                inwestycjeListView.getItems().add(i.toString()+" "+pp.getHashMapInwestycji().get(i));
             }
         }
-        clear();
-        wczytajListe();
     }
-
-
 }
 

@@ -1,12 +1,16 @@
 package titledPanesManagment;
 
 import controllers.Listable;
+import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class SpolkiPaneManager extends ManagerAbstract {
 
@@ -42,7 +46,6 @@ public class SpolkiPaneManager extends ManagerAbstract {
 
     @Override
     public void usun() {
-        //TODO safe delete
         if(!getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getMonitor()) {
                 double cena=0;
@@ -53,6 +56,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
                 }
                 else if(tg.getSelectedToggle().equals(aktualnaCenaRadioButton)){
                     cena = spolka.getAktualnyKurs();
+                    cena =spolka.getAkcjaSpolki().getRynek().getWaluta().przelicCeneNaPLN(cena);
                 }
                 spolka.getAkcjaSpolki().wyprzedajWszystko(cena);
                 getLista().getItems().remove(spolka);
@@ -70,6 +74,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
                     Main.getContainer().getHashMapRynkow().remove(rynek.getNazwa());
                 }
                 rynek.getHashMapSpolek().remove(spolka.getName());
+                spolka.setRunning(false);
             }
 
         }
@@ -91,6 +96,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
         clear();
         Spolka spolka;
         spolka = (Spolka) getLista().getSelectionModel().getSelectedItem();
+        aktualnaCenaRadioButton.fire();
         synchronized (Main.getMonitor()){
             listaInwestorow.getItems().addAll(spolka.getAkcjaSpolki().getSetInwestorow());
             nazwa.setText(spolka.getName());
@@ -115,13 +121,46 @@ public class SpolkiPaneManager extends ManagerAbstract {
 
     @Override
     public void dodajNowy() {
+        /*
         synchronized (Main.getMonitor()){
-            Main.getContainer().addNewWaluta();
-        }
+            HashSet<GieldaPapierowWartosciowych> pom = new HashSet<>();
+            for (Rynek r :
+                    Main.getContainer().getHashMapRynkow().values()) {
+                if (r instanceof GieldaPapierowWartosciowych) {
+                    pom.add((GieldaPapierowWartosciowych) r);
+                }
+            }
+            if(pom.size()>0){
+                int rnd = (int) (Math.random()*1000)%pom.size();
+                int n=0;
+                for (GieldaPapierowWartosciowych gpw:
+                        pom){
+                    if(rnd==n){
+                        gpw.addNewSpolka();
+                    }
+                    n++;
+                }
+                int i = 0;
+                if(!getLista().getSelectionModel().isEmpty()){
+                    i = getLista().getSelectionModel().getSelectedIndex();
+                }
+                wczytajListe();
+                getLista().getSelectionModel().select(i);
+            }
+        }*/
+
     }
 
     @Override
-    public void zapiszPola() {
-
+    public void refresh() {
+        if(!getLista().getSelectionModel().isEmpty()){
+            Spolka spolka = (Spolka) getLista().getSelectionModel().getSelectedItem();
+            kapitalWlasny.setText(String.valueOf(spolka.getKapitalWlasny()));
+            kapitalZakladowy.setText(String.valueOf(spolka.getKapitalZakladowy()));
+            liczbaAkcji.setText(String.valueOf(spolka.getLiczbaAkcji()));
+            listaInwestorow.getItems().clear();
+            listaInwestorow.getItems().addAll(spolka.getAkcjaSpolki().getSetInwestorow());
+        }
     }
+
 }

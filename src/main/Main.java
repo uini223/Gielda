@@ -37,11 +37,13 @@ public class Main extends Application {
     @Override
     public void stop() throws FileNotFoundException {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(
-                            new BufferedOutputStream(
-                            new FileOutputStream("out.ser")));
-            out.writeObject(kontener);
-            out.close();
+            synchronized (Main.getMonitor()) {
+                ObjectOutputStream out = new ObjectOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream("out.ser")));
+                out.writeObject(kontener);
+                out.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

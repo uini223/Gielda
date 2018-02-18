@@ -86,16 +86,16 @@ public class GieldaPapierowWartosciowych extends Rynek{
         aktualizujSpolki();
         Spolka spolka;
         int size = hashMapSpolek.keySet().size(),i=0,rnd;
-        rnd = (int) (Math.random()*1000)%size;
+        rnd = (int) (Math.random()*1000)%(size+1);
         for (String s :
                 hashMapSpolek.keySet()) {
             if (i == rnd){
                 spolka = hashMapSpolek.get(s);
                 int pom;
-                int ilosc = (int)(Math.random()*1000000)%spolka.getLiczbaAkcji();
+                int ilosc = (int)(Math.random()*1000)%spolka.getLiczbaAkcji();
                 double kwota = ilosc*spolka.getAktualnyKurs();
-                kwota = getWaluta().przeliczCene(kwota);
                 kwota = pobierzMarze(kwota);
+                kwota = getWaluta().getAktualnaWartosc()*kwota;
                 if( kwota <= pp.getKapital() && ilosc>0) {
                     if(pp.getHashMapInwestycji().containsKey(spolka.getAkcjaSpolki())) {
                         pom = pp.getHashMapInwestycji().get(spolka.getAkcjaSpolki()).intValue();
@@ -137,4 +137,19 @@ public class GieldaPapierowWartosciowych extends Rynek{
         }
     }
 
+    public void addNewSpolka() {
+        int rnd = (int)(Math.random()*10000)%hashMapIndeksow.size();
+        int n=0;
+        for(Indeks indeks:
+                hashMapIndeksow.values()){
+            if(rnd==n){
+                Spolka spolka = new Spolka(this);
+                indeks.dodajSpolke(spolka);
+                Thread thread= new Thread(spolka);
+                thread.setDaemon(false);
+                thread.start();
+            }
+            n++;
+        }
+    }
 }

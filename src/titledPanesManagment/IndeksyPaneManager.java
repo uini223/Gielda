@@ -49,7 +49,8 @@ public class IndeksyPaneManager extends ManagerAbstract {
                     if(s.getHashSetIndeksow().size()==0){
                         Main.getContainer().getHashMapSpolek().remove(s.getName());
                         ind.getRodzic().getHashMapSpolek().remove(s.getName());
-                        s.wyprzedajSpolke(s.getAktualnyKurs());
+                        s.getAkcjaSpolki().wyprzedajWszystko(ind.getRodzic().getWaluta().
+                                przelicCeneNaPLN(s.getAktualnyKurs()));
                     }
                 }
                 if(ind.getRodzic().getHashMapIndeksow().size()==0){
@@ -117,13 +118,17 @@ public class IndeksyPaneManager extends ManagerAbstract {
                 Indeks ind = new Indeks(gpw);
                 gpw.addIndeks(ind);
             }
+            int i = getLista().getSelectionModel().getSelectedIndex();
+            wczytajListe();
+            getLista().getSelectionModel().select(i);
         }
-        wczytajListe();
     }
 
     @Override
-    public void zapiszPola() {
+    public void refresh() {
+
     }
+
     public void dodajSpolkeDoIndeksu(){
         if(!getLista().getSelectionModel().isEmpty()){
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();

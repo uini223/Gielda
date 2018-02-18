@@ -29,12 +29,9 @@ public class DaySimulation implements Runnable{
                 Main.getMonitor().notifyAll();
 
             }
-            //mvc.updateAll();
             Platform.runLater(refresher);
-            mvc.makeOdswiezButtonVisible();
-
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000*2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

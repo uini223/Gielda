@@ -20,6 +20,7 @@ public class Surowiec extends Inwestycja{
         setAktualnaWartosc(a);
         setNajmniejszaWartosc(a);
         setNajwiekszaWartosc(a);
+        setPoczatkowaWartosc(a);
         /*String[] surowce = {"Jabłka","Gruszki","Pomidory","Olej Silnikowy","Diament","Zboże","Opony","Ropa",""};
         Set<String> jednostkiHandlowe = new HashSet<>();
         jednostkiHandlowe.add("Kg");

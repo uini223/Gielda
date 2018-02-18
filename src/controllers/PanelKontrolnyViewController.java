@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import titledPanesManagment.*;
 
@@ -16,7 +17,6 @@ import java.util.ResourceBundle;
 
 public class PanelKontrolnyViewController implements Initializable, Controllable {
     private Stage myStage;
-    private MainViewController mvc;
     private RynkiPaneManager rynkiPaneManager;
     private PPPaneManager ppPaneManager;
     private IndeksyPaneManager indeksyPaneManager;
@@ -35,7 +35,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private ListView<Listable> lista;
     @FXML
-    private ListView<String> ppInwestycjeListView;
+    private ListView<String> ppInwestycjeListView,walutyPanstwaListView;
     @FXML
     private TextField rynkiNazwaTextField,rynkiKrajTextField,rynkiMiastoTextField,rynkiUlicaTextField,
             rynkiTypRynkuTextField,rynkiMarzaTextField,rynkiWalutaTextField;
@@ -51,7 +51,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
             spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiGieldaTextField;
     @FXML
     private TextField walutyNazwaTextField,walutyPoczatkowyKursTextField,walutyObecnyKursTextField,
-            walutyGieldaTextField;
+            walutyGieldaTextField,dodajNowePanstwoTextField;
     @FXML
     private TextField surowceNazwaTextField,surowcePoczatkowyKursTextField,surowceObecnyKursTextField,
             surowceJednostkaTextField,surowceGieldaTextField;
@@ -91,7 +91,8 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                 spolkiWykupToggleGroup);
 
         walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPoczatkowyKursTextField,
-                walutyObecnyKursTextField, walutyGieldaTextField, walutyInwestorzyListView);
+                walutyObecnyKursTextField, walutyGieldaTextField, dodajNowePanstwoTextField,walutyInwestorzyListView,
+                walutyPanstwaListView);
 
         surowcePaneManager = new SurowcePaneManager(lista,accordion,surowceNazwaTextField,
                 surowcePoczatkowyKursTextField,surowceObecnyKursTextField,surowceJednostkaTextField,
@@ -137,11 +138,17 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
                     manager.onExtendedPropertyChange(old_val,new_val);
                 });
 
+
     }
 
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
+        myStage.setOnCloseRequest(event -> {
+            synchronized (Main.getMonitor()){
+                Main.getContainer().getDaySimulation().getRefresher().setPkvc(null);
+            }
+        });
     }
 
     @Override
@@ -149,10 +156,6 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         return myStage;
     }
 
-    @FXML
-    private void zapiszButtonAction(){
-        manager.zapiszPola();
-    }
 
     @FXML
     private void usunButtonAction(){
@@ -167,13 +170,6 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         indeksyPaneManager.dodajSpolkeDoIndeksu();
     }
 
-    public MainViewController getMvc() {
-        return mvc;
-    }
-
-    public void setMvc(MainViewController mvc) {
-        this.mvc = mvc;
-    }
     @FXML
     private void dodajDoRynkuButtonAction(){
         rynkiPaneManager.dodajDoRynku();
@@ -185,5 +181,18 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     @FXML
     private void dodajIstniejacaDoIndeksu(){
         indeksyPaneManager.dodajInstiejacaDoIndeksu();
+    }
+    @FXML
+    private void dodajNowePanstwo(){
+        walutyPaneManager.dodajNowePanstwo();
+    }
+    @FXML
+    private void usunZeSwiataButtonAction(){
+        walutyPaneManager.usunZeSwiata();
+    }
+    public void refresh(){
+        if(manager!=null) {
+            manager.refresh();
+        }
     }
 }

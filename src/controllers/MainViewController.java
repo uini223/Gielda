@@ -63,7 +63,6 @@ public class MainViewController implements Initializable, Controllable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        makeOdswiezButtonInvisible();
         synchronized (Main.getMonitor()){
             rynekChoiceBox.getItems().addAll(Main.getContainer().getHashMapRynkow().values());
         }
@@ -111,7 +110,10 @@ public class MainViewController implements Initializable, Controllable {
             stage.setScene(new Scene(root, 900, 500));
             stage.initOwner(myStage);
             if(kontroler instanceof PanelKontrolnyViewController){
-                ((PanelKontrolnyViewController) kontroler).setMvc(this);
+                synchronized (Main.getMonitor()){
+                    Main.getContainer().getDaySimulation().getRefresher().
+                            setPkvc((PanelKontrolnyViewController) kontroler);
+                }
             }
             kontroler.setStage(stage);
             stage.show();
@@ -121,7 +123,6 @@ public class MainViewController implements Initializable, Controllable {
 
     @FXML
     private synchronized void onAktywaChoiceBoxAction(){
-        makeOdswiezButtonInvisible();
         Rynek rynek;
         listaAkcji.getItems().clear();
         if(aktywaChoiceBox.getValue() != null) {
@@ -173,7 +174,6 @@ public class MainViewController implements Initializable, Controllable {
     }
     @FXML
     public void  onRynkiChoiceboxAction(){
-        makeOdswiezButtonInvisible();
         String s = aktywaChoiceBox.getValue();
         aktywaChoiceBox.getItems().clear();
         Rynek rynek = rynekChoiceBox.getSelectionModel().getSelectedItem();
@@ -206,7 +206,6 @@ public class MainViewController implements Initializable, Controllable {
 
     @FXML
     private void onListaAkcjiChoice() {
-        makeOdswiezButtonInvisible();
         ObservableList<XYChart.Data<String, Number>> dane = FXCollections.observableArrayList();
         if (!listaAkcji.getSelectionModel().isEmpty()) {
             synchronized (Main.getMonitor()) {
@@ -235,12 +234,6 @@ public class MainViewController implements Initializable, Controllable {
             }
         }
     }
-    public void makeOdswiezButtonVisible(){
-        odswiezButton.setVisible(true);
-    }
-    public void makeOdswiezButtonInvisible(){
-        odswiezButton.setVisible(false);
-    }
 
     @FXML
     private void odswiez(){
@@ -266,6 +259,9 @@ public class MainViewController implements Initializable, Controllable {
                 }
             }
             rynekChoiceBox.getItems().removeAll(rynekSet);
+            int in = listaAkcji.getSelectionModel().getSelectedIndex();
+            onAktywaChoiceBoxAction();
+            listaAkcji.getSelectionModel().select(in);
             for (Indeks i :
                     Main.getContainer().getHashMapIndeksow().values()) {
                 i.aktualizujWartosc(1);
@@ -283,7 +279,6 @@ public class MainViewController implements Initializable, Controllable {
                 s.obliczNowyKurs();
             }
         }
-        makeOdswiezButtonInvisible();
 
     }
     @FXML
