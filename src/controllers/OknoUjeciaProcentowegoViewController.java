@@ -19,6 +19,9 @@ import main.Main;
 import java.net.URL;
 import java.util.*;
 
+/**
+ *  kontroler okienka do wykresow ujecia procentowego
+ */
 public class OknoUjeciaProcentowegoViewController implements Initializable, Controllable {
     @FXML
     private ListView<Inwestycja> allListView,usedListView;
@@ -27,6 +30,11 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
 
     private Stage myStage;
 
+    /**
+     * @param location
+     * @param resources
+     * parametry domyslne dla kontrolera, inicjalizuje okienko ujecia procentowego
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         synchronized (Main.getMonitor()){
@@ -41,6 +49,10 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
 
     }
 
+    /**
+     * @param stage
+     * setuje stage, ktorym zarządza kontroler
+     */
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
@@ -51,10 +63,18 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
         });
     }
 
+    /**
+     * @return
+     * zwraca obecnie zarządzany stage
+     */
     @Override
     public Stage getStage() {
         return myStage;
     }
+
+    /**
+     * odpoweidzialna za wyswietlanie wykresu
+     */
     @FXML
     private void pokazWykres(){
         wykresWartosci.getData().clear();
@@ -97,6 +117,10 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
             }
         }
     }
+
+    /**
+     * dodaje do listy aktywow ktore sa wyswietlane
+     */
     @FXML
     private void dodajDoUsed(){
         if(!allListView.getSelectionModel().isEmpty()){
@@ -107,6 +131,10 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
         }
         pokazWykres();
     }
+
+    /**
+     * usuwa serie z wykresu
+     */
     @FXML
     private void usunSerie(){
         if(!usedListView.getSelectionModel().isEmpty()){
@@ -115,6 +143,10 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
             usedListView.getItems().remove(i);
         }
     }
+
+    /**
+     * funkcja aktualizujaca GUI, uzywana w klasie refresher
+     */
     public void odswiez(){
         pokazWykres();
     }

@@ -194,22 +194,27 @@
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding></VBox>
-                              <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                              <VBox prefHeight="392.0" prefWidth="96.0" spacing="5.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="Indeksy" />
                                     <ListView fx:id="spolkiIndeksListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+                                    <Label text="Zysk" />
+                                    <TextField fx:id="spolkiZyskTextField" />
+                                    <Label text="Przychód" />
+                                    <TextField fx:id="spolkiPrzychodTextField" />
                                  </children>
                                  <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    <Insets />
                                  </HBox.margin>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
                               </VBox>
-                              <VBox prefHeight="385.0" prefWidth="182.0">
+                              <VBox prefHeight="385.0" prefWidth="182.0" spacing="5.0">
                                  <children>
                                     <Label text="Inwestorzy" />
-                                    <ListView fx:id="spolkiInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+                                    <ListView fx:id="spolkiInwestorzyListView" prefHeight="252.0" prefWidth="205.0" VBox.vgrow="ALWAYS" />
+                                    <Label text="Obroty" />
+                                    <TextField fx:id="spolkiObrotyTextField" />
+                                    <Label text="Wolumen" />
+                                    <TextField fx:id="spolkiWolumenTextField" />
                                  </children>
                               </VBox>
                            </children>

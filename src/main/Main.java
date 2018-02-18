@@ -71,7 +71,7 @@ public class Main extends Application {
         Rynek rynek;
         PosiadajacyPieniadze pp;
         Thread thread;
-        for(int i=0;i<10;i++){
+        for(int i=0;i<24;i++){
             if(i<2){
                 rynek = new GieldaPapierowWartosciowych();
                 kontener.addRynek(rynek);
@@ -89,8 +89,8 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //wczytajKontener();
-        nowyStan();
+        wczytajKontener();
+        //nowyStan();
         mainStage = primaryStage;
         String name = "../views/";
         Parent root;

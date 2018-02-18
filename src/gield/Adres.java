@@ -2,6 +2,9 @@ package gield;
 
 import java.io.Serializable;
 
+/**
+ * klasa reprezentujaca adres
+ */
 public class Adres implements Serializable{
     private String miasto,nazwaUlicy;
     private int numerDomu;

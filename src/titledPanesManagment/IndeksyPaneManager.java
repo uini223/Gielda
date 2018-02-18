@@ -13,6 +13,9 @@ import main.Main;
 
 import java.util.Collection;
 
+/**
+ * klasa do zarzadzania IndeksPane w panelu kontrolnym
+ */
 public class IndeksyPaneManager extends ManagerAbstract {
     //hello
     private TextField nazwaTextField,gieldaTextField;
@@ -23,6 +26,16 @@ public class IndeksyPaneManager extends ManagerAbstract {
 
     private ListView<Spolka> dostepneSpolkiListVIiew;
 
+    /**
+     * @param lista
+     * @param accordion
+     * @param nazwaTextField
+     * @param gieldaTextField
+     * @param typChoiceBox
+     * @param spolkiListView
+     * @param dostepneSpolkiListVIiew
+     * konstruktor , potrzebuje jako parametrow wszystkich elemetnow GUI ktorymi zarzadza
+     */
     public IndeksyPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwaTextField,
                               TextField gieldaTextField, ChoiceBox<String>
                                       typChoiceBox, ListView<Spolka> spolkiListView, ListView<Spolka> dostepneSpolkiListVIiew) {
@@ -36,6 +49,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
         setName("Indeksy");
     }
 
+    /**
+     * usuwa indeks
+     */
     @Override
     public void usun() {
         if(!getLista().getSelectionModel().isEmpty()){
@@ -62,6 +78,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
         wczytajListe();
     }
 
+    /**
+     * czysci elementy gui
+     */
     @Override
     public void clear() {
         nazwaTextField.clear();
@@ -70,6 +89,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
         dostepneSpolkiListVIiew.getItems().clear();
     }
 
+    /**
+     *  akcja na wybranie elementu z glownej listy
+     */
     @Override
     public void onSelectedItem() {
         //wczytajListe();
@@ -85,6 +107,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
         }
     }
 
+    /**
+     * wczytuje liste po rozwinieciu Pane'a
+     */
     @Override
     public void wczytajListe() {
         getLista().getItems().clear();
@@ -108,6 +133,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
         }
     }
 
+    /**
+     * dodaje nowy indeks
+     */
     @Override
     public void dodajNowy() {
         if(!typChoiceBox.getSelectionModel().isEmpty()){
@@ -129,6 +157,9 @@ public class IndeksyPaneManager extends ManagerAbstract {
 
     }
 
+    /**
+     * dodaje nowa spolke do indeksu
+     */
     public void dodajSpolkeDoIndeksu(){
         if(!getLista().getSelectionModel().isEmpty()){
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
@@ -141,6 +172,10 @@ public class IndeksyPaneManager extends ManagerAbstract {
             }
         }
     }
+
+    /**
+     * dodaje istniejaca spolke do indeksu (o ile to mozliwe)
+     */
     public void dodajInstiejacaDoIndeksu(){
         if(!dostepneSpolkiListVIiew.getSelectionModel().isEmpty() && !getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getMonitor()) {
@@ -153,6 +188,10 @@ public class IndeksyPaneManager extends ManagerAbstract {
             }
         }
     }
+
+    /**
+     * usuwa spolke z indeksu (o ile to mozliwe)
+     */
     public void usunSpolkeZIndeksu(){
         if(!spolkiListView.getSelectionModel().isEmpty() && !getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getMonitor()) {

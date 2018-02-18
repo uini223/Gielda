@@ -1,15 +1,12 @@
 package posiadajacyPieniadze;
 
-import gield.Inwestycja;
 import main.Main;
-import rynekwalut.Waluta;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
+/**
+ *  klasa dla inwestora
+ */
 public class Inwestor extends PosiadajacyPieniadze {
 
     private HashMap<FunduszInwestycyjny,Number> fiHashMap;
@@ -26,10 +23,9 @@ public class Inwestor extends PosiadajacyPieniadze {
         return pesel;
     }
 
-    public void setPesel(int pesel) {
-        this.pesel = pesel;
-    }
-
+    /**
+     * metoda "kupuje" jednostki uczestnictwa losowo wybranego funduszu
+     */
     public void kupJednostkiUczestictwa() {
         int size = Main.getContainer().getHashMapFunduszy().size();
         if (size > 0) {
@@ -53,7 +49,11 @@ public class Inwestor extends PosiadajacyPieniadze {
             }
         }
     }
-    public void sperzedajJednostkiUczestnictwa(){
+
+    /**
+     * metoda sprzedaje sprzedaje jednostki uczestictwa losowo wybranego funduszu
+     */
+    public void sprzedajJednostkiUczestnictwa(){
         if(fiHashMap.size()>0){
             int a = (int)(Math.random()*10000)%fiHashMap.size();
             int n=0;
@@ -74,6 +74,9 @@ public class Inwestor extends PosiadajacyPieniadze {
         }
     }
 
+    /**
+     * "życie" inwestora
+     */
     @Override
     public void run() {
 
@@ -86,7 +89,7 @@ public class Inwestor extends PosiadajacyPieniadze {
                         kupJednostkiUczestictwa();
                     }
                     else if(a>=8){
-                        sperzedajJednostkiUczestnictwa();
+                        sprzedajJednostkiUczestnictwa();
                     }
                     kupInwestycje();
                     sprzedajInwestycje();
@@ -102,7 +105,4 @@ public class Inwestor extends PosiadajacyPieniadze {
         return fiHashMap;
     }
 
-    public void setFiHashMap(HashMap<FunduszInwestycyjny, Number> fiHashMap) {
-        this.fiHashMap = fiHashMap;
-    }
 }

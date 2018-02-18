@@ -38,6 +38,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * kontroler głównego okienka
+ */
 public class MainViewController implements Initializable, Controllable {
     @FXML
     private ListView<Inwestycja> listaAkcji;
@@ -61,6 +64,11 @@ public class MainViewController implements Initializable, Controllable {
     public MainViewController() {
     }
 
+    /**
+     * @param location
+     * @param resources
+     * parametry domyślne, funkcja inicjująca główne okienko
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         synchronized (Main.getMonitor()){
@@ -77,21 +85,10 @@ public class MainViewController implements Initializable, Controllable {
         });
     }
 
-    @FXML
-    private void deleteButtonAction() throws Exception {
-
-    }
-
-    @FXML
-    private void anulujButtonAction() {
-
-    }
-
-    @FXML
-    private void closeMenuItemAction() {
-        myStage.close();
-    }
-
+    /**
+     * @throws Exception
+     * otwiera okno panelu kontrolnego (o ile takie już nie istnieje)
+     */
     @FXML
     private void openPanelKontrolnyView() throws Exception {
         boolean canCreate = true;
@@ -107,7 +104,7 @@ public class MainViewController implements Initializable, Controllable {
             Controllable kontroler = loader.getController();
             Stage stage = new Stage();
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 900, 500));
+            stage.setScene(new Scene(root, 900, 550));
             stage.initOwner(myStage);
             if(kontroler instanceof PanelKontrolnyViewController){
                 synchronized (Main.getMonitor()){
@@ -121,6 +118,9 @@ public class MainViewController implements Initializable, Controllable {
 
     }
 
+    /**
+     *  funkcja odpowiedzialna za wyswietlanie aktywów danego rynku
+     */
     @FXML
     private synchronized void onAktywaChoiceBoxAction(){
         Rynek rynek;
@@ -172,6 +172,10 @@ public class MainViewController implements Initializable, Controllable {
             }
         }
     }
+
+    /**
+     *  funkcja ustalajaca aktywaChociceBox w zaleznosci od rynku
+     */
     @FXML
     public void  onRynkiChoiceboxAction(){
         String s = aktywaChoiceBox.getValue();
@@ -194,16 +198,27 @@ public class MainViewController implements Initializable, Controllable {
         }
     }
 
+    /**
+     * @param stage
+     * funkcja z interfejsu Controlable, setuje stage, którym zarzadza kontroler
+     *
+     */
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
     }
 
+    /**
+     * @return zwraca stage kontrolera
+     */
     @Override
     public Stage getStage() {
         return myStage;
     }
 
+    /**
+     *  wyswietla wykres
+     */
     @FXML
     private void onListaAkcjiChoice() {
         ObservableList<XYChart.Data<String, Number>> dane = FXCollections.observableArrayList();
@@ -235,11 +250,9 @@ public class MainViewController implements Initializable, Controllable {
         }
     }
 
-    @FXML
-    private void odswiez(){
-        onListaAkcjiChoice();
-    }
-
+    /**
+     * pomocnicza dla Day Simulation, aktualizuje stan symulowanego świata i elementy GUI
+     */
     public void updateAll() {
         //Rynek rynek = rynekChoiceBox.getValue();
         //rynekChoiceBox.getItems().clear();
@@ -281,6 +294,11 @@ public class MainViewController implements Initializable, Controllable {
         }
 
     }
+
+    /**
+     * @throws IOException
+     * otwiera okienko do wykresów w ujęciu procentowym
+     */
     @FXML
     private void openOknoUjeciaView() throws IOException {
         boolean canCreate = true;

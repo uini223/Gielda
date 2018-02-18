@@ -9,6 +9,9 @@ import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.Inwestor;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
+/**
+ *  klasa dla Posiadajacych pieniadze PaneManager w panelu kontrolnym
+ */
 public class PPPaneManager extends ManagerAbstract {
 
     private TextField imieTextField,nazwiskoTextField,nazwaTextField,

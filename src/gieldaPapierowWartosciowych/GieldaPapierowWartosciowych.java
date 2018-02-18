@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ *  klasa dla GPW
+ */
 public class GieldaPapierowWartosciowych extends Rynek{
 
     private HashMap<String,Indeks> hashMapIndeksow;
@@ -23,10 +26,9 @@ public class GieldaPapierowWartosciowych extends Rynek{
         return hashMapSpolek;
     }
 
-    public void setHashMapSpolek(Map<String, Spolka> hashMapSpolek) {
-        this.hashMapSpolek = hashMapSpolek;
-    }
-
+    /**
+     * konstruktor GPW, tworzy nowy indeks (gpw nie moze istiec bez indeksu)
+     */
     public GieldaPapierowWartosciowych() {
         super();
 
@@ -49,8 +51,6 @@ public class GieldaPapierowWartosciowych extends Rynek{
             hashMapIndeksow.put(ind.getNazwa(),ind);
         }
         aktualizujIndeksy();
-
-        //aktualizujSpolki();
     }
 
     public HashMap<String, Indeks> getHashMapIndeksow() {
@@ -58,12 +58,18 @@ public class GieldaPapierowWartosciowych extends Rynek{
     }
 
 
+    /**
+     * aktualizuje indeksy w kontenerze
+     */
     public void aktualizujIndeksy(){
         synchronized (Main.getMonitor()) {
             Main.getContainer().getHashMapIndeksow().putAll(hashMapIndeksow);
         }
     }
 
+    /**
+     * @param ind dodaje indeks do gieldy
+     */
     public void addIndeks(Indeks ind){
         synchronized (Main.getMonitor()) {
             hashMapIndeksow.put(ind.getNazwa(), ind);
@@ -72,6 +78,9 @@ public class GieldaPapierowWartosciowych extends Rynek{
         }
     }
 
+    /**
+     * aktualizuje spolki z ineksow
+     */
     public void aktualizujSpolki(){
         synchronized (Main.getMonitor()) {
             for (Indeks s :
@@ -81,6 +90,10 @@ public class GieldaPapierowWartosciowych extends Rynek{
         }
     }
 
+    /**
+     * @param pp inwestor ktory kupuje na danym rynku
+     * funkcja odpowiedzialna za wybranie losowej spolki z rynku i dokonania zakupu jej akcji
+     */
     @Override
     public void kupno(PosiadajacyPieniadze pp) {
         aktualizujSpolki();
@@ -114,7 +127,11 @@ public class GieldaPapierowWartosciowych extends Rynek{
     }
 
 
-
+    /**
+     * @param inwestycja sprzedawana inwestycja
+     * @param pp sprzedajacy inwestor
+     * inwestor sprzedaje akcje inwestycji
+     */
     @Override
     public void sprzedaz(Inwestycja inwestycja,PosiadajacyPieniadze pp) {
         Spolka s;
@@ -137,6 +154,9 @@ public class GieldaPapierowWartosciowych extends Rynek{
         }
     }
 
+    /**
+     * dodaje nowa spolke do rynki
+     */
     public void addNewSpolka() {
         int rnd = (int)(Math.random()*10000)%hashMapIndeksow.size();
         int n=0;

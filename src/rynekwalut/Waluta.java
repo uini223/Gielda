@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * klasa dla waluty
+ */
 public class Waluta extends Inwestycja {
     private List<String> listaKrajow;
     private double cenaKupna;
@@ -33,6 +36,9 @@ public class Waluta extends Inwestycja {
         this.przelicznik = przelicznik;
     }
 
+    /**
+     * @param nazwa nazwa nowo tworzonej waluty
+     */
     public Waluta(String nazwa) {
         super( nazwa,0);
         listaKrajow = new ArrayList<>();
@@ -56,6 +62,9 @@ public class Waluta extends Inwestycja {
         return nazwa;
     }
 
+    /**
+     * @param text dodaje panstwo do listy krajow
+     */
     public void dodajPanstwo(String text) {
         listaKrajow.add(text);
     }

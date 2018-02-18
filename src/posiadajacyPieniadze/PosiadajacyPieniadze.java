@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * klasa abstrakcyjna dla inwestorow i funduszy
+ */
 public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serializable{
 
     private double kapital;
@@ -30,6 +33,9 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         this.hashMapInwestycji = hashMapInwestycji;
     }
 
+    /**
+     * konstruktor
+     */
     public PosiadajacyPieniadze(){
         hashMapInwestycji = new HashMap<>();
         imie = generujImie();
@@ -43,31 +49,14 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         return name;
     }
 
-    private void updateName(){
-        synchronized(Main.getMonitor()){
-            Main.getContainer().getHashMapInwestorow().remove(name);
-            name= imie+" "+nazwisko+" "+Integer.toString((int)(Math.random()*10000));
-            Main.getContainer().getHashMapInwestorow().put(name,this);
-        }
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setImie(String imie) {
-        this.imie = imie;
-        updateName();
     }
 
     public String getNazwisko() {
         return nazwisko;
     }
 
-    public void setNazwisko(String nazwisko) {
-        this.nazwisko = nazwisko;
-        updateName();
-    }
 
     public double getKapital() {
         return kapital;
@@ -89,6 +78,10 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         "Nowak", "Kowalski", "Predator", "Gossling", "Omen", "Sinus", "Cosinus", "Johanson", "Drop", "8bit"};
         return nazwiska[(int)(Math.random()*100)%nazwiska.length];
     }
+
+    /**
+     * metoda do kupowania losowo wybranej inwestycji z losowo wybranego rynu
+     */
     public void kupInwestycje(){
         synchronized (Main.getMonitor()) {
             int size, i = 0, rnd;
@@ -104,6 +97,9 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         }
     }
 
+    /**
+     * metoda do sprzedawania inwestycji losowo wybranej z posiadanych
+     */
     public  void sprzedajInwestycje(){
         if (!getHashMapInwestycji().keySet().isEmpty()) {
             int rnd = (int) (Math.random() * 100) % getHashMapInwestycji().keySet().size();
@@ -122,6 +118,9 @@ public abstract class PosiadajacyPieniadze implements Listable, Runnable, Serial
         }
     }
 
+    /**
+     * generuje dodatkowy kapital
+     */
     public void generujKapital(){
         double kwota = Math.random()*100000;
         int a = (int)(Math.random()*10000)%15;

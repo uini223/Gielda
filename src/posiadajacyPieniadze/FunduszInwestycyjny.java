@@ -3,6 +3,9 @@ package posiadajacyPieniadze;
 
 import main.Main;
 
+/**
+ * klasa dla funduszu inwestycyjnego
+ */
 public class FunduszInwestycyjny extends PosiadajacyPieniadze  {
     private String nazwa;
 
@@ -15,10 +18,9 @@ public class FunduszInwestycyjny extends PosiadajacyPieniadze  {
         nazwa = getName();
     }
 
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
-    }
-
+    /**
+     * symulacja dla funduszu, kupowanie, sprzedawanie
+     */
     @Override
     public void run() {
         while (getRunning()){

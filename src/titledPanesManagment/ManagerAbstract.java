@@ -5,6 +5,9 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 
+/**
+ * klasa abstrakcyjna dla PaneManagerow
+ */
 public abstract
 class ManagerAbstract {
     private ListView<Listable> lista;
@@ -20,6 +23,11 @@ class ManagerAbstract {
     }
 
 
+    /**
+     * @param old_val
+     * @param new_val
+     * metoda wywolywana po zwinieciu/rozwinieciu titledPane
+     */
     public void onExtendedPropertyChange(TitledPane old_val, TitledPane new_val) {
         if(new_val!=null) {
             if (getAccordion().getExpandedPane().getText().equals(getName()))

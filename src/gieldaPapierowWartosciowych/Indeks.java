@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * klasa dla indeksow spolek na GPW
+ */
 public class Indeks extends Inwestycja implements Listable, Serializable {
 
     private GieldaPapierowWartosciowych rodzic;
@@ -24,6 +27,10 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
         this.hashMapSpolek = hashMapSpolek;
     }
 
+    /**
+     * @param rodzic rynek do ktorego nalezy indeks
+     * tworzy nazwe indeksu i 3 nowe spolki, ktore do niego naleza (indeks nie moze istniec bez spolek)
+     */
     public Indeks(GieldaPapierowWartosciowych rodzic) {
         super( "indeks" + Integer.toString((int)((Math.random())*10000)),0);
         //name = "indeks" + Integer.toString((int)((Math.random())*10000));
@@ -37,6 +44,9 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
             Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
             hashMapSpolek.put(spolka.getName(),spolka);
             spolka.getAkcjaSpolki().addWartoscAkcji(spolka.getAktualnyKurs());
+            Thread th = new Thread(spolka);
+            th.setDaemon(true);
+            th.start();
         }
         rodzic.addIndeks(this);
         aktualizujWartosc(0);
@@ -66,10 +76,19 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
 
     private int parametrDoboruSpolek;
 
+    /**
+     * @param a dodaje spolke 'a' do zestawu spolek indeksu
+     */
     public void dodajSpolke(Spolka a){
         hashMapSpolek.put(a.getName(),a);
         rodzic.aktualizujSpolki();
     }
+
+    /**
+     * @param a parametr sluzy to wyboru trybu aktualizowania wartosci
+     * a == 0 przy inicjalizacji wartosc
+     *          else aktualizuje wartosc indeksu na podstawie sumy wartosci spolek nalezacych do indeksu
+     */
     public void aktualizujWartosc(int a){
         double wartosc = 0;
         for (String s :
@@ -86,6 +105,10 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
     public Rynek getRynek(){
         return rodzic;
     }
+
+    /**
+     * @param a usuwa spolke 'a' z indeksu
+     */
     public void usunSpolke(Spolka a){
         hashMapSpolek.remove(a.getName(),a);
         rodzic.aktualizujSpolki();

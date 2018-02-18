@@ -15,6 +15,9 @@ import titledPanesManagment.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * kontroler panelu kontrolnego
+ */
 public class PanelKontrolnyViewController implements Initializable, Controllable {
     private Stage myStage;
     private RynkiPaneManager rynkiPaneManager;
@@ -48,7 +51,8 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private ListView<Indeks> spolkiIndeksListView;
     @FXML
     private TextField spolkiNazwaTextField, spolkiKapitalWlasnyTextField,spolkiNowaCenaTextField,
-            spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiGieldaTextField;
+            spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiGieldaTextField,
+            spolkiWolumenTextField,spolkiPrzychodTextField,spolkiZyskTextField,spolkiObrotyTextField;
     @FXML
     private TextField walutyNazwaTextField,walutyPoczatkowyKursTextField,walutyObecnyKursTextField,
             walutyGieldaTextField,dodajNowePanstwoTextField;
@@ -72,6 +76,13 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
     }
 
+    /**
+     * @param location
+     * @param resources
+     * parametry domyślne dla kontrolera,
+     * inicjaluzje okienko, tworzy PaneManagery dla TitledPane'ów
+     * poszczegolne PaneManagery są pseudo kontrolerami dla odpowiedniego TitledPane'u
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -87,8 +98,9 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
         spolkiPaneManager = new SpolkiPaneManager(lista,accordion, spolkiNazwaTextField, spolkiKapitalWlasnyTextField,
                 spolkiKapitalZakladowyTextField, spolkiLiczbaAkcjiTextField, spolkiNowaCenaTextField,
-                spolkiIndeksListView, spolkiGieldaTextField, spolkiInwestorzyListView,spolkiNowaCena,spolkiAktualnaCena,
-                spolkiWykupToggleGroup);
+                spolkiZyskTextField, spolkiPrzychodTextField, spolkiIndeksListView, spolkiGieldaTextField,
+                spolkiObrotyTextField, spolkiWolumenTextField, spolkiInwestorzyListView,spolkiNowaCena,
+                spolkiAktualnaCena, spolkiWykupToggleGroup);
 
         walutyPaneManager = new WalutyPaneManager(lista,accordion, walutyNazwaTextField, walutyPoczatkowyKursTextField,
                 walutyObecnyKursTextField, walutyGieldaTextField, dodajNowePanstwoTextField,walutyInwestorzyListView,
@@ -141,6 +153,10 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
 
     }
 
+    /**
+     * @param stage
+     * setuje stage którym zarządza kontroler
+     */
     @Override
     public void setStage(Stage stage) {
         myStage = stage;
@@ -151,45 +167,81 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
         });
     }
 
+    /**
+     * @return
+     * getter dla stage, którym zarządza kontroler
+     */
     @Override
     public Stage getStage() {
         return myStage;
     }
 
 
+    /**
+     * akcja dla przycisku usun
+     */
     @FXML
     private void usunButtonAction(){
         manager.usun();
     }
 
+    /**
+     * akcja dla przcisku dodaj nowy
+     */
     @FXML
     private void dodajNowyButtonAction(){ manager.dodajNowy(); }
 
+    /**
+     * akcja dla przycisku dodaj spolke w indeksyPane
+     */
     @FXML
     private void dodajSpolkeAction(){
         indeksyPaneManager.dodajSpolkeDoIndeksu();
     }
 
+    /**
+     * akcja dla przycisku dodaj do rynku (walute/spolke/surowiec) w rynkiPane
+     */
     @FXML
     private void dodajDoRynkuButtonAction(){
         rynkiPaneManager.dodajDoRynku();
     }
+
+    /**
+     * akcja dla przycisku usun spolke z indeksu w indeksy pane
+     */
     @FXML
     private void usunSpolkeZIndeksu(){
         indeksyPaneManager.usunSpolkeZIndeksu();
     }
+
+    /**
+     * akcja dla przycisku dodaj do instniejacegoo indeksu w indeksyPane
+     */
     @FXML
     private void dodajIstniejacaDoIndeksu(){
         indeksyPaneManager.dodajInstiejacaDoIndeksu();
     }
+
+    /**
+     * akcja dla przycisku dodaj nowe panstwo w walutyPane
+     */
     @FXML
     private void dodajNowePanstwo(){
         walutyPaneManager.dodajNowePanstwo();
     }
+
+    /**
+     * akcja dla przycisku usun ze swiata w walutyPane
+     */
     @FXML
     private void usunZeSwiataButtonAction(){
         walutyPaneManager.usunZeSwiata();
     }
+
+    /**
+     * funckja do odsiwezania GUI uzywana w refresherze
+     */
     public void refresh(){
         if(manager!=null) {
             manager.refresh();

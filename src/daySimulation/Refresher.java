@@ -8,6 +8,9 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.Main;
 
+/**
+ * klasa do odwiezania elementow GUI i stanu rynku
+ */
 public class Refresher implements Runnable {
 
     private MainViewController mvc;
@@ -17,6 +20,9 @@ public class Refresher implements Runnable {
     public Refresher() {
     }
 
+    /**
+     * metoda run dla odswiezacza
+     */
     @Override
     public void run() {
         mvc.updateAll();
@@ -32,16 +38,8 @@ public class Refresher implements Runnable {
         this.mvc = mvc;
     }
 
-    public OknoUjeciaProcentowegoViewController getOupvc() {
-        return oupvc;
-    }
-
     public void setOupvc(OknoUjeciaProcentowegoViewController oupvc) {
         this.oupvc = oupvc;
-    }
-
-    public PanelKontrolnyViewController getPkvc() {
-        return pkvc;
     }
 
     public void setPkvc(PanelKontrolnyViewController pkvc) {

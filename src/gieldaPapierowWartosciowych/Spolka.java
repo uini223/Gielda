@@ -10,6 +10,9 @@ import posiadajacyPieniadze.PosiadajacyPieniadze;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * klasa dla spolki
+ */
 public class Spolka implements Runnable, Serializable, Listable
 {
     private String name;
@@ -37,6 +40,9 @@ public class Spolka implements Runnable, Serializable, Listable
 
     private Boolean running;
 
+    /**
+     * @param rynek rynek na ktorym jest notowana spolka
+     */
     public Spolka(Rynek rynek) {
         //super(nazwa);
         hashSetIndeksow = new HashSet<>();
@@ -51,8 +57,8 @@ public class Spolka implements Runnable, Serializable, Listable
         aktualnyKurs = kursOtwarcia;
         setMinimalnyKurs(kursOtwarcia);
         setMaksymalnyKurs(kursOtwarcia);
-        przychod = 0;
-        zysk = 0;
+        przychod = (Math.random()*1000);
+        zysk = przychod-(Math.random()*500);
         wolumen = 0;
         obroty = 0;
         akcjaSpolki = new Akcje(name,aktualnyKurs);
@@ -69,10 +75,13 @@ public class Spolka implements Runnable, Serializable, Listable
         this.name = name;
     }
 
+    /**
+     *  "życie" spolki, generowanie zysku/ zmiana liczby akcji
+     */
     public void run(){
         while(running){
-            double a = Math.random()*1000;
-            if(a<50) {
+            double a = Math.random()*100;
+            if(a<40) {
                 synchronized (Main.getMonitor()) {
                     generujZysk();
                     zmienLiczbeAkcji();
@@ -88,6 +97,9 @@ public class Spolka implements Runnable, Serializable, Listable
         }
     }
 
+    /**
+     * @return zwraca losowa nazwe spolki
+     */
     private String losowaNazwa() {
         String[] pierwszaCzesc = {"New", "Star", "Bez", "Odrey", "Dog", "Skoki", "music"};
         String[] drugaCzesc = {"Corp", "z o.o","sp.j", "company", "fundation", "studio", "Ehdb"};
@@ -107,14 +119,24 @@ public class Spolka implements Runnable, Serializable, Listable
         return akcjaSpolki;
     }
 
+    /**
+     * generuje przychod
+     */
     public void generujPrzychod(){
         przychod+= Math.random()*10000;
     }
+
+    /**
+     * generuje zysk
+     */
     public void generujZysk(){
         generujPrzychod();
         zysk = przychod - Math.random()*1000;
     }
 
+    /**
+     * losowo zmienia liczbe akcji o losowa wartosc
+     */
     public void zmienLiczbeAkcji() {
         int znak = (int) (Math.random() * 100) % 2;
         if(liczbaAkcji>0){
@@ -128,6 +150,10 @@ public class Spolka implements Runnable, Serializable, Listable
         }
     }
 
+    /**
+     * @param ilosc ilosc sprzedawanych przez spolke akcji
+     * @param kwota kwota sprzedazy
+     */
     public void sprzedajAkcje(int ilosc,double kwota){
         //zmianaKursu();
         akcjaSpolki.dodajKupujacego();
@@ -135,6 +161,11 @@ public class Spolka implements Runnable, Serializable, Listable
         wolumen+=ilosc;
         obroty+=kwota;
     }
+
+    /**
+     * @param ilosc ilosc kupowanych przez spolke akcji
+     * @param kwota
+     */
     public void kupAkcje(int ilosc,double kwota){
         //zmianaKursu();
         akcjaSpolki.dodajSprzedajacego();
@@ -151,73 +182,44 @@ public class Spolka implements Runnable, Serializable, Listable
         return kapitalWlasny;
     }
 
-    public void setKapitalWlasny(double kapitalWlasny) {
-        this.kapitalWlasny = kapitalWlasny;
-    }
-
     public double getKapitalZakladowy() {
         return kapitalZakladowy;
-    }
-
-    public void setKapitalZakladowy(double kapitalZakladowy) {
-        this.kapitalZakladowy = kapitalZakladowy;
-    }
-
-    public double getMaksymalnyKurs() {
-        return maksymalnyKurs;
     }
 
     public void setMaksymalnyKurs(double maksymalnyKurs) {
         this.maksymalnyKurs = maksymalnyKurs;
     }
 
-    public double getMinimalnyKurs() {
-        return minimalnyKurs;
-    }
-
     public void setMinimalnyKurs(double minimalnyKurs) {
         this.minimalnyKurs = minimalnyKurs;
-    }
-
-    public Indeks getIndeksSpolki() {
-        return indeksSpolki;
-    }
-
-    public void setIndeksSpolki(Indeks indeksSpolki) {
-        this.indeksSpolki = indeksSpolki;
     }
 
     public HashSet<Indeks> getHashSetIndeksow() {
         return hashSetIndeksow;
     }
 
-    public void setHashSetIndeksow(HashSet<Indeks> hashSetIndeksow) {
-        this.hashSetIndeksow = hashSetIndeksow;
-    }
-
     public Date getDataPierwszejWyceny() {
         return dataPierwszejWyceny;
     }
 
-    public void setDataPierwszejWyceny(Date dataPierwszejWyceny) {
-        this.dataPierwszejWyceny = dataPierwszejWyceny;
-    }
-
-    public void wyprzedajSpolke(double cena){
-        for (PosiadajacyPieniadze inwestor :
-                akcjaSpolki.getSetInwestorow()) {
-            double kwota = (int)inwestor.getHashMapInwestycji().get(akcjaSpolki)*cena;
-            inwestor.setKapital(inwestor.getKapital()+kwota);
-            inwestor.getHashMapInwestycji().remove(akcjaSpolki);
-        }
-    }
-
-    public Boolean getRunning() {
-        return running;
-    }
-
     public void setRunning(Boolean running) {
         this.running = running;
+    }
+
+    public int getWolumen() {
+        return wolumen;
+    }
+
+    public double getZysk() {
+        return zysk;
+    }
+
+    public double getObroty() {
+        return obroty;
+    }
+
+    public double getPrzychod() {
+        return przychod;
     }
 }
 

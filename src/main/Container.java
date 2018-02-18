@@ -14,9 +14,10 @@ import rynekwalut.Waluta;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * klasa kontenera przechowuje stan swiata, zawiera wszyskie potrzebne elementy
+ */
 public  class Container implements Serializable {
-    private  volatile HashMap<String, Stage> stageHashMap ;
-
     private volatile HashMap<String, Rynek> hashMapRynkow;
 
     private volatile HashMap<String, PosiadajacyPieniadze> hashMapInwestorow;
@@ -44,7 +45,6 @@ public  class Container implements Serializable {
         surowiecSet = new HashSet<>();
         hashMapSurowcow = new HashMap<>();
         walutaSet = new HashSet<>();
-        stageHashMap = new HashMap<>();
         hashMapRynkow = new HashMap<>();
         hashMapInwestorow = new HashMap<>();
         hashMapWalut = new HashMap<>();
@@ -61,16 +61,8 @@ public  class Container implements Serializable {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Indeks getIndeks(String s){
         return hashMapIndeksow.get(s);
-    }
-
-    public void addSpolka(Spolka spolka){
-        hashMapSpolek.put(spolka.getName(),spolka);
     }
 
     public HashMap<String, Spolka> getHashMapSpolek() {
@@ -79,10 +71,6 @@ public  class Container implements Serializable {
 
     public HashMap<String, Indeks> getHashMapIndeksow() {
         return hashMapIndeksow;
-    }
-
-    public void addIndeks(Indeks indeks){
-        hashMapIndeksow.put(indeks.getNazwa(),indeks);
     }
 
     public HashMap<String, Waluta> getHashMapWalut() {
@@ -101,10 +89,6 @@ public  class Container implements Serializable {
         return hashMapRynkow;
     }
 
-    public PosiadajacyPieniadze getPP(String name){
-        return hashMapInwestorow.get(name);
-    }
-
     public HashMap<String, PosiadajacyPieniadze> getHashMapInwestorow(){
         return hashMapInwestorow;
     }
@@ -117,18 +101,9 @@ public  class Container implements Serializable {
         return hashMapRynkow.get(name);
     }
 
-    public void addStage(String name, Stage stage){
-        stageHashMap.put(name,stage);
-    }
-
-    public Stage getStage(String name){
-        return stageHashMap.get(name);
-    }
-
-    public HashMap<String,Stage> getStageHashMap(){
-        return stageHashMap;
-    }
-
+    /**
+     * @return zwaraca dodana walute do swiata
+     */
     public Waluta addNewWaluta(){
         char characters[] = new char[26];
         for(int i=0; i<26;i++){
@@ -148,10 +123,9 @@ public  class Container implements Serializable {
         return walutaSet;
     }
 
-    public void setWalutaSet(HashSet<Waluta> walutaSet) {
-        this.walutaSet = walutaSet;
-    }
-
+    /**
+     * @return zwraca dodany do swiata surowiec
+     */
     public Surowiec addNewSurowiec(){
         Waluta waluta=null;
         int a = (int)(Math.random()*1000)%hashMapWalut.values().size();
@@ -172,16 +146,8 @@ public  class Container implements Serializable {
         return hashMapSurowcow;
     }
 
-    public void setHashMapSurowcow(HashMap<String, Surowiec> hashMapSurowcow) {
-        this.hashMapSurowcow = hashMapSurowcow;
-    }
-
     public HashSet<Surowiec> getSurowiecSet() {
         return surowiecSet;
-    }
-
-    public void setSurowiecSet(HashSet<Surowiec> surowiecSet) {
-        this.surowiecSet = surowiecSet;
     }
 
     public DaySimulation getDaySimulation() {
@@ -196,7 +162,4 @@ public  class Container implements Serializable {
         return hashMapFunduszy;
     }
 
-    public void setHashMapFunduszy(HashMap<String, FunduszInwestycyjny> hashMapFunduszy) {
-        this.hashMapFunduszy = hashMapFunduszy;
-    }
 }

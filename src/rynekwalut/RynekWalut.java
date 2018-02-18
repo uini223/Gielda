@@ -10,10 +10,16 @@ import posiadajacyPieniadze.PosiadajacyPieniadze;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ *  klasa dla rynku walut
+ */
 public class RynekWalut extends Rynek {
 
     private HashMap<String,Waluta> hashMapWalut;
 
+    /**
+     * konstruktor
+     */
     public RynekWalut() {
         super();
         hashMapWalut = new HashMap<>();
@@ -47,7 +53,6 @@ public class RynekWalut extends Rynek {
                 if(x!=null) Main.getContainer().getWalutaSet().remove(x);
             }
             else{
-                System.out.println("dodaje Walute");
                 Waluta waluta = Main.getContainer().addNewWaluta();
                 hashMapWalut.put(waluta.getNazwa(), waluta);
                 Main.getContainer().getWalutaSet().remove(waluta);

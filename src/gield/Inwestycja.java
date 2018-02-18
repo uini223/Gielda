@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * klasa abstrakcyjna Inwestycja dla podklas akcja,indeks,surowiec,waluta
+ */
 public abstract class Inwestycja implements Listable, Serializable{
     private Rynek rynek;
 
@@ -22,6 +25,11 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     private HashSet<PosiadajacyPieniadze> setInwestorow;
 
+    /**
+     * @param nazwa
+     * @param aktualnaWartosc
+     * konstruktor obiektu
+     */
     public Inwestycja(String nazwa, double aktualnaWartosc) {
         this.nazwa = nazwa;
         this.aktualnaWartosc = aktualnaWartosc;
@@ -47,6 +55,10 @@ public abstract class Inwestycja implements Listable, Serializable{
         return rynek;
     }
 
+    /**
+     * @param wartoscAkcji
+     * dodaje wartosc inwestycji(nie tylko akcji) do hashmapy wartosci w czasie
+     */
     public void addWartoscAkcji(double wartoscAkcji){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         synchronized (Main.getMonitor()){
@@ -73,6 +85,10 @@ public abstract class Inwestycja implements Listable, Serializable{
         return setInwestorow;
     }
 
+    /**
+     * @param cena
+     * wyprzedanie wszystkiego, funkcja zwraca wszystkim inwestorom zainwestowane pieniadze
+     */
     public void wyprzedajWszystko(double cena){
         for (PosiadajacyPieniadze pp :
                 getSetInwestorow()) {
@@ -111,19 +127,31 @@ public abstract class Inwestycja implements Listable, Serializable{
         this.poczatkowaWartosc = poczatkowaWartosc;
     }
 
+    /**
+     * dodaje jednego kupującego w dnaym "dniu"
+     */
     public void dodajKupujacego(){
         kupujacy+=1;
     }
 
+    /**
+     * dodaje jednego sprzedajacego w danym "dniu"
+     */
     public void dodajSprzedajacego(){
         sprzedajacy+=1;
     }
 
+    /**
+     * ustawia ilosc sprzedajacych i kupujacyh na 0
+     */
     public void resetujSprzedajacychKupujacych(){
         sprzedajacy = 0;
         kupujacy =0;
     }
 
+    /**
+     * wyznacza nowy kurs na podstawie kupujacych i sprzedajacych (glownie losowo)
+     */
     public void obliczNowyKurs(){
         if(rynek!=null) {
             double kurs;

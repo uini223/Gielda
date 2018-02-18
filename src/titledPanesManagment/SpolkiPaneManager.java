@@ -1,7 +1,6 @@
 package titledPanesManagment;
 
 import controllers.Listable;
-import gield.Rynek;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
@@ -9,12 +8,10 @@ import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 public class SpolkiPaneManager extends ManagerAbstract {
 
-    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,gielda,nowaCena;
+    private TextField nazwa,kapitalWlasny,kapitalZakladowy,liczbaAkcji,gielda,nowaCena,obrotyTextField,zyskTextField,
+    wolumenTextField,przychodTextField;
 
     private ListView<PosiadajacyPieniadze> listaInwestorow;
 
@@ -26,17 +23,22 @@ public class SpolkiPaneManager extends ManagerAbstract {
 
     public SpolkiPaneManager(ListView<Listable> lista, Accordion accordion, TextField nazwa,
                              TextField kapitalWlasny, TextField kapitalZakladowy, TextField liczbaAkcji,
-                             TextField nowaCena, ListView<Indeks> listaIndeksow, TextField gielda,
+                             TextField nowaCena, TextField zyskTextField, TextField przychodTextField, ListView<Indeks>
+                             listaIndeksow, TextField gielda, TextField obrotyTextField, TextField wolumenTextField,
                              ListView<PosiadajacyPieniadze> listaInwestorow, RadioButton nowaCenaRadioButton,
                              RadioButton aktualnaCenaRadioButton, ToggleGroup tg) {
         super(lista, accordion);
         this.nowaCena = nowaCena;
+        this.zyskTextField = zyskTextField;
+        this.przychodTextField = przychodTextField;
         this.listaIndeksow = listaIndeksow;
         this.nazwa = nazwa;
         this.kapitalWlasny = kapitalWlasny;
         this.kapitalZakladowy = kapitalZakladowy;
         this.liczbaAkcji = liczbaAkcji;
         this.gielda = gielda;
+        this.obrotyTextField = obrotyTextField;
+        this.wolumenTextField = wolumenTextField;
         this.listaInwestorow = listaInwestorow;
         this.nowaCenaRadioButton = nowaCenaRadioButton;
         this.aktualnaCenaRadioButton = aktualnaCenaRadioButton;
@@ -89,6 +91,10 @@ public class SpolkiPaneManager extends ManagerAbstract {
         kapitalZakladowy.clear();
         liczbaAkcji.clear();
         listaInwestorow.getItems().clear();
+        wolumenTextField.clear();
+        zyskTextField.clear();
+        przychodTextField.clear();
+        obrotyTextField.clear();
     }
 
     @Override
@@ -105,6 +111,10 @@ public class SpolkiPaneManager extends ManagerAbstract {
             liczbaAkcji.setText(String.valueOf(spolka.getLiczbaAkcji()));
             gielda.setText(spolka.getAkcjaSpolki().getRynek().getNazwa());
             listaIndeksow.getItems().addAll(spolka.getHashSetIndeksow());
+            wolumenTextField.setText(String.valueOf(spolka.getWolumen()));
+            zyskTextField.setText(String.valueOf(spolka.getZysk()));
+            obrotyTextField.setText(String.valueOf(spolka.getObroty()));
+            przychodTextField.setText(String.valueOf(spolka.getPrzychod()));
         }
     }
 
@@ -160,6 +170,10 @@ public class SpolkiPaneManager extends ManagerAbstract {
             liczbaAkcji.setText(String.valueOf(spolka.getLiczbaAkcji()));
             listaInwestorow.getItems().clear();
             listaInwestorow.getItems().addAll(spolka.getAkcjaSpolki().getSetInwestorow());
+            wolumenTextField.setText(String.valueOf(spolka.getWolumen()));
+            zyskTextField.setText(String.valueOf(spolka.getZysk()));
+            obrotyTextField.setText(String.valueOf(spolka.getObroty()));
+            przychodTextField.setText(String.valueOf(spolka.getPrzychod()));
         }
     }
 

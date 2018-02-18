@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * klasa dla rynku surowców
+ */
 public class RynekSurowcow extends Rynek{
     private Map<String,Surowiec> hashMapSurowcow;
 
@@ -27,6 +30,9 @@ public class RynekSurowcow extends Rynek{
         return hashMapSurowcow;
     }
 
+    /**
+     * dodaje losowy surowiec do rynku (najpierw szuka "wonly" jezeli nie znajdzie to tworzy zupelnie nowy sutowiec
+     */
     public void addSurowiec(){
         synchronized (Main.getMonitor()){
             int size = Main.getContainer().getSurowiecSet().size();
@@ -54,10 +60,11 @@ public class RynekSurowcow extends Rynek{
         }
     }
 
-    public void setHashMapSurowcow(Map<String, Surowiec> hashMapSurowcow) {
-        this.hashMapSurowcow = hashMapSurowcow;
-    }
 
+    /**
+     * @param pp ten, ktory kupuje na rynku
+     *           metoda kupowania z rynu
+     */
     @Override
     public void kupno(PosiadajacyPieniadze pp) {
         Surowiec surowiec=null;
@@ -80,6 +87,12 @@ public class RynekSurowcow extends Rynek{
             kupno(kwota,ilosc,pp,surowiec);
         }
     }
+
+    /**
+     * @param inwestycja sprzedawana inwestycja
+     * @param pp ten co sprzedaje
+     *           metoda sprzedazy inwestycji na rynku
+     */
     @Override
     public void sprzedaz(Inwestycja inwestycja,PosiadajacyPieniadze pp) {
         Surowiec surowiec = (Surowiec) inwestycja;

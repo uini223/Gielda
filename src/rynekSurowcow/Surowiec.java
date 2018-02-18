@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *  klasa dla surowca
+ */
 public class Surowiec extends Inwestycja{
     private String jednostkaHandlowa;
     private Waluta waluta;

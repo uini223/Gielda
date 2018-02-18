@@ -9,7 +9,9 @@ import gieldaPapierowWartosciowych.Spolka;
 import javafx.scene.control.*;
 import main.Main;
 import rynekSurowcow.RynekSurowcow;
+import rynekSurowcow.Surowiec;
 import rynekwalut.RynekWalut;
+import rynekwalut.Waluta;
 
 public class RynkiPaneManager extends ManagerAbstract {
 
@@ -113,6 +115,34 @@ public class RynkiPaneManager extends ManagerAbstract {
             synchronized (Main.getMonitor()){
                 Rynek rynek = (Rynek) getLista().getSelectionModel().getSelectedItem();
                 Main.getContainer().getHashMapRynkow().remove(rynek.getNazwa());
+                if(rynek instanceof GieldaPapierowWartosciowych){
+                    for (Spolka s :
+                            ((GieldaPapierowWartosciowych) rynek).getHashMapSpolek().values()) {
+                        Main.getContainer().getHashMapSpolek().remove(s.getName());
+                        s.getAkcjaSpolki().wyprzedajWszystko(s.getAktualnyKurs());
+                        s.setRunning(false);
+                        s.getHashSetIndeksow().clear();
+                    }
+                    for(Indeks i:
+                            ((GieldaPapierowWartosciowych) rynek).getHashMapIndeksow().values()){
+                        Main.getContainer().getHashMapIndeksow().remove(i.getNazwa());
+                        i.getHashMapSpolek().clear();
+                    }
+                }
+                else if(rynek instanceof RynekWalut){
+                    for(Waluta w:
+                            ((RynekWalut) rynek).getHashMapWalut().values()){
+                        w.setRynek(null);
+                        Main.getContainer().getWalutaSet().add(w);
+                    }
+                }
+                else if(rynek instanceof RynekSurowcow){
+                    for(Surowiec s:
+                            ((RynekSurowcow) rynek).getHashMapSurowcow().values()){
+                        s.setRynek(null);
+                        Main.getContainer().getSurowiecSet().add(s);
+                    }
+                }
             }
         }
         wczytajListe();
@@ -169,7 +199,7 @@ public class RynkiPaneManager extends ManagerAbstract {
                                 Main.getContainer().getHashMapSpolek().put(s.getName(),s);
                                 s.getHashSetIndeksow().add(indeks);
                                 Thread th = new Thread(s);
-                                th.setDaemon(false);
+                                th.setDaemon(true);
                                 th.start();
                             }
                             n++;

@@ -11,30 +11,42 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * klasa abstarkcyjna dla rynkow
+ */
 public abstract class Rynek implements Listable, Serializable{
     private String nazwa, kraj;
     private Waluta waluta;
     private Adres adres;
     private Indeks indeks;
     private double marzaOdTransakcji;
-    private HashMap<String,Inwestycja> hashMapInwestycji;
 
+    /**
+     * kontruktor rynku, losuje nazwe dla rynku, kraj, adres, oraz marze od transakcji
+     */
     public Rynek() {
         String[] nazwyGield = {"GPW","NYM","WSP","PPP","APS","STH","UNE","OMA","PPA","ASA","PLN"};
         for (int i=0;i<nazwyGield.length;i++) {
             nazwyGield[i] += Integer.toString((int)(Math.random()*1000));
         }
-
-        hashMapInwestycji = new HashMap<>();
         nazwa = nazwyGield[(int)(Math.random()*100)%nazwyGield.length];
         this.kraj = "kraj";
 
         this.adres = new Adres();
-        this.marzaOdTransakcji = 0.5;
+        this.marzaOdTransakcji = Math.random()*10;
     }
 
+    /**
+     * @param pp
+     * implementowana "niżej"
+     */
     public abstract void kupno(PosiadajacyPieniadze pp);
 
+    /**
+     * @param inwestycja
+     * @param pp
+     * implementowana "niżej"
+     */
     public abstract void sprzedaz(Inwestycja inwestycja, PosiadajacyPieniadze pp);
 
     @Override
@@ -46,20 +58,8 @@ public abstract class Rynek implements Listable, Serializable{
         return nazwa;
     }
 
-    public void setNazwa(String nazwa) {
-        synchronized(Main.getContainer()){
-            Main.getContainer().getHashMapRynkow().remove(this.nazwa);
-            this.nazwa = nazwa;
-            Main.getContainer().getHashMapRynkow().put(this.nazwa,this);
-        }
-    }
-
     public String getKraj() {
         return kraj;
-    }
-
-    public void setKraj(String kraj) {
-        this.kraj = kraj;
     }
 
     public Waluta getWaluta() {
@@ -74,10 +74,6 @@ public abstract class Rynek implements Listable, Serializable{
         return adres;
     }
 
-    public void setAdres(Adres adres) {
-        this.adres = adres;
-    }
-
     public Indeks getIndeks() {
         return indeks;
     }
@@ -90,23 +86,22 @@ public abstract class Rynek implements Listable, Serializable{
         return marzaOdTransakcji;
     }
 
+    /**
+     * @param kwota
+     * @return
+     * pobiera marze od transakcji zwraca zwiekszona kwote o marze
+     */
     public double pobierzMarze(double kwota) {
         double marza = getMarzaOdTransakcji()/100;
         return kwota+(kwota*marza);
     }
 
-    public void setMarzaOdTransakcji(double marzaOdTransakcji) {
-        this.marzaOdTransakcji = marzaOdTransakcji;
-    }
-
-    public HashMap<String, Inwestycja> getHashMapInwestycji() {
-        return hashMapInwestycji;
-    }
-
-    public void setHashMapInwestycji(HashMap<String, Inwestycja> hashMapInwestycji) {
-        this.hashMapInwestycji = hashMapInwestycji;
-    }
-
+    /**
+     * @param kwota kwota zakupu (po pobraniu marzy)
+     * @param ilosc ilosc zakupowanej inwestycji
+     * @param pp kupujacy inwestor
+     * @param inwestycja kupowana inwestycja
+     */
     public void kupno(double kwota,int ilosc,PosiadajacyPieniadze pp, Inwestycja inwestycja){
         int pom;
         if(kwota<= pp.getKapital() && ilosc>0){
@@ -123,6 +118,12 @@ public abstract class Rynek implements Listable, Serializable{
         }
     }
 
+    /**
+     * @param kwota kwota sprzedazy
+     * @param ileSprzedanych ilosc sprzedanych jenostek inwestycji
+     * @param pp inwestor sprzedajacy
+     * @param inwestycja sprzedawana inwestycja
+     */
     public void sprzedaz(double kwota,int ileSprzedanych,PosiadajacyPieniadze pp, Inwestycja inwestycja){
         int ilosc = (int) pp.getHashMapInwestycji().get(inwestycja);
         if(ileSprzedanych==ilosc){
