@@ -4,12 +4,10 @@ import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import main.Main;
@@ -111,7 +109,7 @@ public class OknoUjeciaProcentowegoViewController implements Initializable, Cont
                 }
 
                 seria.setData(lista);
-                seria.setName(i.getNazwa());
+                seria.setName(i.getName());
                 wykresWartosci.getData().add(seria);
                 listaDat.clear();
             }

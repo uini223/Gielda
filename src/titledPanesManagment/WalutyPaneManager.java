@@ -1,7 +1,6 @@
 package titledPanesManagment;
 
 import controllers.Listable;
-import gield.Rynek;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -34,7 +33,7 @@ public class WalutyPaneManager extends ManagerAbstract {
             Waluta waluta = (Waluta) getLista().getSelectionModel().getSelectedItem();
             RynekWalut rynek = (RynekWalut) waluta.getRynek();
             if(rynek!=null){
-                rynek.getHashMapWalut().remove(waluta.getNazwa());
+                rynek.getHashMapWalut().remove(waluta.getName());
                 waluta.setRynek(null);
                 waluta.wyprzedajWszystko(waluta.getAktualnaWartosc());
                 if(rynek.getHashMapWalut().size()==0){
@@ -129,7 +128,7 @@ public class WalutyPaneManager extends ManagerAbstract {
             }
             synchronized (Main.getMonitor()){
                 Main.getContainer().getWalutaSet().remove(waluta);
-                Main.getContainer().getHashMapWalut().remove(waluta.getNazwa());
+                Main.getContainer().getHashMapWalut().remove(waluta.getName());
             }
             getLista().getItems().remove(waluta);
         }

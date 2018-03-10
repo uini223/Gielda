@@ -1,7 +1,9 @@
 package gieldaPapierowWartosciowych;
 
 import gield.Inwestycja;
-import gield.Rynek;
+import observers.Observer;
+
+import java.util.List;
 
 /**
  * klasa dla akcji spolki
@@ -9,6 +11,7 @@ import gield.Rynek;
 public class Akcje extends Inwestycja{
 
     private Spolka spolka;
+
 
     /**
      * @param nazwaSpolki
@@ -19,13 +22,17 @@ public class Akcje extends Inwestycja{
         super(nazwaSpolki,aktualnaWartosc);
     }
 
+    public Akcje(){
+
+    }
+
     public String getNazwaSpolki() {
-        return getNazwa();
+        return getName();
     }
 
     @Override
     public String toString() {
-        return getNazwa();
+        return getName();
     }
 
     public Spolka getSpolka() {
@@ -35,4 +42,6 @@ public class Akcje extends Inwestycja{
     public void setSpolka(Spolka spolka) {
         this.spolka = spolka;
     }
+
+
 }

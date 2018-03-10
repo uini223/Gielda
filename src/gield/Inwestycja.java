@@ -2,14 +2,12 @@ package gield;
 
 import controllers.Listable;
 import main.Main;
-import posiadajacyPieniadze.Inwestor;
+import observers.Observer;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * klasa abstrakcyjna Inwestycja dla podklas akcja,indeks,surowiec,waluta
@@ -21,32 +19,43 @@ public abstract class Inwestycja implements Listable, Serializable{
 
     private int kupujacy,sprzedajacy,licznik;
 
-    private String nazwa;
+    private String name;
 
     private HashSet<PosiadajacyPieniadze> setInwestorow;
 
+    private List<Observer> observers;
+
     /**
-     * @param nazwa
+     * @param name
      * @param aktualnaWartosc
      * konstruktor obiektu
      */
-    public Inwestycja(String nazwa, double aktualnaWartosc) {
-        this.nazwa = nazwa;
+    public Inwestycja(String name, double aktualnaWartosc) {
+        this.name = name;
         this.aktualnaWartosc = aktualnaWartosc;
         najmniejszaWartosc = aktualnaWartosc;
         najwiekszaWartosc = aktualnaWartosc;
+
         listaWartosciWCzasie = new HashMap<>();
         setInwestorow = new HashSet<>();
         resetujSprzedajacychKupujacych();
         licznik =0;
+    }
+    public Inwestycja(){
+        listaWartosciWCzasie = new HashMap<>();
+        observers = new ArrayList<>();
     }
 
     public double getAktualnaWartosc() {
         return aktualnaWartosc;
     }
 
-    public String getNazwa() {
-        return nazwa;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     private Map<String,Number> listaWartosciWCzasie;
@@ -149,6 +158,18 @@ public abstract class Inwestycja implements Listable, Serializable{
         kupujacy =0;
     }
 
+    public void notifyAllObservers(){
+        for (Observer observer: observers){
+            observer.update();
+        }
+    }
+
+    public void attachObserver(Observer observer){
+        observers.add(observer);
+    }
+    public void detachObserver(Observer observer){
+        observers.remove(observer);
+    }
     /**
      * wyznacza nowy kurs na podstawie kupujacych i sprzedajacych (glownie losowo)
      */
@@ -175,6 +196,7 @@ public abstract class Inwestycja implements Listable, Serializable{
 
 
             }
+            notifyAllObservers();
             addWartoscAkcji(kurs);
         }
     }

@@ -18,7 +18,6 @@ public abstract class Rynek implements Listable, Serializable{
     private String nazwa, kraj;
     private Waluta waluta;
     private Adres adres;
-    private Indeks indeks;
     private double marzaOdTransakcji;
 
     /**
@@ -74,13 +73,6 @@ public abstract class Rynek implements Listable, Serializable{
         return adres;
     }
 
-    public Indeks getIndeks() {
-        return indeks;
-    }
-
-    public void setIndeks(Indeks indeks) {
-        this.indeks = indeks;
-    }
 
     public double getMarzaOdTransakcji() {
         return marzaOdTransakcji;

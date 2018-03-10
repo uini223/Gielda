@@ -22,32 +22,32 @@
               <panes>
                   <TitledPane animated="false" layoutX="13.0" layoutY="38.0" text="Waluty">
                     <content>
-                        <fx:include source="WalutyPane.fxml" fx:id="walutyPane"/>
+                        <fx:include source="panes/WalutyPane.fxml" fx:id="walutyPane"/>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Spolki" >
                       <content>
-                          <fx:include source="SpolkiPane.fxml" fx:id="spolkiPane"/>
+                          <fx:include source="panes/SpolkiPane.fxml" fx:id="spolkiPane"/>
                       </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Indeksy" >
                     <content>
-                        <fx:include source="IndeksyPane.fxml" fx:id="indeksyPane"/>
+                        <fx:include source="panes/IndeksyPane.fxml" fx:id="indeksyPane"/>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" layoutX="13.0" layoutY="13.0" text="Posiadajacy Pieniadze" >
                     <content>
-                        <fx:include source="PpPane.fxml" fx:id="ppPane"/>
+                        <fx:include source="panes/PpPane.fxml" fx:id="ppPane"/>
                     </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Rynki">
                     <content>
-                        <fx:include source="RynkiPane.fxml" fx:id="rynkiPane"/>
+                        <fx:include source="panes/RynkiPane.fxml" fx:id="rynkiPane"/>
                     </content>
                   </TitledPane>
                   <TitledPane fx:id="surowce" animated="false" layoutX="13.0" layoutY="13.0" text="Surowce">
                      <content>
-                        <fx:include source="SurowcePane.fxml" fx:id="surowcePane"/>
+                        <fx:include source="panes/SurowcePane.fxml" fx:id="surowcePane"/>
                      </content>
                   </TitledPane>
 

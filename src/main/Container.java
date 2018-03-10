@@ -4,11 +4,9 @@ import daySimulation.DaySimulation;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
-import javafx.stage.Stage;
 import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekSurowcow.Surowiec;
-import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
 import java.io.Serializable;
@@ -139,7 +137,7 @@ public  class Container implements Serializable {
         }
         Surowiec surowiec = new Surowiec("Maliny"+String.valueOf(Math.random()*100),"Kg",waluta);
         surowiecSet.add(surowiec);
-        hashMapSurowcow.put(surowiec.getNazwa(),surowiec);
+        hashMapSurowcow.put(surowiec.getName(),surowiec);
         return surowiec;
     }
     public HashMap<String, Surowiec> getHashMapSurowcow() {
@@ -162,4 +160,11 @@ public  class Container implements Serializable {
         return hashMapFunduszy;
     }
 
+    public void addIndeks(Indeks indeks) {
+        hashMapIndeksow.put(indeks.getName(),indeks);
+    }
+
+    public void addSpolka(Spolka spolka) {
+        hashMapSpolek.put(spolka.getName(),spolka);
+    }
 }

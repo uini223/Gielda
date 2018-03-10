@@ -1,17 +1,12 @@
 package gieldaPapierowWartosciowych;
 
-import gield.Adres;
 import gield.Inwestycja;
 import gield.Rynek;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
-import rynekwalut.Waluta;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *  klasa dla GPW
@@ -32,23 +27,13 @@ public class GieldaPapierowWartosciowych extends Rynek{
     public GieldaPapierowWartosciowych() {
         super();
 
-        synchronized (Main.getMonitor()) {
-            int a = (int)((Math.random()*1000)%Main.getContainer().getHashMapWalut().size());
-            int n=0;
-            for (String s :
-                    Main.getContainer().getHashMapWalut().keySet()) {
-                if(a==n){
-                    setWaluta(Main.getContainer().getHashMapWalut().get(s));
-                }
-                n++;
-            }
-        }
+
         hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
         Indeks ind;
         for(int i=0;i<1;i++){
             ind = new Indeks(this);
-            hashMapIndeksow.put(ind.getNazwa(),ind);
+            hashMapIndeksow.put(ind.getName(),ind);
         }
         aktualizujIndeksy();
     }
@@ -72,7 +57,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
      */
     public void addIndeks(Indeks ind){
         synchronized (Main.getMonitor()) {
-            hashMapIndeksow.put(ind.getNazwa(), ind);
+            hashMapIndeksow.put(ind.getName(), ind);
             aktualizujIndeksy();
             aktualizujSpolki();
         }
@@ -106,7 +91,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
                 spolka = hashMapSpolek.get(s);
                 int pom;
                 int ilosc = (int)(Math.random()*1000)%spolka.getLiczbaAkcji();
-                double kwota = ilosc*spolka.getAktualnyKurs();
+                double kwota = ilosc*spolka.getAkcjaSpolki().getAktualnaWartosc();
                 kwota = pobierzMarze(kwota);
                 kwota = getWaluta().getAktualnaWartosc()*kwota;
                 if( kwota <= pp.getKapital() && ilosc>0) {
@@ -140,7 +125,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
             s = hashMapSpolek.get(((Akcje) inwestycja).getNazwaSpolki());
             int ilosc = (int) pp.getHashMapInwestycji().get(inwestycja);
             ilosc = (int)(Math.random()*10000)%ilosc;
-            kwota = ilosc *s.getAktualnyKurs();
+            kwota = ilosc *s.getAkcjaSpolki().getAktualnaWartosc();
             kwota = getWaluta().przeliczCene(kwota);
             kwota = pobierzMarze(kwota);
             if(ilosc>0){

@@ -1,12 +1,7 @@
 package rynekSurowcow;
 
 import gield.Inwestycja;
-import gield.Rynek;
 import rynekwalut.Waluta;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *  klasa dla surowca
@@ -47,7 +42,7 @@ public class Surowiec extends Inwestycja{
 
     @Override
     public String toString() {
-        return getNazwa();
+        return getName();
     }
 
     public String getJednostkaHandlowa() {

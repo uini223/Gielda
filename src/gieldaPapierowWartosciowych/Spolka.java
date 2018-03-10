@@ -1,11 +1,8 @@
 package gieldaPapierowWartosciowych;
 
 import controllers.Listable;
-import gield.Inwestycja;
 import gield.Rynek;
 import main.Main;
-import posiadajacyPieniadze.Inwestor;
-import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.io.Serializable;
 import java.util.*;
@@ -16,61 +13,34 @@ import java.util.*;
 public class Spolka implements Runnable, Serializable, Listable
 {
     private String name;
-
     private Date dataPierwszejWyceny;
-
-    private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy,  obroty, aktualnyKurs,
-            maksymalnyKurs, minimalnyKurs,zysk;
-
-    public int getLiczbaAkcji() {
-        return liczbaAkcji;
-    }
-
-    public void setLiczbaAkcji(int liczbaAkcji) {
-        this.liczbaAkcji = liczbaAkcji;
-    }
-
+    private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy, obroty, zysk;
     private int liczbaAkcji,wolumen;
-
     private Akcje akcjaSpolki;
-
-    private Indeks indeksSpolki;
-
-    private HashSet<Indeks> hashSetIndeksow;
-
+    private HashMap<String,Indeks> hashMapIndeksow;
     private Boolean running;
+    private Rynek rynek;
+
 
     /**
      * @param rynek rynek na ktorym jest notowana spolka
      */
     public Spolka(Rynek rynek) {
-        //super(nazwa);
-        hashSetIndeksow = new HashSet<>();
-        name = losowaNazwa();
-        synchronized (Main.getMonitor()){
-            dataPierwszejWyceny = new Date(Main.getContainer().getDate().getTime());
-        }
-        kapitalZakladowy = Math.random()*1000000;
-        kapitalWlasny = kapitalZakladowy+Math.random()*1000000;
-        liczbaAkcji = (int)(Math.random()*1000000)%100001+50000;
-        kursOtwarcia = kapitalWlasny/liczbaAkcji;
-        aktualnyKurs = kursOtwarcia;
-        setMinimalnyKurs(kursOtwarcia);
-        setMaksymalnyKurs(kursOtwarcia);
-        przychod = (Math.random()*1000);
-        zysk = przychod-(Math.random()*500);
-        wolumen = 0;
-        obroty = 0;
-        akcjaSpolki = new Akcje(name,aktualnyKurs);
+
+        akcjaSpolki = new Akcje();
         akcjaSpolki.setRynek(rynek);
         akcjaSpolki.setSpolka(this);
+
+    }
+
+    public Spolka(){
+        hashMapIndeksow = new HashMap<>();
         running = true;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -97,18 +67,6 @@ public class Spolka implements Runnable, Serializable, Listable
         }
     }
 
-    /**
-     * @return zwraca losowa nazwe spolki
-     */
-    private String losowaNazwa() {
-        String[] pierwszaCzesc = {"New", "Star", "Bez", "Odrey", "Dog", "Skoki", "music"};
-        String[] drugaCzesc = {"Corp", "z o.o","sp.j", "company", "fundation", "studio", "Ehdb"};
-        int zakresPierwszy = pierwszaCzesc.length;
-        int zakresDrugi = drugaCzesc.length;
-        return pierwszaCzesc[(int)(Math.random()*100)%zakresPierwszy]
-                +drugaCzesc[(int)(Math.random()*100)%zakresDrugi]+Integer.toString(
-                (int)(Math.random()*100));
-    }
 
     @Override
     public String toString() {
@@ -117,6 +75,14 @@ public class Spolka implements Runnable, Serializable, Listable
 
     public Akcje getAkcjaSpolki(){
         return akcjaSpolki;
+    }
+
+    public void setObroty(double obroty) {
+        this.obroty = obroty;
+    }
+
+    public void setAkcjaSpolki(Akcje akcjaSpolki) {
+        this.akcjaSpolki = akcjaSpolki;
     }
 
     /**
@@ -174,9 +140,6 @@ public class Spolka implements Runnable, Serializable, Listable
         obroty+=kwota;
     }
 
-    public double getAktualnyKurs() {
-        return aktualnyKurs;
-    }
 
     public double getKapitalWlasny() {
         return kapitalWlasny;
@@ -186,20 +149,16 @@ public class Spolka implements Runnable, Serializable, Listable
         return kapitalZakladowy;
     }
 
-    public void setMaksymalnyKurs(double maksymalnyKurs) {
-        this.maksymalnyKurs = maksymalnyKurs;
-    }
-
-    public void setMinimalnyKurs(double minimalnyKurs) {
-        this.minimalnyKurs = minimalnyKurs;
-    }
-
-    public HashSet<Indeks> getHashSetIndeksow() {
-        return hashSetIndeksow;
+    public HashMap<String,Indeks> getHashMapIndeksow() {
+        return hashMapIndeksow;
     }
 
     public Date getDataPierwszejWyceny() {
         return dataPierwszejWyceny;
+    }
+
+    public void setLiczbaAkcji(int liczbaAkcji) {
+        this.liczbaAkcji = liczbaAkcji;
     }
 
     public void setRunning(Boolean running) {
@@ -220,6 +179,59 @@ public class Spolka implements Runnable, Serializable, Listable
 
     public double getPrzychod() {
         return przychod;
+    }
+
+    public void setDataPierwszejWyceny(Date data) {
+        dataPierwszejWyceny = data;
+    }
+
+    public void setKapitalZakladowy(double kapital) {
+        this.kapitalZakladowy = kapital;
+    }
+
+    public void setKapitalWlasny(double kapitalWlasny) {
+        this.kapitalWlasny = kapitalWlasny;
+    }
+
+    public void setKursOtwarcia(double kursOtwarcia) {
+        this.kursOtwarcia = kursOtwarcia;
+    }
+
+    public double getKursOtwarcia() {
+        return kursOtwarcia;
+    }
+
+
+    public void setPrzychod(double przychod) {
+        this.przychod = przychod;
+    }
+
+    public void setZysk(double zysk) {
+        this.zysk = zysk;
+    }
+
+    public void setWolumen(int wolumen) {
+        this.wolumen = wolumen;
+    }
+
+    public void setObroty(int obroty) {
+        this.obroty = obroty;
+    }
+
+    public int getLiczbaAkcji() {
+        return liczbaAkcji;
+    }
+
+    public Rynek getRynek() {
+        return rynek;
+    }
+
+    public void setRynek(Rynek rynek) {
+        this.rynek = rynek;
+    }
+
+    public void addIndeks(Indeks indeks) {
+        hashMapIndeksow.put(indeks.getName(),indeks);
     }
 }
 

@@ -1,14 +1,11 @@
 package rynekwalut;
 
-import gield.Adres;
 import gield.Inwestycja;
-import gieldaPapierowWartosciowych.Indeks;
 import gield.Rynek;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *  klasa dla rynku walut
@@ -44,7 +41,7 @@ public class RynekWalut extends Rynek {
                 for (Waluta waluta :
                         Main.getContainer().getWalutaSet()) {
                     if (a == n) {
-                        hashMapWalut.put(waluta.getNazwa(),waluta);
+                        hashMapWalut.put(waluta.getName(),waluta);
                         waluta.setRynek(this);
                         x = waluta;
                     }
@@ -54,7 +51,7 @@ public class RynekWalut extends Rynek {
             }
             else{
                 Waluta waluta = Main.getContainer().addNewWaluta();
-                hashMapWalut.put(waluta.getNazwa(), waluta);
+                hashMapWalut.put(waluta.getName(), waluta);
                 Main.getContainer().getWalutaSet().remove(waluta);
                 waluta.setRynek(this);
             }

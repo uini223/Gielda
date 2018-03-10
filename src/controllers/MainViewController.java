@@ -1,8 +1,6 @@
 package controllers;
 
-import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.impl.FXRobotHelper;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import gield.Inwestycja;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.Akcje;
@@ -10,7 +8,6 @@ import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
 import javafx.collections.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,20 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import main.Main;
-import posiadajacyPieniadze.Inwestor;
-import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekSurowcow.RynekSurowcow;
 import rynekSurowcow.Surowiec;
 import rynekwalut.RynekWalut;
 import rynekwalut.Waluta;
 
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -234,7 +224,7 @@ public class MainViewController implements Initializable, Controllable {
                 }
                 XYChart.Series<String, Number> seria = new XYChart.Series<>();
                 seria.setData(dane.sorted());
-                seria.setName(inwestycja.getNazwa());
+                seria.setName(inwestycja.getName());
                 wykresWartosci.getData().clear();
                 wykresWartosci.getData().add(seria);
                 najmniejszaWartoscTextField.setText(String.valueOf(inwestycja.getNajmniejszaWartosc()));

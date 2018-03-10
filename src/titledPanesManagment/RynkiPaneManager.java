@@ -121,11 +121,11 @@ public class RynkiPaneManager extends ManagerAbstract {
                         Main.getContainer().getHashMapSpolek().remove(s.getName());
                         s.getAkcjaSpolki().wyprzedajWszystko(s.getAktualnyKurs());
                         s.setRunning(false);
-                        s.getHashSetIndeksow().clear();
+                        s.getHashMapIndeksow().clear();
                     }
                     for(Indeks i:
                             ((GieldaPapierowWartosciowych) rynek).getHashMapIndeksow().values()){
-                        Main.getContainer().getHashMapIndeksow().remove(i.getNazwa());
+                        Main.getContainer().getHashMapIndeksow().remove(i.getName());
                         i.getHashMapSpolek().clear();
                     }
                 }
@@ -197,7 +197,7 @@ public class RynkiPaneManager extends ManagerAbstract {
                                 Spolka s = new Spolka(rynek);
                                 indeks.dodajSpolke(s);
                                 Main.getContainer().getHashMapSpolek().put(s.getName(),s);
-                                s.getHashSetIndeksow().add(indeks);
+                                s.getHashMapIndeksow().add(indeks);
                                 Thread th = new Thread(s);
                                 th.setDaemon(true);
                                 th.start();

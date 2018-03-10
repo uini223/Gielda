@@ -1,15 +1,11 @@
 package rynekSurowcow;
 
-import gield.Adres;
 import gield.Inwestycja;
 import gield.Rynek;
-import gieldaPapierowWartosciowych.Indeks;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
-import rynekwalut.Waluta;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +39,7 @@ public class RynekSurowcow extends Rynek{
                 for (Surowiec surowiec :
                         Main.getContainer().getSurowiecSet()) {
                     if (a == n) {
-                        hashMapSurowcow.put(surowiec.getNazwa(),surowiec);
+                        hashMapSurowcow.put(surowiec.getName(),surowiec);
                         surowiec.setRynek(this);
                         x = surowiec;
                     }
@@ -53,7 +49,7 @@ public class RynekSurowcow extends Rynek{
             }
             else{
                 Surowiec surowiec = Main.getContainer().addNewSurowiec();
-                hashMapSurowcow.put(surowiec.getNazwa(), surowiec);
+                hashMapSurowcow.put(surowiec.getName(), surowiec);
                 surowiec.setRynek(this);
                 Main.getContainer().getSurowiecSet().remove(surowiec);
             }

@@ -11,8 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import main.Main;
 
-import java.util.Collection;
-
 /**
  * klasa do zarzadzania IndeksPane w panelu kontrolnym
  */
@@ -57,12 +55,12 @@ public class IndeksyPaneManager extends ManagerAbstract {
         if(!getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getContainer()){
                 Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
-                Main.getContainer().getHashMapIndeksow().remove(ind.getNazwa());
-                ind.getRodzic().getHashMapIndeksow().remove(ind.getNazwa());
+                Main.getContainer().getHashMapIndeksow().remove(ind.getName());
+                ind.getRodzic().getHashMapIndeksow().remove(ind.getName());
                 for (Spolka s :
                         ind.getHashMapSpolek().values()) {
-                    s.getHashSetIndeksow().remove(ind);
-                    if(s.getHashSetIndeksow().size()==0){
+                    s.getHashMapIndeksow().remove(ind);
+                    if(s.getHashMapIndeksow().size()==0){
                         Main.getContainer().getHashMapSpolek().remove(s.getName());
                         ind.getRodzic().getHashMapSpolek().remove(s.getName());
                         s.getAkcjaSpolki().wyprzedajWszystko(ind.getRodzic().getWaluta().
@@ -102,7 +100,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
             dostepneSpolkiListVIiew.getItems().addAll(ind.getRodzic().getHashMapSpolek().values());
             dostepneSpolkiListVIiew.getItems().removeAll(ind.getHashMapSpolek().values());
             spolkiListView.getItems().addAll(ind.getHashMapSpolek().values());
-            nazwaTextField.setText(ind.getNazwa());
+            nazwaTextField.setText(ind.getName());
             gieldaTextField.setText(ind.getRodzic().getNazwa());
         }
     }
@@ -165,7 +163,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
             synchronized(Main.getMonitor()){
                 Spolka spolka = new Spolka(ind.getRynek());
-                spolka.getHashSetIndeksow().add(ind);
+                spolka.getHashMapIndeksow().add(ind);
                 Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
                 ind.dodajSpolke(spolka);
                 spolkiListView.getItems().add(spolka);
@@ -182,7 +180,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
                 Spolka spolka = dostepneSpolkiListVIiew.getSelectionModel().getSelectedItem();
                 Indeks indeks = (Indeks) getLista().getSelectionModel().getSelectedItem();
                 indeks.dodajSpolke(spolka);
-                spolka.getHashSetIndeksow().add(indeks);
+                spolka.getHashMapIndeksow().add(indeks);
                 spolkiListView.getItems().add(spolka);
                 dostepneSpolkiListVIiew.getItems().remove(spolka);
             }
@@ -197,14 +195,14 @@ public class IndeksyPaneManager extends ManagerAbstract {
             synchronized (Main.getMonitor()) {
                 Spolka spolka = spolkiListView.getSelectionModel().getSelectedItem();
                 Indeks indeks = (Indeks) getLista().getSelectionModel().getSelectedItem();
-                if(spolka.getHashSetIndeksow().size()>1) {
+                if(spolka.getHashMapIndeksow().size()>1) {
                     if (indeks.getHashMapSpolek().values().size() < 2) {
-                        indeks.getRodzic().getHashMapIndeksow().remove(indeks.getNazwa());
-                        Main.getContainer().getHashMapIndeksow().remove(indeks.getNazwa());
+                        indeks.getRodzic().getHashMapIndeksow().remove(indeks.getName());
+                        Main.getContainer().getHashMapIndeksow().remove(indeks.getName());
                         getLista().getItems().remove(indeks);
                     }
                     indeks.usunSpolke(spolka);
-                    spolka.getHashSetIndeksow().remove(indeks);
+                    spolka.getHashMapIndeksow().remove(indeks);
                     spolkiListView.getItems().remove(spolka);
                     dostepneSpolkiListVIiew.getItems().add(spolka);
                 }

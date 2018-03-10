@@ -35,7 +35,7 @@ public class SurowcePaneManager extends ManagerAbstract {
         if(!getLista().getSelectionModel().isEmpty()){
             synchronized (Main.getMonitor()){
                 Surowiec surowiec = (Surowiec) getLista().getSelectionModel().getSelectedItem();
-                Main.getContainer().getHashMapSurowcow().remove(surowiec.getNazwa());
+                Main.getContainer().getHashMapSurowcow().remove(surowiec.getName());
                 for (PosiadajacyPieniadze pp :
                         surowiec.getSetInwestorow()) {
                     pp.setKapital(pp.getKapital()+surowiec.getAktualnaWartosc()*
@@ -43,7 +43,7 @@ public class SurowcePaneManager extends ManagerAbstract {
                     pp.getHashMapInwestycji().remove(surowiec);
                 }
                 if(surowiec.getRynek() instanceof RynekSurowcow){
-                    ((RynekSurowcow) surowiec.getRynek()).getHashMapSurowcow().remove(surowiec.getNazwa());
+                    ((RynekSurowcow) surowiec.getRynek()).getHashMapSurowcow().remove(surowiec.getName());
                     if(((RynekSurowcow) surowiec.getRynek()).getHashMapSurowcow().size()==0){
                         Main.getContainer().getHashMapRynkow().remove(surowiec.getRynek().getNazwa());
                     }
@@ -68,7 +68,7 @@ public class SurowcePaneManager extends ManagerAbstract {
         listaInwestorow.getItems().clear();
         synchronized (Main.getMonitor()) {
             Surowiec surowiec = (Surowiec) getLista().getSelectionModel().getSelectedItem();
-            nazwaTextField.setText(surowiec.getNazwa());
+            nazwaTextField.setText(surowiec.getName());
             poczatkowyKursTextField.setText(String.valueOf(surowiec.getPoczatkowaWartosc()));
             obecnyKursTextField.setText(String.valueOf(surowiec.getAktualnaWartosc()));
             jednostkaTextField.setText(surowiec.getJednostkaHandlowa());
