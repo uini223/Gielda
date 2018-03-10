@@ -14,5 +14,7 @@ public class IndeksyPaneController {
 
     public void injectPanelKontrolnyViewController(PanelKontrolnyViewController p){
         this.panelKontrolnyViewController = p;
+
+
     }
 }
