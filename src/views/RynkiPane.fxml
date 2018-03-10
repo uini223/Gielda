@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="rynkiPane" prefHeight="324.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/8.0.141"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.panes.RynkiPaneController">
+   <children>
+      <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label text="Miasto" />
+            <TextField fx:id="rynkiMiastoTextField" />
+            <Label text="Ulica" />
+            <TextField fx:id="rynkiUlicaTextField" />
+            <Label text="Nazwa" />
+            <TextField fx:id="rynkiNazwaTextField" />
+            <Label text="Kraj" />
+            <TextField fx:id="rynkiKrajTextField" />
+            <Label text="Typ Rynku" />
+            <TextField fx:id="rynkiTypRynkuTextField" alignment="TOP_LEFT" editable="false" VBox.vgrow="ALWAYS" />
+            <Label text="Waluta" />
+            <TextField fx:id="rynkiWalutaTextField" editable="false" />
+            <Label text="Marża od Transakcji" />
+            <TextField fx:id="rynkiMarzaTextField" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="180.0" spacing="15.0" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" spacing="5.0" />
+            <Button alignment="CENTER" mnemonicParsing="false"  prefHeight="29.0" prefWidth="96.0" text="Usuń" VBox.vgrow="ALWAYS" />
+            <ChoiceBox fx:id="rynkiTypChoiceBox" prefWidth="150.0" />
+            <Button fx:id="rynkiDodajNowyButton" mnemonicParsing="false"  prefHeight="30.0" prefWidth="136.0" text="Dodaj Nowy Rynek" />
+            <Button fx:id="rynkiDodajButton" mnemonicParsing="false"  />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="335.0" prefWidth="237.0">
+         <children>
+            <Label text="Aktywa Na Rynku" />
+            <ListView fx:id="rynkiInwestycjaListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </ListView>
+         </children>
+      </VBox>
+   </children>
+</HBox>

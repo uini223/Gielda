@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="ppPane" prefHeight="304.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/8.0.141"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.panes.PpPaneController">
+   <children>
+      <VBox fillWidth="false" prefHeight="50.0" prefWidth="180.0" spacing="10.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label text="Kapitał" />
+            <TextField fx:id="ppKapitalTextField" />
+            <Label text="Nazwa" />
+            <TextField fx:id="ppNazwaTextField" />
+            <Label text="Imię" />
+            <TextField fx:id="ppImieTextField" />
+            <Label text="Nazwisko" />
+            <TextField fx:id="ppNazwiskoTextField" />
+            <Label text="Pesel" />
+            <TextField fx:id="ppPeselTextField" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+      <VBox fillWidth="false" prefHeight="50.0" prefWidth="180.0" spacing="10.0" HBox.hgrow="ALWAYS">
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+         <children>
+            <Label text="Typ PP" />
+            <TextField fx:id="ppTypTextField" editable="false" />
+            <Button fx:id="rynkiLosujButton1" mnemonicParsing="false"  prefHeight="30.0" prefWidth="100.0" text="Usun">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <ChoiceBox fx:id="ppTypChoiceBox" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </ChoiceBox>
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Dodaj Nowy">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <VBox prefHeight="50.0" prefWidth="180.0" spacing="2.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label text="Posiadane Inwestycje" />
+            <ListView fx:id="ppInwestycjeListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>

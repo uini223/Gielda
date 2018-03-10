@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="surowce" prefHeight="233.0" prefWidth="478.0" spacing="2.0"
+<HBox fx:id="walutyPane" prefHeight="353.0" prefWidth="505.0" spacing="2.0"
       xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.panes.SurowcePaneController">
+      fx:controller="controllers.panes.WalutyPaneController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
          <children>
@@ -20,8 +20,23 @@
             <Text fx:id="poczatkowyKursText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
             <Label text="Obecny kurs" />
             <Text fx:id="obecnyKursText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
-            <Label text="Jednostka Handlowa" />
-            <Text fx:id="jednostkaText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
+            <Label text="Gielda" />
+            <Text fx:id="gieldaText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
+            <Button alignment="BASELINE_CENTER" mnemonicParsing="false"  prefHeight="25.0" prefWidth="155.0" text="Usuń ze Świata">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false"  prefHeight="22.0" prefWidth="155.0" text="Usuń z Rynku Walut">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false"  prefHeight="22.0" prefWidth="155.0" text="Dodaj Walute do swiata">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
          </children>
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -30,32 +45,24 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
-         <children>
-            <Label text="Gielda" />
-            <Text fx:id="gieldaText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
-            <Button alignment="BASELINE_CENTER" mnemonicParsing="false"  prefHeight="25.0" prefWidth="155.0" text="Usuń" HBox.hgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false"  prefHeight="22.0" prefWidth="155.0" text="Dodaj do świata">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-         </children>
+      <VBox alignment="CENTER_LEFT" prefHeight="385.0" prefWidth="148.0" spacing="5.0" HBox.hgrow="ALWAYS">
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </HBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
+         <children>
+            <Label text="Lista państw gdzie obowiązuje waluta" />
+            <ListView fx:id="walutyPanstwaListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false"  text="Dodaj nowe Państwo" />
+            <Text fx:id="nowePanstwoText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;wartość&gt;" />
+         </children>
       </VBox>
       <VBox prefHeight="385.0" prefWidth="182.0">
          <children>
             <Label text="Inwestorzy" />
-            <ListView fx:id="surowceInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="walutyInwestorzyListView" prefHeight="378.0" prefWidth="198.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

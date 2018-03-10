@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.panes.SurowcePaneController;
 import gield.Inwestycja;
 import gieldaPapierowWartosciowych.Indeks;
 import gieldaPapierowWartosciowych.Spolka;
@@ -29,7 +30,7 @@ public class PanelKontrolnyViewController implements Initializable, Controllable
     private SurowcePaneManager surowcePaneManager;
 
     @FXML
-    ResourceBundle resources;
+    private SurowcePaneController surowcePaneController;
     @FXML
     private ChoiceBox<String> ppInwestycjeChoiceBox,rynkiTypChoiceBox,ppTypChoiceBox,
     indeksyTypChoiceBox;

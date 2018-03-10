@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="spolkiPane" prefHeight="351.0" prefWidth="570.0" spacing="2.0"
+      xmlns="http://javafx.com/javafx/8.0.141"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.panes.SpolkiPaneController">
+   <children>
+      <VBox prefHeight="331.0" prefWidth="10.0" spacing="3.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label text="Nazwa" />
+            <TextField fx:id="spolkiNazwaTextField" />
+            <Label text="Kapiał Własny" />
+            <TextField fx:id="spolkiKapitalWlasnyTextField" />
+            <Label text="Kapitał Zakładowy" />
+            <TextField fx:id="spolkiKapitalZakladowyTextField" />
+            <Label text="Liczba Akcji" />
+            <TextField fx:id="spolkiLiczbaAkcjiTextField" />
+            <Label text="Gielda" />
+            <TextField fx:id="spolkiGieldaTextField" />
+            <Button alignment="BASELINE_CENTER" mnemonicParsing="false"  prefHeight="25.0" prefWidth="155.0" text="Wykup wszystkie akcje">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <RadioButton fx:id="spolkiAktualnaCena" mnemonicParsing="false" text="Obecna cena">
+               <toggleGroup>
+                  <ToggleGroup fx:id="spolkiWykupToggleGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="162.0">
+               <children>
+                  <RadioButton fx:id="spolkiNowaCena" mnemonicParsing="false" text="Cena w PLN" toggleGroup="$spolkiWykupToggleGroup" />
+                  <TextField fx:id="spolkiNowaCenaTextField" alignment="CENTER" prefHeight="25.0" prefWidth="71.0">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="392.0" prefWidth="96.0" spacing="5.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label text="Indeksy" />
+            <ListView fx:id="spolkiIndeksListView" prefHeight="215.0" prefWidth="82.0" VBox.vgrow="ALWAYS" />
+            <Label text="Zysk" />
+            <TextField fx:id="spolkiZyskTextField" />
+            <Label text="Przychód" />
+            <TextField fx:id="spolkiPrzychodTextField" />
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <VBox prefHeight="341.0" prefWidth="123.0" spacing="5.0">
+         <children>
+            <Label text="Inwestorzy" />
+            <ListView fx:id="spolkiInwestorzyListView" prefHeight="215.0" prefWidth="261.0" VBox.vgrow="ALWAYS" />
+            <Label text="Obroty" />
+            <TextField fx:id="spolkiObrotyTextField" />
+            <Label text="Wolumen" />
+            <TextField fx:id="spolkiWolumenTextField" />
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>
