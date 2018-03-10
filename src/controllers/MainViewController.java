@@ -83,6 +83,8 @@ public class MainViewController implements Initializable, Controllable {
                 onListaAkcjiChoice();
             }
         });
+
+
     }
 
     /**

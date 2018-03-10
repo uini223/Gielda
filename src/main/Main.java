@@ -89,8 +89,8 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        wczytajKontener();
-        //nowyStan();
+//        wczytajKontener();
+        nowyStan();
         mainStage = primaryStage;
         String name = "../views/";
         Parent root;
