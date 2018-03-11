@@ -1,9 +1,9 @@
 package titledPanesManagment;
 
 import controllers.Listable;
-import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;

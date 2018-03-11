@@ -2,9 +2,9 @@ package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Rynek;
-import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;

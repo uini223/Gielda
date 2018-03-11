@@ -1,23 +1,16 @@
 package main;
 
 import controllers.Controllable;
-import controllers.MainViewController;
-import daySimulation.DaySimulation;
 import gield.Rynek;
 import gieldaPapierowWartosciowych.GPWBuilder;
-import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import posiadajacyPieniadze.Inwestor;
-import posiadajacyPieniadze.PosiadajacyPieniadze;
-import rynekSurowcow.RynekSurowcow;
-import rynekwalut.RynekWalut;
 
 import java.io.*;
 

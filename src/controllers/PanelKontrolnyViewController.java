@@ -2,8 +2,8 @@ package controllers;
 
 import controllers.panes.SurowcePaneController;
 import gield.Inwestycja;
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

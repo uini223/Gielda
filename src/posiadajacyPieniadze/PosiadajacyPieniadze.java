@@ -2,13 +2,10 @@ package posiadajacyPieniadze;
 
 import controllers.Listable;
 import gield.Inwestycja;
-import gieldaPapierowWartosciowych.Akcje;
 import main.Main;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * klasa abstrakcyjna dla inwestorow i funduszy

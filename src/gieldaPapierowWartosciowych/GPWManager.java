@@ -1,6 +1,9 @@
 package gieldaPapierowWartosciowych;
 
-import gield.Rynek;
+import gieldaPapierowWartosciowych.Factories.SpolkaFactory;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import main.Main;
 
 import java.util.HashSet;

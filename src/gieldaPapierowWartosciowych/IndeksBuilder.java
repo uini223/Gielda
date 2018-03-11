@@ -1,6 +1,9 @@
 package gieldaPapierowWartosciowych;
 
 import gield.Rynek;
+import gieldaPapierowWartosciowych.Factories.IndeksFactory;
+import gieldaPapierowWartosciowych.Factories.SpolkaFactory;
+import gieldaPapierowWartosciowych.model.Indeks;
 import observers.IndeksObserver;
 
 public class IndeksBuilder {

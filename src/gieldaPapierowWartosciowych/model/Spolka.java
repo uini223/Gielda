@@ -1,4 +1,4 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.model;
 
 import controllers.Listable;
 import gield.Rynek;

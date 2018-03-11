@@ -1,9 +1,8 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.model;
 
 import controllers.Listable;
 import gield.Inwestycja;
 import gield.Rynek;
-import main.Main;
 import observers.IndeksObserver;
 
 import java.io.Serializable;

@@ -1,4 +1,7 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.Factories;
+
+import gieldaPapierowWartosciowych.model.Akcje;
+import gieldaPapierowWartosciowych.model.Spolka;
 
 public class AkcjeFactory {
 

@@ -1,9 +1,6 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.model;
 
 import gield.Inwestycja;
-import observers.Observer;
-
-import java.util.List;
 
 /**
  * klasa dla akcji spolki

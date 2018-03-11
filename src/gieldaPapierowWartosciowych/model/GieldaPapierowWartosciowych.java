@@ -1,4 +1,4 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.model;
 
 import gield.Inwestycja;
 import gield.Rynek;

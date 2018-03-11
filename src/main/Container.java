@@ -2,8 +2,8 @@ package main;
 
 import daySimulation.DaySimulation;
 import gield.Rynek;
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import posiadajacyPieniadze.FunduszInwestycyjny;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekSurowcow.Surowiec;

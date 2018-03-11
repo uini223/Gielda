@@ -1,6 +1,8 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.Factories;
 
 import gield.Rynek;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 import main.Main;
 
 import java.util.Date;

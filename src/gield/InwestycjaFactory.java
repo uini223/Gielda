@@ -1,6 +1,6 @@
 package gield;
 
-import gieldaPapierowWartosciowych.Akcje;
+import gieldaPapierowWartosciowych.model.Akcje;
 
 public class InwestycjaFactory  {
 

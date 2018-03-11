@@ -2,7 +2,7 @@ package titledPanesManagment;
 
 import controllers.Listable;
 import gield.Inwestycja;
-import gieldaPapierowWartosciowych.Akcje;
+import gieldaPapierowWartosciowych.model.Akcje;
 import javafx.scene.control.*;
 import main.Main;
 import posiadajacyPieniadze.FunduszInwestycyjny;

@@ -1,15 +1,10 @@
 package gield;
 
 import controllers.Listable;
-import gieldaPapierowWartosciowych.Indeks;
-import main.Main;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 import rynekwalut.Waluta;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * klasa abstarkcyjna dla rynkow

@@ -1,7 +1,7 @@
 package controllers;
 
 import gield.Inwestycja;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.Spolka;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

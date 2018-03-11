@@ -1,7 +1,7 @@
 package observers;
 
-import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
-import gieldaPapierowWartosciowych.Indeks;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.model.Indeks;
 
 public class GPWObserver extends Observer{
 

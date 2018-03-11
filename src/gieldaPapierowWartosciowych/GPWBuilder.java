@@ -1,5 +1,7 @@
 package gieldaPapierowWartosciowych;
 
+import gieldaPapierowWartosciowych.Factories.GPWFactory;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
 import observers.GPWObserver;
 
 public class GPWBuilder {

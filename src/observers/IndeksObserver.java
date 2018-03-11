@@ -1,7 +1,7 @@
 package observers;
 
-import gieldaPapierowWartosciowych.Indeks;
-import gieldaPapierowWartosciowych.Spolka;
+import gieldaPapierowWartosciowych.model.Indeks;
+import gieldaPapierowWartosciowych.model.Spolka;
 
 public class IndeksObserver extends Observer{
 

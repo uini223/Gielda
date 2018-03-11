@@ -1,6 +1,7 @@
-package gieldaPapierowWartosciowych;
+package gieldaPapierowWartosciowych.Factories;
 
 import gield.Adres;
+import gieldaPapierowWartosciowych.model.GieldaPapierowWartosciowych;
 import main.Main;
 import rynekwalut.Waluta;
 
