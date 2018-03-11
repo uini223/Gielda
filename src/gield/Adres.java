@@ -10,10 +10,10 @@ public class Adres implements Serializable{
     private int numerDomu;
 
 
-    public Adres() {
-        this.miasto = "miasto";
-        this.nazwaUlicy = "nazwaUlicy";
-        this.numerDomu = 3;
+    public Adres(String miasto,String nazwaUlicy,int numerDomu) {
+        this.miasto = miasto;
+        this.nazwaUlicy = nazwaUlicy;
+        this.numerDomu = numerDomu;
     }
 
     @Override

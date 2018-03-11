@@ -4,7 +4,10 @@ import controllers.Controllable;
 import controllers.MainViewController;
 import daySimulation.DaySimulation;
 import gield.Rynek;
+import gieldaPapierowWartosciowych.GPWBuilder;
 import gieldaPapierowWartosciowych.GieldaPapierowWartosciowych;
+import gieldaPapierowWartosciowych.Indeks;
+import gieldaPapierowWartosciowych.Spolka;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +39,7 @@ public class Main extends Application {
 
     @Override
     public void stop() throws FileNotFoundException {
-        try {
+        /*try {
             synchronized (Main.getMonitor()) {
                 ObjectOutputStream out = new ObjectOutputStream(
                         new BufferedOutputStream(
@@ -46,9 +49,10 @@ public class Main extends Application {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } */
 
     }
+
     private void wczytajKontener() throws FileNotFoundException {
         try {
             ObjectInputStream in = new ObjectInputStream(
@@ -66,27 +70,31 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
     private void nowyStan(){
-        ThreadGroup threadGroup = new ThreadGroup("Ala");
-        Rynek rynek;
-        PosiadajacyPieniadze pp;
-        Thread thread;
-        for(int i=0;i<24;i++){
-            if(i<2){
-                rynek = new GieldaPapierowWartosciowych();
-                kontener.addRynek(rynek);
-                rynek = new RynekWalut();
-                kontener.addRynek(rynek);
-                rynek = new RynekSurowcow();
-                kontener.addRynek(rynek);
+        GPWBuilder gpwBuilder = new GPWBuilder();
+        gpwBuilder.setNumber(1);
+        gpwBuilder.getGPW();
+        System.out.println("********RYNKI**********");
+        for (Rynek rynek:
+                kontener.getHashMapRynkow().values()){
+            System.out.println(rynek);
+            if(rynek instanceof GieldaPapierowWartosciowych){
+                for (Indeks indeks :
+                        ((GieldaPapierowWartosciowych) rynek).getHashMapIndeksow().values()) {
+                    System.out.println("****INDEKSY****");
+                    System.out.println(indeks);
+                    System.out.println("**SPOLKI**");
+                    for (Spolka spolka :
+                            indeks.getHashMapSpolek().values()) {
+                        System.out.println(spolka);
+                    }
+                }
             }
-            pp = new Inwestor();
-            kontener.addPosiadajacyPieniadze(pp);
-            thread = new Thread(threadGroup,pp);
-            thread.setDaemon(true);
-            thread.start();
+
         }
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 //        wczytajKontener();
@@ -102,15 +110,7 @@ public class Main extends Application {
         primaryStage.show();
         Controllable kontroler = loader.getController();
         kontroler.setStage(mainStage);
-
-        DaySimulation day = new DaySimulation();
-        if(kontroler instanceof MainViewController) day.setMvc((MainViewController)kontroler);
-        Thread th = new Thread(day);
-        getContainer().setDaySimulation(day);
-        th.setDaemon(true);
-        th.start();
     }
-
 
     public void setView(String name) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource(name));
@@ -118,9 +118,11 @@ public class Main extends Application {
         mainStage.setScene(new Scene(root,300,400));
         mainStage.show();
     }
+
     public static synchronized Container getContainer(){
         return kontener;
     }
+
     public static void main(String[] args) {
         launch(args);
     }

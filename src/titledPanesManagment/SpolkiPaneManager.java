@@ -57,7 +57,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
                     cena = Double.parseDouble(nowaCena.getText());
                 }
                 else if(tg.getSelectedToggle().equals(aktualnaCenaRadioButton)){
-                    cena = spolka.getAktualnyKurs();
+                    cena = spolka.getAkcjaSpolki().getAktualnaWartosc();
                     cena =spolka.getAkcjaSpolki().getRynek().getWaluta().przelicCeneNaPLN(cena);
                 }
                 spolka.getAkcjaSpolki().wyprzedajWszystko(cena);
@@ -65,7 +65,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
                 Main.getContainer().getHashMapSpolek().remove(spolka.getName());
                 GieldaPapierowWartosciowych rynek = (GieldaPapierowWartosciowych) spolka.getAkcjaSpolki().getRynek();
                 for (Indeks i :
-                        spolka.getHashMapIndeksow()) {
+                        spolka.getHashMapIndeksow().values()) {
                     if(i.getHashMapSpolek().size()==1){
                         Main.getContainer().getHashMapIndeksow().remove(i.getName());
                         rynek.getHashMapIndeksow().remove(i.getName());
@@ -110,7 +110,7 @@ public class SpolkiPaneManager extends ManagerAbstract {
             kapitalWlasny.setText(String.valueOf(spolka.getKapitalWlasny()));
             liczbaAkcji.setText(String.valueOf(spolka.getLiczbaAkcji()));
             gielda.setText(spolka.getAkcjaSpolki().getRynek().getNazwa());
-            listaIndeksow.getItems().addAll(spolka.getHashMapIndeksow());
+            listaIndeksow.getItems().addAll(spolka.getHashMapIndeksow().values());
             wolumenTextField.setText(String.valueOf(spolka.getWolumen()));
             zyskTextField.setText(String.valueOf(spolka.getZysk()));
             obrotyTextField.setText(String.valueOf(spolka.getObroty()));

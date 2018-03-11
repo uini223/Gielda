@@ -31,7 +31,7 @@ public abstract class Rynek implements Listable, Serializable{
         nazwa = nazwyGield[(int)(Math.random()*100)%nazwyGield.length];
         this.kraj = "kraj";
 
-        this.adres = new Adres();
+        this.adres = new Adres("Miasto","ulica",4);
         this.marzaOdTransakcji = Math.random()*10;
     }
 
@@ -127,6 +127,22 @@ public abstract class Rynek implements Listable, Serializable{
         }
         pp.setKapital(pp.getKapital()+kwota);
         inwestycja.dodajSprzedajacego();
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public void setKraj(String kraj) {
+        this.kraj = kraj;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
+    public void setMarzaOdTransakcji(double marzaOdTransakcji) {
+        this.marzaOdTransakcji = marzaOdTransakcji;
     }
 }
 

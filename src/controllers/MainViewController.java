@@ -269,7 +269,7 @@ public class MainViewController implements Initializable, Controllable {
             listaAkcji.getSelectionModel().select(in);
             for (Indeks i :
                     Main.getContainer().getHashMapIndeksow().values()) {
-                i.aktualizujWartosc(1);
+                i.aktualizujWartosc();
             }
             for (Spolka s:
                     Main.getContainer().getHashMapSpolek().values()){

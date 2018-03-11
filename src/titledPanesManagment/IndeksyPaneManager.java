@@ -64,7 +64,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
                         Main.getContainer().getHashMapSpolek().remove(s.getName());
                         ind.getRodzic().getHashMapSpolek().remove(s.getName());
                         s.getAkcjaSpolki().wyprzedajWszystko(ind.getRodzic().getWaluta().
-                                przelicCeneNaPLN(s.getAktualnyKurs()));
+                                przelicCeneNaPLN(s.getAkcjaSpolki().getAktualnaWartosc()));
                     }
                 }
                 if(ind.getRodzic().getHashMapIndeksow().size()==0){
@@ -141,7 +141,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
             GieldaPapierowWartosciowych gpw;
             synchronized(Main.getMonitor()){
                 gpw = (GieldaPapierowWartosciowych) Main.getContainer().getRynek(s);
-                Indeks ind = new Indeks(gpw);
+                Indeks ind = new Indeks();
                 gpw.addIndeks(ind);
             }
             int i = getLista().getSelectionModel().getSelectedIndex();
@@ -162,8 +162,8 @@ public class IndeksyPaneManager extends ManagerAbstract {
         if(!getLista().getSelectionModel().isEmpty()){
             Indeks ind = (Indeks) getLista().getSelectionModel().getSelectedItem();
             synchronized(Main.getMonitor()){
-                Spolka spolka = new Spolka(ind.getRynek());
-                spolka.getHashMapIndeksow().add(ind);
+                Spolka spolka = new Spolka();
+                spolka.getHashMapIndeksow().put(ind.getName(),ind);
                 Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
                 ind.dodajSpolke(spolka);
                 spolkiListView.getItems().add(spolka);
@@ -180,7 +180,7 @@ public class IndeksyPaneManager extends ManagerAbstract {
                 Spolka spolka = dostepneSpolkiListVIiew.getSelectionModel().getSelectedItem();
                 Indeks indeks = (Indeks) getLista().getSelectionModel().getSelectedItem();
                 indeks.dodajSpolke(spolka);
-                spolka.getHashMapIndeksow().add(indeks);
+                spolka.getHashMapIndeksow().put(indeks.getName(),indeks);
                 spolkiListView.getItems().add(spolka);
                 dostepneSpolkiListVIiew.getItems().remove(spolka);
             }

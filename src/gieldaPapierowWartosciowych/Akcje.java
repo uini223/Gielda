@@ -23,15 +23,10 @@ public class Akcje extends Inwestycja{
     }
 
     public Akcje(){
-
+        super();
     }
 
     public String getNazwaSpolki() {
-        return getName();
-    }
-
-    @Override
-    public String toString() {
         return getName();
     }
 
@@ -43,5 +38,8 @@ public class Akcje extends Inwestycja{
         this.spolka = spolka;
     }
 
-
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

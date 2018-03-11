@@ -14,24 +14,13 @@ public class Spolka implements Runnable, Serializable, Listable
 {
     private String name;
     private Date dataPierwszejWyceny;
-    private double kursOtwarcia, przychod, kapitalWlasny, kapitalZakladowy, obroty, zysk;
+    private double przychod, kapitalWlasny, kapitalZakladowy, obroty, zysk;
     private int liczbaAkcji,wolumen;
     private Akcje akcjaSpolki;
     private HashMap<String,Indeks> hashMapIndeksow;
     private Boolean running;
     private Rynek rynek;
 
-
-    /**
-     * @param rynek rynek na ktorym jest notowana spolka
-     */
-    public Spolka(Rynek rynek) {
-
-        akcjaSpolki = new Akcje();
-        akcjaSpolki.setRynek(rynek);
-        akcjaSpolki.setSpolka(this);
-
-    }
 
     public Spolka(){
         hashMapIndeksow = new HashMap<>();
@@ -67,10 +56,23 @@ public class Spolka implements Runnable, Serializable, Listable
         }
     }
 
-
     @Override
     public String toString() {
-        return name;
+        return "Spolka{" +
+                "name='" + name + '\'' +
+                ", dataPierwszejWyceny=" + dataPierwszejWyceny +
+                ", przychod=" + przychod +
+                ", kapitalWlasny=" + kapitalWlasny +
+                ", kapitalZakladowy=" + kapitalZakladowy +
+                ", obroty=" + obroty +
+                ", zysk=" + zysk +
+                ", liczbaAkcji=" + liczbaAkcji +
+                ", wolumen=" + wolumen +
+                ", akcjaSpolki=" + akcjaSpolki +
+                ", hashMapIndeksow=" + hashMapIndeksow +
+                ", running=" + running +
+                ", rynek=" + rynek +
+                '}';
     }
 
     public Akcje getAkcjaSpolki(){
@@ -192,15 +194,6 @@ public class Spolka implements Runnable, Serializable, Listable
     public void setKapitalWlasny(double kapitalWlasny) {
         this.kapitalWlasny = kapitalWlasny;
     }
-
-    public void setKursOtwarcia(double kursOtwarcia) {
-        this.kursOtwarcia = kursOtwarcia;
-    }
-
-    public double getKursOtwarcia() {
-        return kursOtwarcia;
-    }
-
 
     public void setPrzychod(double przychod) {
         this.przychod = przychod;

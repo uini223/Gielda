@@ -25,6 +25,7 @@ public class SpolkaFactory {
         spolka.getHashMapIndeksow().put(indeks.getName(),indeks);
         AkcjeFactory akcjeFactory = new AkcjeFactory();
         spolka.setAkcjaSpolki(akcjeFactory.getAkcje(spolka));
+        addSpolkaToContainer(spolka);
         return spolka;
     }
 

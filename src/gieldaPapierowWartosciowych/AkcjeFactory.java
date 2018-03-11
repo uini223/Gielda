@@ -10,6 +10,7 @@ public class AkcjeFactory {
         akcje.setAktualnaWartosc(akcje.getPoczatkowaWartosc());
         akcje.setNajmniejszaWartosc(akcje.getAktualnaWartosc());
         akcje.setNajwiekszaWartosc(akcje.getPoczatkowaWartosc());
+        akcje.setName(spolka.getName());
         return akcje;
     }
 }

@@ -1,5 +1,7 @@
 package gieldaPapierowWartosciowych;
 
+import observers.GPWObserver;
+
 public class GPWBuilder {
 
     private IndeksBuilder indeksBuilder = new IndeksBuilder();
@@ -11,7 +13,7 @@ public class GPWBuilder {
         for (int i=0;i<number;i++){
             gpw.addIndeks(indeksBuilder.getIndeks(gpw));
         }
-        //TODO observer
+        gpw.setGpwObserver(new GPWObserver(gpw));
         return gpw;
     }
 

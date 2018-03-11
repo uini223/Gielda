@@ -3,6 +3,7 @@ package gieldaPapierowWartosciowych;
 import gield.Inwestycja;
 import gield.Rynek;
 import main.Main;
+import observers.GPWObserver;
 import posiadajacyPieniadze.PosiadajacyPieniadze;
 
 import java.util.HashMap;
@@ -17,6 +18,8 @@ public class GieldaPapierowWartosciowych extends Rynek{
 
     private Map<String, Spolka> hashMapSpolek;
 
+    private GPWObserver gpwObserver;
+
     public Map<String, Spolka> getHashMapSpolek() {
         return hashMapSpolek;
     }
@@ -26,16 +29,8 @@ public class GieldaPapierowWartosciowych extends Rynek{
      */
     public GieldaPapierowWartosciowych() {
         super();
-
-
-        hashMapIndeksow = new HashMap<>();
         hashMapSpolek = new HashMap<>();
-        Indeks ind;
-        for(int i=0;i<1;i++){
-            ind = new Indeks(this);
-            hashMapIndeksow.put(ind.getName(),ind);
-        }
-        aktualizujIndeksy();
+        hashMapIndeksow = new HashMap<>();
     }
 
     public HashMap<String, Indeks> getHashMapIndeksow() {
@@ -148,7 +143,7 @@ public class GieldaPapierowWartosciowych extends Rynek{
         for(Indeks indeks:
                 hashMapIndeksow.values()){
             if(rnd==n){
-                Spolka spolka = new Spolka(this);
+                Spolka spolka = new Spolka();
                 indeks.dodajSpolke(spolka);
                 Thread thread= new Thread(spolka);
                 thread.setDaemon(false);
@@ -156,5 +151,13 @@ public class GieldaPapierowWartosciowych extends Rynek{
             }
             n++;
         }
+    }
+
+    public GPWObserver getGpwObserver() {
+        return gpwObserver;
+    }
+
+    public void setGpwObserver(GPWObserver gpwObserver) {
+        this.gpwObserver = gpwObserver;
     }
 }

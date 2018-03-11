@@ -19,30 +19,8 @@ public class Indeks extends Inwestycja implements Listable, Serializable {
     private Map<String,Spolka> hashMapSpolek;
     private IndeksObserver indeksObserver;
 
-    /**
-     * @param rodzic rynek do ktorego nalezy indeks
-     * tworzy nazwe indeksu i 3 nowe spolki, ktore do niego naleza (indeks nie moze istniec bez spolek)
-     */
-    public Indeks(GieldaPapierowWartosciowych rodzic) {
-        super( "indeks" + Integer.toString((int)((Math.random())*10000)),0);
-        //name = "indeks" + Integer.toString((int)((Math.random())*10000));
-        this.rodzic = rodzic;
-        setRynek(rodzic);
-        Spolka spolka;
-        for (int i = 0; i < 3; i++) {
-            spolka = new Spolka(rodzic);
-//            spolka.getHashMapIndeksow().add(this);
-            Main.getContainer().getHashMapSpolek().put(spolka.getName(),spolka);
-            hashMapSpolek.put(spolka.getName(),spolka);
-            //spolka.getAkcjaSpolki().addWartoscAkcji(spolka.getAktualnyKurs());
-            Thread th = new Thread(spolka);
-            th.setDaemon(true);
-            th.start();
-        }
-        rodzic.addIndeks(this);
-
-    }
     public Indeks(){
+        super();
         hashMapSpolek = new HashMap<>();
         //indeksObserver = new IndeksObserver(this);
     }
